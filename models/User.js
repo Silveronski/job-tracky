@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const UserScheme = new mongoose.Schema({
     name:{
@@ -28,10 +29,21 @@ const UserScheme = new mongoose.Schema({
 
 // this function gets called before saving the user model
 // we use a regular function instead of arrow function to get the correct 'this' refarence
-UserScheme.pre('save', async function(next) {
+UserScheme.pre('save', async function() {
     const salt = await bcrypt.genSalt(10); // generate 10 random bytes
     this.password = await bcrypt.hash(this.password, salt);
-    next();
 });
+
+UserScheme.methods.createJWT = function() {
+    return jwt.sign(
+        { userId: this._id, name: this.name },
+        process.env.JWT_SECRET,
+        { expiresIn: process.env.JWT_LIFETIME }
+    );
+}
+
+UserScheme.methods.comparePassword = async function(canditatePassword) {
+    return await bcrypt.compare(canditatePassword, this.password);
+}
 
 module.exports = mongoose.model('User', UserScheme);

@@ -6,6 +6,7 @@ const express = require('express');
 const connectToDb = require('./db/connect');
 const authRouter = require('./routes/auth');
 const jobsRouter = require('./routes/jobs');
+const authenticateUser = require('./middleware/authentication');
 const errorHandler = require('./middleware/error-handler');
 const notFound = require('./middleware/not-found');
 
@@ -14,7 +15,7 @@ const PORT = process.env.PORT || 3001;
 
 app.use(express.json());
 app.use('/api/v1/auth', authRouter);
-app.use('/api/v1/jobs', jobsRouter);
+app.use('/api/v1/jobs', authenticateUser, jobsRouter);
 app.use(errorHandler);
 app.use(notFound);
 

@@ -1,0 +1,76 @@
+.register-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 18rem;
+    .wrapper{
+        min-width: min-content;
+        padding: 3rem 6rem;
+        background-color: rgb(40, 38, 38);
+        box-shadow: 8px 5px 30px rgb(0, 0, 0);
+        border-radius: 24px;
+        h1{
+            filter: drop-shadow(8px 3px 12px $primaryColor);
+            text-align: center;
+            font-size: 3.5rem;
+            margin-bottom: 2.5rem;
+        }
+        form{
+            .form-fields{
+                display: flex;
+                align-items: center;
+                margin-block: 1.5rem;        
+                label{
+                    min-width: 150px;
+                    font-size: 1.5rem;
+                }
+                input{
+                    outline: none;
+                    font-size: 1.5rem;
+                    padding-left: 0.3em;
+                    padding-block: 0.2rem;
+                    border-radius: 24px;
+                }
+            }
+            .btn-container{             
+                .error{
+                    text-align: center;
+                    color: red;
+                    margin-top: 1em;
+                    font-size: 1.2rem;
+                }
+                button{
+                    cursor: pointer;
+                    width: 100%;
+                    min-width: fit-content;
+                    font-size: 1.5rem;
+                    border: none;
+                    border-radius: 24px;
+                    padding: 0.5em 1em;
+                    margin-block: 1.6rem;
+                    background-color: $primaryColor;
+                    font-weight: 600;
+                    transition: 0.3s;
+                    color: white;
+                    &:hover{
+                        background-color: $primaryColorBrighter;
+                    }
+                }
+               
+                .toggler{
+                    text-align: center;
+                    font-size: 1.2rem;
+                    margin-top: 0.5rem;
+                    a{
+                        cursor: pointer;
+                        color: $primaryColor;
+                        transition: 0.3s;
+                        &:hover{
+                            color: $primaryColorBrighter;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

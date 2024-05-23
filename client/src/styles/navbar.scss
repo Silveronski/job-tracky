@@ -1,0 +1,40 @@
+header{
+    position: fixed;
+    width: 100%; 
+    top: 0;
+    nav{    
+        display: flex;
+        align-items: center;
+        padding-block: 1.5rem;
+        background-color: $primaryColorDarker;      
+        h1{
+            font-size: 3.5rem;
+            margin-left: 2rem;
+            span{
+                &:nth-child(2){
+                    color: $primaryColorBrighter;
+                }
+            }
+        }
+        div{
+            display: flex;
+            margin-left: auto;
+            align-items: center;
+            gap: 2rem;
+            margin-right: 2rem;
+            p{
+                font-size: 1.8rem;
+            }
+            button{
+                font-size: 1.6rem;
+                padding: 0.5em 1.2em;
+                border-radius: 24px;
+                border: none;
+                color: white;
+                cursor: pointer;       
+                letter-spacing: 1px;
+                background-color: $primaryColorBrighter;
+            }
+        }
+    }
+}

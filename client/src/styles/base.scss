@@ -1,5 +1,6 @@
 $primaryColor: rgb(73, 190, 141);
 $primaryColorBrighter: rgb(45, 216, 145);
+$primaryColorDarker: rgb(16, 88, 58);
 
 *{
     margin: 0;
@@ -11,4 +12,8 @@ $primaryColorBrighter: rgb(45, 216, 145);
 body{
     background-color: rgba(0, 0, 0, 0.9);
     color: white;
+}
+
+main{
+    margin-top: 150px;
 }

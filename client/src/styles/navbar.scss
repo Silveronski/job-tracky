@@ -1,12 +1,13 @@
 header{
     position: fixed;
     width: 100%; 
+    
     top: 0;
     nav{    
         display: flex;
         align-items: center;
         padding-block: 1.5rem;
-        background-color: $primaryColorDarker;      
+        background-color: rgb(40, 38, 38);         
         h1{
             font-size: 3.5rem;
             margin-left: 2rem;

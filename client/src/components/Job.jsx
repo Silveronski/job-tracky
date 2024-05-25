@@ -7,7 +7,7 @@ const Job = ({jobId, jobDate, jobPosition, jobCompany, jobStatus}) => {
   return (
     <div className="job-card">
       <div className="job-date-container">
-          <small className="job-date">{jobDate}</small>
+          <small className="job-date">{new Date(jobDate).toLocaleDateString()}</small>
       </div>       
       <div className="positon-company">
           <h3>{jobPosition}</h3>

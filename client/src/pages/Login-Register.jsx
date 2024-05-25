@@ -50,7 +50,7 @@ const LoginRegister = () => {
     }
 
     return (
-        <section className="register-container">
+        <section className="form-container">
             <div className="wrapper">
                 {<h1>{isLogin ? 'Login' : 'Register'}</h1>}
                 <form onSubmit={isLogin ? handleLogin : handleRegister}>

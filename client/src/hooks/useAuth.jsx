@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-const api = axios.create({
+export const api = axios.create({
     baseURL: 'http://localhost:3002/api/v1'
 });
 
@@ -40,29 +40,12 @@ export const useAuth = () => {
         localStorage.setItem('userData', JSON.stringify(user));
     }
 
-    const getJobs = async () => {
-        try {
-            const response = await api.get('/jobs', {
-                headers:{
-                    Authorization: `Bearer ${user.token}`
-                }
-            });
-            if (response?.data) {
-                return response.data.jobs;
-            }
-        } 
-        catch (error) {
-            console.error('error in getting jobs', error);
-            return error;
-        }
-    }
 
     useEffect(() => {
         const userData = localStorage.getItem('userData');
-        console.log(JSON.parse(userData));
         userData && setUser(JSON.parse(userData));
         setLoading(false);
     },[]);
 
-    return { user, loading, register, login, getJobs };
+    return { user, loading, register, login };
 }

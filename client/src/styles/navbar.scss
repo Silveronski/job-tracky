@@ -1,13 +1,12 @@
 header{
     position: fixed;
-    width: 100%; 
-    
+    width: 100%;    
     top: 0;
     nav{    
         display: flex;
         align-items: center;
         padding-block: 1.5rem;
-        background-color: rgb(40, 38, 38);         
+        background-color: $darkGrayColor;         
         h1{
             font-size: 3.5rem;
             margin-left: 2rem;
@@ -34,7 +33,11 @@ header{
                 color: white;
                 cursor: pointer;       
                 letter-spacing: 1px;
-                background-color: $primaryColorBrighter;
+                transition: 0.3s;
+                background-color: $primaryColor;
+                &:hover{
+                    background-color: $primaryColorBrighter;
+                }
             }
         }
     }

@@ -1,9 +1,5 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
-
-export const api = axios.create({
-    baseURL: 'http://localhost:3002/api/v1'
-});
+import { api } from '../api/api-config';
 
 export const useAuth = () => {
     const [user, setUser] = useState({ name: '', token: null });
@@ -35,16 +31,43 @@ export const useAuth = () => {
         }
     }
 
+    const verifyUser = async (token) => {
+        try {
+            const response = await api.post('/auth/verify-token', null, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            if (response.data) return response.data.user;                      
+        } 
+        catch (error) {
+            console.error('error validating token', error);
+            return null;
+        }
+    }
+
     const storeUser = (user) => {
         setUser(user);
         localStorage.setItem('userData', JSON.stringify(user));
     }
 
-
     useEffect(() => {
-        const userData = localStorage.getItem('userData');
-        userData && setUser(JSON.parse(userData));
-        setLoading(false);
+        const checkToken = async () => {
+            const userData = localStorage.getItem('userData');
+            if (userData) {
+                const parsedUserData = JSON.parse(userData);
+                const validUser = await verifyUser(parsedUserData.token);
+                if (validUser) {
+                    setUser({ name: validUser.name, token: validUser.token });
+                }
+                else {
+                    localStorage.removeItem('userData');
+                    setUser({ name: '', token: null });
+                }
+            }      
+            setLoading(false);
+        }
+        checkToken();
     },[]);
 
     return { user, loading, register, login };

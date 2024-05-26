@@ -12,10 +12,11 @@ const Navbar = () => {
         <header>
             <nav>
                 <h1><span>Job</span><span>Tracky</span></h1>
+                {user.token && 
                 <div>
                     <p>Hello, {user?.name}</p>
                     <button onClick={signOut}>Sign Out</button>
-                </div>
+                </div>}
             </nav>
         </header>
     )

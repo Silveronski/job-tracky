@@ -37,15 +37,15 @@ const EditJob = () => {
                 <form onSubmit={handleFormSubmit}>
                   <div className="form-fields">
                       <label>Company</label>
-                      <input type="text" defaultValue={currentJob.company}/>
+                      <input type="text" defaultValue={currentJob?.company}/>
                   </div>
                   <div className="form-fields">
                       <label>Position</label>
-                      <input type="text" defaultValue={currentJob.position}/>
+                      <input type="text" defaultValue={currentJob?.position}/>
                   </div>
                   <div className="form-fields">
                       <label>Status</label>
-                      <select defaultValue={currentJob.status}>
+                      <select defaultValue={currentJob?.status}>
                         <option value="pending">pending</option>
                         <option value="interview">interview</option>
                         <option value="declined">declined</option>

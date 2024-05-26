@@ -3,9 +3,9 @@
     padding-left: 6em;
     .addjob-container{
         margin-top: 0;
-        margin-bottom: 5em;
+        margin-bottom: 5em;      
         .wrapper{
-            padding-inline: 8em;
+            padding-inline: 8em;        
         }
     }
     .jobs-container{
@@ -92,4 +92,9 @@
             margin-top: 1.8em;
         }
     }
+}
+
+.editjob-container{
+    flex-direction: column;
+    gap: 5em;     
 }

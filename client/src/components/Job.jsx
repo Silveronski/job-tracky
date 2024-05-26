@@ -1,7 +1,12 @@
 import { useNavigate } from "react-router-dom"
 
 const Job = ({jobId, jobDate, jobPosition, jobCompany, jobStatus}) => {
-  const currentJob = { jobId, jobCompany, jobPosition, jobStatus };
+  const currentJob = {
+    _id: jobId,
+    company: jobCompany,
+    position: jobPosition,
+    status: jobStatus 
+  };
   const navigate = useNavigate();
   
   return (

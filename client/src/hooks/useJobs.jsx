@@ -42,9 +42,9 @@ export const useJobs = () => {
         }
     }
 
-    const updateJob = async (jobId) => {
+    const updateJob = async (jobId, editedJob) => {
         try {
-            const response = await api.patch(`/jobs/${jobId}`, {
+            const response = await api.patch(`/jobs/${jobId}`, editedJob,{
                 headers:{
                     Authorization: `Bearer ${user.token}`
                 }
@@ -62,17 +62,25 @@ export const useJobs = () => {
 
     const deleteJob = async (jobId) => {
         try {
-            
+            const response = await api.delete(`/jobs/${jobId}`, {
+                headers:{
+                    Authorization: `Bearer ${user.token}`
+                }
+            });
+            if (response?.data){
+                setJobs((prevJobs) => prevJobs.filter((job) => job._id !== jobId));
+                return response.data.job;
+            }
         } 
         catch (error) {
-            console.error('error in adding a job', error);
+            console.error('error in deleting a job', error);
             return error;
         }
     }
 
     useEffect(() => {
         user.token && getJobs();
-    }, [user]);
+    }, [user.token]);
 
     return { jobs, getJobs, addJob, updateJob, deleteJob }
 }

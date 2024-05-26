@@ -23,7 +23,7 @@ const createJob = async (req,res) => {
 }
 
 const updateJob = async (req,res) => {
-    const {company, position} = req.body;
+    const { company, position } = req.body;
     if (company.trim() === '' || position.trim() === '') {
         throw new BadRequestError('Please provide company and postion');
     }

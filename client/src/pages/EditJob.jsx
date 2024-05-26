@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom";
+import { JobContext } from "../context/JobContext";
 
 const EditJob = () => {
+    const { updateJob } = useContext(JobContext);
     const navigate = useNavigate();
     const location = useLocation();
     const { currentJob } = location.state || {};

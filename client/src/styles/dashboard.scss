@@ -1,6 +1,8 @@
 .dashboard-container{    
     margin-top: 15rem;
-    padding-left: 6em;
+    @include laptop{
+        margin-top: 10.5rem;
+    }
     .addjob-container{
         margin-top: 0;
         margin-bottom: 5em;      
@@ -14,6 +16,7 @@
         flex-wrap: wrap;
         gap: 4rem;
         margin-bottom: 3em;
+        padding-left: 6em;
         .job-card{
             background-color: $darkGrayColor;
             width: 22%;
@@ -22,6 +25,9 @@
             padding-bottom: 1.8em;
             border-radius: 16px;
             overflow: hidden;
+            @include laptop{
+                min-width: 395px;
+            }
             .job-date-container{
                 display: flex;
                 .job-date{  

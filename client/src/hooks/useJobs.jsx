@@ -44,7 +44,15 @@ export const useJobs = () => {
 
     const updateJob = async (jobId) => {
         try {
-            
+            const response = await api.patch(`/jobs/${jobId}`, {
+                headers:{
+                    Authorization: `Bearer ${user.token}`
+                }
+            });
+            if (response?.data) {
+                setJobs((prevJobs) => prevJobs.map(job => job._id === jobId ? response.data.job : job));
+                return response.data.job;
+            }
         } 
         catch (error) {
             console.error('error in adding a job', error);

@@ -1,9 +1,11 @@
 import { useContext, useState } from "react"
 import { JobContext } from "../context/JobContext";
+import { useToastr } from "../hooks/useToastr";
 
 const AddJob = () => {
   const [error, setError] = useState({ msg: '', activated: false });
   const { addJob } = useContext(JobContext);
+  const { generateToastr } = useToastr();
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -18,6 +20,7 @@ const AddJob = () => {
       setError({ msg: data.response.data.msg, activated: true });
       return;
     }
+    generateToastr('success', 'Job has been successfully created');
     setError({ activated: false });
     e.target.reset();
   }

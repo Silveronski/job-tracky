@@ -1,8 +1,9 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom"
 import { JobContext } from "../context/JobContext";
+import { useToastr } from "../hooks/useToastr";
 
-const Job = ({jobId, jobDate, jobPosition, jobCompany, jobStatus}) => {
+const Job = ({ jobId, jobDate, jobPosition, jobCompany, jobStatus }) => {
   const currentJob = {
     _id: jobId,
     company: jobCompany,
@@ -11,18 +12,19 @@ const Job = ({jobId, jobDate, jobPosition, jobCompany, jobStatus}) => {
   };
   const navigate = useNavigate();
   const { deleteJob } = useContext(JobContext);
+  const { generateToastr } = useToastr();
 
   const handleDelete = async () => {
     const data = await deleteJob(jobId);
     if (data instanceof Error) {
-      console.error(data);
+      generateToastr('error', 'Could not delete the job');
       return;
-      // handle later
     }
+    generateToastr('success', 'Job has been successfully deleted');
   }
   
   return (
-    <div className="job-card">
+    <section className="job-card">
       <div className="job-date-container">
           <small className="job-date">{new Date(jobDate).toLocaleDateString()}</small>
       </div>       
@@ -37,7 +39,7 @@ const Job = ({jobId, jobDate, jobPosition, jobCompany, jobStatus}) => {
           </div>
           <small className="status">{jobStatus}</small>
       </div>
-    </div>
+    </section>
   )
 }
 

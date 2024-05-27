@@ -1,17 +1,23 @@
 import { useContext, useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom";
 import { JobContext } from "../context/JobContext";
+import { AuthContext } from "../context/AuthContext";
+import { useToastr } from "../hooks/useToastr";
 
 const EditJob = () => {
+    const { user, loading } = useContext(AuthContext);
     const { updateJob } = useContext(JobContext);
-    const navigate = useNavigate();
     const location = useLocation();
     const { currentJob } = location.state || {};
+    const navigate = useNavigate();
     const [error, setError] = useState({msg: '', activated: false});
+    const { generateToastr } = useToastr();
 
     useEffect(() => {
-        !currentJob && navigate("/login");
-    }, [currentJob, navigate]);
+        if (!loading) {
+            if (!currentJob) user.token ? navigate("/dashboard") : navigate("/login");         
+        }
+    }, [currentJob, navigate, loading]);
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
@@ -27,6 +33,7 @@ const EditJob = () => {
             setError({ msg: data.response.data.msg, activated: true });
             return;
         }
+        generateToastr('success', 'Job has been successfully updated');
         navigate("/dashboard");
     }
 

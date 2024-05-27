@@ -31,6 +31,12 @@ export const useAuth = () => {
         }
     }
 
+    const signOut = () => {
+        localStorage.removeItem('userData');
+        setUser({ name: '', token: null });
+        navigate("/login");
+    }
+
     const verifyUser = async (token) => {
         try {
             const response = await api.post('/auth/verify-token', null, {
@@ -70,5 +76,5 @@ export const useAuth = () => {
         checkToken();
     },[]);
 
-    return { user, loading, register, login };
+    return { user, loading, register, login, signOut };
 }

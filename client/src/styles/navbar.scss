@@ -8,14 +8,10 @@ header{
         align-items: center;
         padding-block: 1.5rem;
         background-color: $darkGrayColor;         
-        h1{
-            font-size: 3.5rem;
-            margin-left: 2rem;
-            span{
-                &:nth-child(2){
-                    color: $primaryColorBrighter;
-                }
-            }
+        img{
+            width: 16em;
+            margin-left: 2em;         
+            object-fit: cover;
         }
         div{
             display: flex;

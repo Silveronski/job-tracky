@@ -54,7 +54,7 @@ const EditJob = () => {
                     </div>                  
                 </form>
             </div>
-            <Button text="Dashboard" onClick={() => navigate('/dashboard')}/>
+            <Button className="primary-button back-to-dashboard" text="Back to Dashboard" onClick={() => navigate('/dashboard')}/>
     </section>
     )
 }

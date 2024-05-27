@@ -22,20 +22,8 @@ header{
             p{
                 font-size: 1.8rem;
             }
-            button{
-                min-width: fit-content;
-                font-size: 1.6rem;
-                padding: 0.5em 1.2em;
-                border-radius: 24px;
-                border: none;
-                color: white;
-                cursor: pointer;       
-                letter-spacing: 1px;
-                transition: 0.3s;
-                background-color: $primaryColor;
-                &:hover{
-                    background-color: $primaryColorBrighter;
-                }
+            button{              
+                letter-spacing: 1px;                 
             }
         }
     }

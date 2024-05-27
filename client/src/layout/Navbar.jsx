@@ -1,6 +1,7 @@
 import { useContext } from "react"
 import { AuthContext } from "../context/AuthContext"
 import logo from "../assets/images/jobtrackyLogo.png";
+import Button from "../components/Button";
 
 const Navbar = () => {
     const { user, signOut } = useContext(AuthContext);
@@ -12,7 +13,7 @@ const Navbar = () => {
                 {user.token && 
                 <div>
                     <p>Hello, {user?.name || 'User'}</p>
-                    <button onClick={() => signOut()}>Sign Out</button>
+                    <Button text="Sign Out" onClick={() => signOut()}/>
                 </div>}
             </nav>
         </header>

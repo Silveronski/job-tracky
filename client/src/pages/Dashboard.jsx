@@ -9,9 +9,7 @@ const Dashboard = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!loading) {
-            !user.token && navigate("/login");
-        }
+        if (!loading) !user.token && navigate("/login");                
     }, [loading, user.token]);
 
     return (

@@ -1,6 +1,7 @@
 import { useContext, useState } from "react"
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import FormFields from "../components/FormFields";
 
 const LoginRegister = () => {
     const [error, setError] = useState({ msg: '', activated: false });
@@ -54,19 +55,9 @@ const LoginRegister = () => {
             <div className="wrapper">
                 {<h1>{isLogin ? 'Login' : 'Register'}</h1>}
                 <form onSubmit={isLogin ? handleLogin : handleRegister}>
-                   {!isLogin && 
-                    <div className="form-fields">
-                        <label>Name</label>
-                        <input type="text"/>
-                    </div>}
-                    <div className="form-fields">
-                        <label>Email</label>
-                        <input type="email"/>
-                    </div>
-                    <div className="form-fields">
-                        <label>Password</label>
-                        <input type="password"/>
-                    </div>
+                   {!isLogin && <FormFields label="Name"/>}        
+                   <FormFields label="Email" inputType="email"/>
+                   <FormFields label="Password" inputType="password"/>
                     <div className="btn-container">
                         {error.activated && <p className="error">{error.msg}</p>}
                         <button>Submit</button>

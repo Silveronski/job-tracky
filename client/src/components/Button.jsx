@@ -1,9 +1,14 @@
-import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
-const Button = ({onClick}) => {
+const Button = ({ text, onClick = () => {} }) => {
   return (
-    <button onClick={onClick}></button>
+    <button className='primary-button' onClick={onClick}>{text}</button>
   )
 }
+
+Button.propTypes = {
+  text: PropTypes.string.isRequired,
+  onClick: PropTypes.func
+};
 
 export default Button

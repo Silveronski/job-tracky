@@ -2,6 +2,7 @@ import { useContext, useState } from "react"
 import { JobContext } from "../context/JobContext";
 import { useToastr } from "../hooks/useToastr";
 import FormFields from "./FormFields";
+import Button from "./Button";
 
 const AddJob = () => {
   const [error, setError] = useState({ msg: '', activated: false });
@@ -35,7 +36,7 @@ const AddJob = () => {
                   <FormFields label="Position"/>
                   <div className="btn-container">
                       {error.activated && <p className="error">{error.msg}</p>}
-                      <button>Submit</button>
+                      <Button text="Submit"/>
                   </div>                  
                 </form>
             </div>

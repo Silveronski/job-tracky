@@ -4,6 +4,7 @@ import { JobContext } from "../context/JobContext";
 import { AuthContext } from "../context/AuthContext";
 import { useToastr } from "../hooks/useToastr";
 import FormFields from "../components/FormFields";
+import Button from "../components/Button";
 
 const EditJob = () => {
     const { user, loading } = useContext(AuthContext);
@@ -49,11 +50,11 @@ const EditJob = () => {
                     selectOptions={["pending", "interview", "declined"]}/> 
                     <div className="btn-container">
                         {error.activated && <p className="error">{error.msg}</p>}
-                        <button>Submit</button>
+                        <Button text="Submit"/>
                     </div>                  
                 </form>
             </div>
-            <button className="primary-button" onClick={() => navigate('/dashboard')}>Dashboard</button>
+            <Button text="Dashboard" onClick={() => navigate('/dashboard')}/>
     </section>
     )
 }

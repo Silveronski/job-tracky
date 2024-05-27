@@ -9,7 +9,7 @@ const Navbar = () => {
     return (
         <header>
             <nav>
-                <img src={logo} alt="logo"/>
+                <img className={!user.token ? 'centered-logo' : ''} src={logo} alt="logo"/>
                 {user.token && 
                 <div>
                     <p>Hello, {user?.name || 'User'}</p>

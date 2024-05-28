@@ -8,10 +8,11 @@ header{
         align-items: center;
         padding-block: 1.5rem;
         background-color: $darkGrayColor;         
-        img{
+        .logo{
             width: 16em;
             margin-left: 2em;         
-            object-fit: cover;
+            object-fit: cover;   
+            padding-bottom: 0.5em; 
         }
         .centered-logo{
             margin: auto;
@@ -20,13 +21,18 @@ header{
             display: flex;
             margin-left: auto;
             align-items: center;
-            gap: 2rem;
+            gap: 2em;
             margin-right: 2rem;
             p{
                 font-size: 1.8rem;
             }
             button{              
-                letter-spacing: 1px;                 
+                letter-spacing: 1px; 
+                display: flex;
+                align-items: center;
+                .logout{
+                    margin-left: 0.5em;
+                }                
             }
         }
     }

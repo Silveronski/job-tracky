@@ -27,6 +27,10 @@
                 padding-bottom: 1.8em;
                 border-radius: 16px;
                 overflow: hidden;
+                transition: 0.5s;
+                &:hover{
+                    scale: 1.03;
+                }
                 @include laptop{
                     min-width: 395px;
                 }
@@ -125,14 +129,19 @@
         }
     } 
     .back-to-dashboard{
+        display: flex;
+        align-items: center;
         background: transparent;
         border: 2px solid $primaryColorBrighter;
         font-size: 2rem; 
         border-radius: 40px;   
-        padding: 0.5em 2.2em;
+        padding: 0.5em 1.8em;
         margin-top: 1em;    
         &:hover{
             background-color: $primaryColorBrighter;
         }  
+        .dashboard-logo{
+            margin-left: 0.7em;
+        }
     }  
 }

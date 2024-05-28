@@ -1,6 +1,7 @@
 import { useContext } from "react"
 import { AuthContext } from "../context/AuthContext"
 import logo from "../assets/images/jobtrackyLogo.png";
+import logout from "../assets/images/logout.png";
 import Button from "../components/Button";
 
 const Navbar = () => {
@@ -9,11 +10,11 @@ const Navbar = () => {
     return (
         <header>
             <nav>
-                <img className={!user.token ? 'centered-logo' : ''} src={logo} alt="logo"/>
+                <img className={!user.token ? 'centered-logo logo' : 'logo'} src={logo} alt="logo"/>
                 {user.token && 
                 <div>
                     <p>Hello, {user?.name || 'User'}</p>
-                    <Button text="Sign Out" onClick={() => signOut()}/>
+                    <Button text="Sign Out" onClick={() => signOut()} imgUrl={logout} imgClass="logout"/>
                 </div>}
             </nav>
         </header>

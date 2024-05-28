@@ -5,6 +5,7 @@ import { AuthContext } from "../context/AuthContext";
 import { useToastr } from "../hooks/useToastr";
 import FormFields from "../components/FormFields";
 import Button from "../components/Button";
+import dashboard from "../assets/images/dashboard.png";
 
 const EditJob = () => {
     const { user, loading } = useContext(AuthContext);
@@ -54,8 +55,9 @@ const EditJob = () => {
                     </div>                  
                 </form>
             </div>
-            <Button className="primary-button back-to-dashboard" text="Back to Dashboard" onClick={() => navigate('/dashboard')}/>
-    </section>
+            <Button className="primary-button back-to-dashboard" text="Back to Dashboard"
+             onClick={() => navigate('/dashboard')} imgUrl={dashboard} imgClass="dashboard-logo"/>
+        </section>
     )
 }
 

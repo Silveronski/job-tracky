@@ -39,6 +39,22 @@ export const useAuth = () => {
         navigate("/login");
     }
 
+    const checkToken = async () => {
+        const userData = localStorage.getItem('userData');
+        if (userData) {
+            const parsedUserData = JSON.parse(userData);
+            const validUser = await verifyUser(parsedUserData.token);
+            if (validUser) {
+                setUser({ name: validUser.name, token: validUser.token });
+            }
+            else {
+                localStorage.removeItem('userData');
+                setUser({ name: '', token: null });
+            }
+        }      
+        setLoading(false);
+    }
+
     const verifyUser = async (token) => {
         try {
             const response = await api.post('/auth/verify-token', null, {
@@ -59,22 +75,7 @@ export const useAuth = () => {
         localStorage.setItem('userData', JSON.stringify(user));
     }
 
-    useEffect(() => {
-        const checkToken = async () => {
-            const userData = localStorage.getItem('userData');
-            if (userData) {
-                const parsedUserData = JSON.parse(userData);
-                const validUser = await verifyUser(parsedUserData.token);
-                if (validUser) {
-                    setUser({ name: validUser.name, token: validUser.token });
-                }
-                else {
-                    localStorage.removeItem('userData');
-                    setUser({ name: '', token: null });
-                }
-            }      
-            setLoading(false);
-        }
+    useEffect(() => {      
         checkToken();
     },[]);
 

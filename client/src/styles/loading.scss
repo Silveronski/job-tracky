@@ -1,0 +1,26 @@
+.spinner-container{
+    display: grid;
+    place-items: center;
+    .spinner{
+        background-image: linear-gradient($primaryColorBrighter, $primaryColorDarker);
+        width: 200px;
+        height: 200px;
+        animation: spin 1.7s linear infinite;
+        text-align: center;
+        border-radius: 80px;
+        filter: blur(1px);
+        box-shadow: 0px -5px 20px 0px $primaryColorBrighter, 0px 5px 20px 0px $primaryColorDarker;
+        .inner{
+            background-color: rgb(36, 36, 36);
+            width: 200px;
+            height: 200px;
+            border-radius: 80px;
+            filter: blur(10px);
+        }
+    }    
+    @keyframes spin{
+        to{
+            transform: rotate(360deg);
+        }
+    }
+}

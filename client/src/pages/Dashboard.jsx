@@ -1,8 +1,10 @@
-import Jobs from "../components/Jobs";
 import AddJob from "../components/AddJob";
-import { useContext, useEffect } from "react";
+import Loading from "../components/Loading";
+import { Suspense, lazy, useContext, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+
+const Jobs = lazy(() => import('../components/Jobs'));
 
 const Dashboard = () => {
     const { user, loading } = useContext(AuthContext);
@@ -15,7 +17,9 @@ const Dashboard = () => {
     return (
         <section className="dashboard-container">
             <AddJob/>
-            <Jobs/>        
+            <Suspense fallback={<Loading/>}>
+                <Jobs/>
+            </Suspense>       
         </section>
     )
 }

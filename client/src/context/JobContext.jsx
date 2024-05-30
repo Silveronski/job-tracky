@@ -7,12 +7,13 @@ export const JobContext = createContext({
     addJob: async () => {},
     updateJob: async () => {},
     deleteJob: async () => {},
+    loading: true
 });
 
 export const JobContextProvider = ({ children }) => {
-    const { jobs, getJobs, addJob, updateJob, deleteJob } = useJobs();
+    const { jobs, getJobs, addJob, updateJob, deleteJob, loading } = useJobs();
     return (
-        <JobContext.Provider value={{ jobs, getJobs, addJob, updateJob, deleteJob,}}>                                   
+        <JobContext.Provider value={{ jobs, getJobs, addJob, updateJob, deleteJob, loading}}>                                   
             {children}
         </JobContext.Provider>
     )

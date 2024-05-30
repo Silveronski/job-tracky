@@ -8,7 +8,10 @@ const Button = ({ text, onClick = () => {}, className = 'primary-button', imgUrl
 
 Button.propTypes = {
   text: PropTypes.string.isRequired,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
+  className: PropTypes.string,
+  imgUrl: PropTypes.string,
+  imgClass: PropTypes.string
 };
 
 export default Button

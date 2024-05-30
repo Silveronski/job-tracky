@@ -5,12 +5,12 @@ import logout from "../assets/images/logout.png";
 import Button from "../components/Button";
 
 const Navbar = () => {
-    const { user, signOut } = useContext(AuthContext);
+    const { user, loading, signOut } = useContext(AuthContext);
 
     return (
         <header>
             <nav>
-                <img className={!user.token ? 'centered-logo logo' : 'logo'} src={logo} alt="logo"/>
+                <img className={(!loading && !user.token) ? 'centered-logo logo' : 'logo'} src={logo} alt="logo"/>
                 {user.token && 
                 <div>
                     <p>Hello, {user?.name || 'User'}</p>

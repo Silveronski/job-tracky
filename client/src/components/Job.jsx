@@ -3,13 +3,8 @@ import { useNavigate } from "react-router-dom"
 import { JobContext } from "../context/JobContext";
 import { useToastr } from "../hooks/useToastr";
 
-const Job = ({ jobId, jobDate, jobPosition, jobCompany, jobStatus }) => {
-  const currentJob = {
-    _id: jobId,
-    company: jobCompany,
-    position: jobPosition,
-    status: jobStatus 
-  };
+const Job = ({ _id, createdAt, position, company, status }) => {
+  const currentJob = { _id, company, position, status };
   const navigate = useNavigate();
   const { deleteJob } = useContext(JobContext);
   const { generateToastr } = useToastr();
@@ -26,18 +21,18 @@ const Job = ({ jobId, jobDate, jobPosition, jobCompany, jobStatus }) => {
   return (
     <section className="job-card">
       <div className="job-date-container">
-          <small className="job-date">{new Date(jobDate).toLocaleDateString()}</small>
+          <small className="job-date">{new Date(createdAt).toLocaleDateString()}</small>
       </div>       
       <div className="positon-company">
-          <h3>{jobPosition}</h3>
-          <p>{jobCompany}</p>
+          <h3>{position}</h3>
+          <p>{company}</p>
       </div>
       <div className="btns-status">
           <div className="btn-container">
               <button onClick={() => navigate('/edit', { state: {currentJob} })}>Edit</button>
               <button onClick={handleDelete}>Delete</button>
           </div>
-          <small className="status">{jobStatus}</small>
+          <small className="status">{status}</small>
       </div>
     </section>
   )

@@ -3,8 +3,9 @@ import { AuthContext } from "../context/AuthContext";
 import { api, setAuthToken } from '../api/api-config';
 
 export const useJobs = () => {
-    const [jobs, setJobs] = useState([]);
     const { user } = useContext(AuthContext);
+    const [jobs, setJobs] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const getJobs = async () => {
         try {
@@ -17,6 +18,9 @@ export const useJobs = () => {
         catch (error) {
             console.error('error in getting jobs', error);
             return error;
+        }
+        finally {
+            setLoading(false);
         }
     }
 
@@ -69,5 +73,5 @@ export const useJobs = () => {
         }
     }, [user.token]);
 
-    return { jobs, getJobs, addJob, updateJob, deleteJob }
+    return { jobs, getJobs, addJob, updateJob, deleteJob, loading }
 }

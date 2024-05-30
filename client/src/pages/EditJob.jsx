@@ -10,11 +10,11 @@ import dashboard from "../assets/images/dashboard.png";
 const EditJob = () => {
     const { user, loading } = useContext(AuthContext);
     const { updateJob } = useContext(JobContext);
+    const { generateToastr } = useToastr();
+    const navigate = useNavigate();
     const location = useLocation();
     const { currentJob } = location.state || {};
-    const navigate = useNavigate();
     const [error, setError] = useState({msg: '', activated: false});
-    const { generateToastr } = useToastr();
 
     useEffect(() => {
         if (!loading) {

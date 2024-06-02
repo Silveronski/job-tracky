@@ -5,15 +5,17 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
 const EmailVerification = () => {
-    const { user, verifyVerificationCode } = useContext(AuthContext);
+    const { user, loading, verifyVerificationCode } = useContext(AuthContext);
     const navigate = useNavigate();
     const location = useLocation();
     const { verifyData } = location.state || {};
     const [error, setError] = useState({ msg: '', activated: false });
 
     useEffect(() => {
-        if (!verifyData) user?.token ? navigate("/dashboard") : navigate("/login");
-    },[navigate, verifyData]);
+        if (!loading) {
+            if (!verifyData) user?.token ? navigate("/dashboard") : navigate("/login");
+        }
+    },[navigate, verifyData, loading]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();

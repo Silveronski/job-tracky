@@ -47,7 +47,7 @@ const LoginRegister = () => {
             return;           
         }
         const verifyData = { msg: data.msg, email: user.email };
-        navigate("/verify-email", {state: {verifyData} });   
+        navigate("/verify-email", { state: {verifyData} });   
     }
 
     return (

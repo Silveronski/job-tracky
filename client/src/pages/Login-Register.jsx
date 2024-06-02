@@ -10,10 +10,8 @@ const LoginRegister = () => {
     const { register, login } = useContext(AuthContext);
     const navigate = useNavigate();
 
-    const toggleLoginOrRegister = () => {
-        setIsLogin(!isLogin);
-    }
-
+    const toggleLoginOrRegister = () => setIsLogin(!isLogin);
+        
     const handleLogin = async (e) => {
         e.preventDefault();   
         const user = {
@@ -29,7 +27,7 @@ const LoginRegister = () => {
             setError({ msg: data.response.data.msg, activated: true });
             return;
         }
-        navigate('/dashboard');
+        navigate("/dashboard");
     }
 
     const handleRegister = async (e) => {
@@ -48,7 +46,8 @@ const LoginRegister = () => {
             setError({ msg: data.response.data.msg, activated: true });
             return;           
         }
-        navigate('/dashboard');     
+        const verifyData = { msg: data.msg, email: user.email };
+        navigate("/verify-email", {state: {verifyData} });   
     }
 
     return (

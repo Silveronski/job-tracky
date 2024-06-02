@@ -14,7 +14,7 @@ const EditJob = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const { currentJob } = location.state || {};
-    const [error, setError] = useState({msg: '', activated: false});
+    const [error, setError] = useState({ msg: '', activated: false });
 
     useEffect(() => {
         if (!loading) {

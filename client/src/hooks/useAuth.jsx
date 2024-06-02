@@ -10,12 +10,23 @@ export const useAuth = () => {
     const register = async (user) => {
         try {
             const response = await api.post('/auth/register', user);
+            if (response?.data) return true;                          
+        } 
+        catch (error) {
+            console.error('error registering user', error);
+            return error;
+        }
+    }
+
+    const verifyVerificationCode = async (verificationCode, email) => {
+        try {
+            const response = await api.post('/auth/verify-email', { verificationCode, email });
             if (response?.data) {
                 storeUser({ name: response.data.user.name, token: response.data.token });
             }
         } 
         catch (error) {
-            console.error('error registering user', error);
+            console.error('error verifying code', error);
             return error;
         }
     }
@@ -79,5 +90,5 @@ export const useAuth = () => {
         checkToken();
     },[]);
 
-    return { user, loading, register, login, signOut };
+    return { user, loading, register, login, verifyVerificationCode, signOut };
 }

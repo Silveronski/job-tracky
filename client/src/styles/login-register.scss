@@ -62,5 +62,13 @@
                 }
             }
         }
+        .verify-form{
+            .form-fields{        
+                label{
+                    min-width: 250px;
+                    font-size: 1.5rem;
+                }
+            }
+        }
     }
 }

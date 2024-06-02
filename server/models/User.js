@@ -25,11 +25,19 @@ const UserScheme = new mongoose.Schema({
         required: [true, 'Please provide password'],
         minlength: 6
     },
+    verificationCode: {
+        type: String
+    },
+    isVerified: {
+        type: Boolean,
+        default: false
+    },
 });
 
 // this function gets called before saving the user model
 // we use a regular function instead of arrow function to get the correct 'this' refarence
 UserScheme.pre('save', async function() {
+    if (!this.isModified('password')) return;
     const salt = await bcrypt.genSalt(10); // generate 10 random bytes
     this.password = await bcrypt.hash(this.password, salt);
 });

@@ -6,13 +6,14 @@ export const AuthContext = createContext({
     loading: true,
     register: async () => {},
     login: async () => {},
+    verifyVerificationCode: async () => {},
     signOut: () => {}
 });
 
 export const AuthContextProvider = ({ children }) => {
-    const { user, loading, register, login, signOut } = useAuth();
+    const { user, loading, register, login, verifyVerificationCode, signOut } = useAuth();
     return (
-        <AuthContext.Provider value={{ user, loading, register, login, signOut}}>                                       
+        <AuthContext.Provider value={{ user, loading, register, login, verifyVerificationCode, signOut}}>                                       
             {children}
         </AuthContext.Provider>
     )

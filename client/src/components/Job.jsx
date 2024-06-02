@@ -10,7 +10,7 @@ const Job = ({ _id, createdAt, position, company, status }) => {
   const { generateToastr } = useToastr();
 
   const handleDelete = async () => {
-    const data = await deleteJob(jobId);
+    const data = await deleteJob(_id);
     if (data instanceof Error) {
       generateToastr('error', 'Could not delete the job');
       return;

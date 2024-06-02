@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const sendVerificationEmail = require('../utils/sendVerificationEmail');
+const sendResetPasswordEmail = require('../utils/sendResetPasswordEmail');
 const crypto = require('crypto');
 const { BadRequestError, UnauthenticatedError } = require('../errors');
 const { StatusCodes } = require('http-status-codes');
@@ -72,9 +73,52 @@ const verifyToken = async (req,res) => {
     }
 }
 
+const forgotPassword = async (req,res) => {
+    const { email } = req.body;
+    if (!email) throw new BadRequestError('Please provide your email');
+
+    const user = await User.findOne({ email });
+    if (!user) throw new UnauthenticatedError('Invalid Email');
+    if (!user.isVerified) throw new UnauthenticatedError('User is not verified');
+
+    const resetPasswordCode = crypto.randomBytes(6).toString('hex');
+    const tenMinutes = 1000 * 60 * 10;
+    const expirationDate = new Date(Date.now() + tenMinutes);
+
+    user.verificationCode = resetPasswordCode;
+    user.resetPasswordCodeExpirationDate = expirationDate;
+    await user.save();
+
+    await sendResetPasswordEmail({
+        name: user.name,
+        email: user.email,
+        verificationCode: user.verificationCode
+    });
+
+    res.status(StatusCodes.OK).json({ msg: 'Success! Please check your email to reset your password' });
+}
+
+const resetPassword = async (req,res) => {
+    const { email, verificationCode, newPassword } = req.body;
+    const user = await User.findOne({ email });
+
+    if (!user) throw new UnauthenticatedError('Invalid Email');
+    if (!user.isVerified) throw new UnauthenticatedError('User is not verified'); 
+    if (user.verificationCode !== verificationCode) throw new UnauthenticatedError('Invalid verification code');
+    if (user.resetPasswordCodeExpirationDate < Date.now()) throw new BadRequestError('Verification code expired');
+
+    user.password = newPassword;
+    user.verificationCode = '';
+    await user.save();
+
+    res.status(StatusCodes.OK).json({ msg: 'Reset password succesfully' });
+}
+
 module.exports = {
     register,
     verifyEmail,
     login,
-    verifyToken
+    verifyToken,
+    forgotPassword,
+    resetPassword
 }

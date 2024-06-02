@@ -32,6 +32,9 @@ const UserScheme = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    resetPasswordCodeExpirationDate: {
+        type: Date
+    }, 
 });
 
 // this function gets called before saving the user model

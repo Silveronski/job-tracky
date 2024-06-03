@@ -7,24 +7,28 @@
         margin-top: 10.5rem;
     }
     .wrapper{
+        position: relative;
         min-width: min-content;
         padding: 3rem 7.5rem;
         background-color: rgb(40, 38, 38);
         box-shadow: 8px 5px 30px rgb(0, 0, 0);
-        border-radius: 24px;
+        border-radius: 24px;   
         h1{          
             color: $primaryColorBrighter;
             text-align: center;
             font-size: 3.5rem;
             margin-bottom: 2.5rem;
         }
-        .password-reset-title{
+        .verify-email-title{
             margin-bottom: 0.3em;
         }
         .forgot-password-title{
             margin-bottom: 0.8em;
         }
-        .password-reset-success{
+        .password-reset-title{
+            margin-bottom: 0.3em;
+        }  
+        .verify-email-success{
             font-size: 1.3rem;
             text-align: center;
             margin-bottom: 2.5em;
@@ -36,7 +40,13 @@
             text-align: center;
             margin: auto;      
             line-height: 1.4em;
-        }
+        }  
+        .password-reset-success{
+            font-size: 1.3rem;
+            text-align: center;
+            margin-bottom: 2.5em;
+            color: rgba(133, 250, 201, 0.676)
+        }        
         form{
             .form-fields{
                 display: flex;
@@ -120,6 +130,25 @@
                     width: 60%;
                 }
             }
+        }
+    }
+    .loading{
+        &::after{
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;   
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .loading-indicator{
+            position: absolute;
+            width: 200px;
+            z-index: 3;
+            left: 50%;
+            top: 25%;         
+            transform: translateX(-50%);
         }
     }
 }

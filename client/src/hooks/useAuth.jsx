@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react';
 import { api } from '../api/api-config';
-import { useNavigate } from 'react-router-dom';
 
 export const useAuth = () => {
     const [user, setUser] = useState({ name: '', token: null });
     const [loading, setLoading] = useState(true);
-    const navigate = useNavigate();
     
     const register = async (user) => {
         try {
@@ -69,7 +67,6 @@ export const useAuth = () => {
     const signOut = () => {
         localStorage.removeItem('userData');
         setUser({ name: '', token: null });
-        navigate("/login");
     }
 
     const checkToken = async () => {

@@ -3,10 +3,12 @@ import { AuthContext } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import FormFields from "../components/FormFields";
 import Button from "../components/Button";
+import loadingGif from "../assets/images/loadinggif.gif";
 
 const LoginRegister = () => {
     const [error, setError] = useState({ msg: '', activated: false });
     const [isLogin, setIsLogin] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const { register, login } = useContext(AuthContext);
     const navigate = useNavigate();
 
@@ -41,19 +43,23 @@ const LoginRegister = () => {
             setError({ msg: 'Please fill the form', activated: true });
             return;
         }
+        setIsLoading(true);
         const data = await register(user);
         if (data instanceof Error) {
+            setIsLoading(false);
             setError({ msg: data.response.data.msg, activated: true });
             return;           
         }
+        setIsLoading(false);
         const verifyData = { msg: data.msg, email: user.email };
         navigate("/verify-email", { state: {verifyData} });   
     }
 
     return (
         <section className="form-container">
-            <div className="wrapper">
-                {<h1>{isLogin ? 'Login' : 'Register'}</h1>}
+            <div className={isLoading ? "wrapper loading" : "wrapper"}>
+                {isLoading && <img className="loading-indicator" src={loadingGif} alt="loading-gif"/>}
+                <h1>{isLogin ? 'Login' : 'Register'}</h1>
                 <form onSubmit={isLogin ? handleLogin : handleRegister}>
                    {!isLogin && <FormFields label="Name"/>}        
                    <FormFields label="Email" inputType="email"/>

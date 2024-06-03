@@ -4,10 +4,12 @@ import { Link, useNavigate } from "react-router-dom";
 import FormFields from "../components/FormFields";
 import Button from "../components/Button";
 import check from "../assets/images/check.png";
+import loadingGif from "../assets/images/loadinggif.gif";
 
 const ForgotPassword = () => {
     const { forgotPassword, resetPassword } = useContext(AuthContext);
     const [isValidUser, setIsValidUser] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState({ msg: '', activated: false });
     const navigate = useNavigate();
     const dialogRef = useRef();
@@ -24,13 +26,16 @@ const ForgotPassword = () => {
             setError({ msg: 'Please provide a valid email', activated: true });
             return;
         }
+        setIsLoading(true);
         const data = await forgotPassword(email);
         if (data instanceof Error) {
             setError({ msg: data.response.data.msg, activated: true });
+            setIsLoading(false);
             return;
         }
         setError({ activated: false });
         setIsValidUser(true);
+        setIsLoading(false);
         sessionStorage.setItem('isValidUser', true);
         sessionStorage.setItem('userEmail', JSON.stringify(email));
     }
@@ -61,8 +66,9 @@ const ForgotPassword = () => {
     }
 
     return (
-        <section className="form-container">         
-            <div className="wrapper" style= {!isValidUser ? {paddingInline: 0} : {paddingInline: '7.5rem'}}>             
+        <section className="form-container">              
+            <div className={isLoading ? "wrapper loading" : "wrapper"} style= {!isValidUser ? {paddingInline: 0} : {paddingInline: '7.5rem'}}> 
+                {isLoading && <img className="loading-indicator" src={loadingGif} alt="loading-gif"/>}                          
                 <h1 className={isValidUser ? "password-reset-title" : "forgot-password-title"}>Reset Password</h1>
                 <p className={isValidUser ? "password-reset-success" : "password-reset-prompt"}>
                     {isValidUser ? "Success! Please check your email to reset your password."  
@@ -79,11 +85,11 @@ const ForgotPassword = () => {
                         {error.activated && <p className="error">{error.msg}</p>}
                         <Button text={isValidUser ? "Change Password" : "Send me a reset code"}/> 
                         <p className="toggler back-to-login"><Link to={"/login"}>Back to login</Link></p>                  
-                    </div>                  
+                    </div>               
                 </form>          
-            </div> 
+            </div>          
             <dialog ref={dialogRef}>
-                <img className="dialog-item" src={check} alt="success" />
+                <img className="dialog-item" src={check} alt="success"/>
                 <h2 className="dialog-item">Password Changed!</h2>
                 <p className="dialog-item">Your password has been changed successfully</p>
                 <Button text="Back to Login" onClick={() => navigate("/login")}/>

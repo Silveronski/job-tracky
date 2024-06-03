@@ -1,6 +1,6 @@
 import { useContext, useState } from "react"
 import { AuthContext } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FormFields from "../components/FormFields";
 import Button from "../components/Button";
 
@@ -60,7 +60,8 @@ const LoginRegister = () => {
                    <FormFields label="Password" inputType="password"/>
                     <div className="btn-container">
                         {error.activated && <p className="error">{error.msg}</p>}
-                        <Button text="Submit"/>
+                        <Button text="Submit"/> 
+                        {isLogin && <p className="toggler forgot-password"><Link to={"/forgot-password"}>Forgot your password?</Link></p>}                   
                         <p className="toggler">{isLogin ? 'Not a member yet?' : 'Already a member?'}
                             <a onClick={toggleLoginOrRegister}> {isLogin ? 'Register' : 'Login'}</a>
                         </p>

@@ -7,13 +7,25 @@ export const AuthContext = createContext({
     register: async () => {},
     login: async () => {},
     verifyVerificationCode: async () => {},
-    signOut: () => {}
+    signOut: () => {},
+    forgotPassword: async () => {},
+    resetPassword: async () => {},
 });
 
 export const AuthContextProvider = ({ children }) => {
-    const { user, loading, register, login, verifyVerificationCode, signOut } = useAuth();
+    const { 
+        user,
+        loading,
+        register,
+        login,
+        verifyVerificationCode,
+        signOut, 
+        forgotPassword, 
+        resetPassword 
+    } = useAuth();
     return (
-        <AuthContext.Provider value={{ user, loading, register, login, verifyVerificationCode, signOut}}>                                       
+        <AuthContext.Provider value={{ user, loading, register, login, verifyVerificationCode,
+                                        signOut, forgotPassword, resetPassword}}>                                       
             {children}
         </AuthContext.Provider>
     )

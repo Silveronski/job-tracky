@@ -1,5 +1,6 @@
 $primaryColor: rgb(73, 190, 141);
 $primaryColorBrighter: rgb(45, 216, 145);
+$primaryColorBrightest: rgb(81, 239, 173);
 $primaryColorDarker: rgb(16, 88, 58);
 $darkGrayColor: rgb(40, 38, 38);
 
@@ -8,6 +9,10 @@ $darkGrayColor: rgb(40, 38, 38);
     padding: 0;
     box-sizing: border-box;
     font-family: Verdana, sans-serif;
+}
+
+input, button{
+    font-family: inherit;
 }
 
 body{

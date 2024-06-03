@@ -1,0 +1,125 @@
+.form-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20rem;
+    @include laptop{
+        margin-top: 10.5rem;
+    }
+    .wrapper{
+        min-width: min-content;
+        padding: 3rem 7.5rem;
+        background-color: rgb(40, 38, 38);
+        box-shadow: 8px 5px 30px rgb(0, 0, 0);
+        border-radius: 24px;
+        h1{          
+            color: $primaryColorBrighter;
+            text-align: center;
+            font-size: 3.5rem;
+            margin-bottom: 2.5rem;
+        }
+        .password-reset-title{
+            margin-bottom: 0.3em;
+        }
+        .forgot-password-title{
+            margin-bottom: 0.8em;
+        }
+        .password-reset-success{
+            font-size: 1.3rem;
+            text-align: center;
+            margin-bottom: 2.5em;
+            color: rgba(133, 250, 201, 0.676)
+        }
+        .password-reset-prompt{
+            width: 55%;  
+            font-size: 1.4rem; 
+            text-align: center;
+            margin: auto;      
+            line-height: 1.4em;
+        }
+        form{
+            .form-fields{
+                display: flex;
+                align-items: center;
+                margin-block: 1.5rem;        
+                label{
+                    min-width: 160px;
+                    font-size: 1.65rem;
+                }
+                input{
+                    outline: none;
+                    font-size: 1.5rem;
+                    padding-left: 0.3em;
+                    padding-block: 0.6rem;
+                    border-radius: 8px;
+                    background-color: lightgray;               
+                }
+            }
+            .btn-container{             
+                .error{
+                    text-align: center;
+                    color: red;                
+                    font-size: 1.2rem;
+                }
+                button{
+                    width: 100%;
+                    margin-block: 1.6rem;
+                    font-weight: 600;               
+                }           
+                .toggler{
+                    text-align: center;
+                    font-size: 1.2rem;
+                    margin-top: 0.5rem;
+                    a{
+                        cursor: pointer;
+                        color: $primaryColor;
+                        transition: 0.3s;
+                        &:hover{
+                            color: $primaryColorBrighter;
+                        }
+                    }
+                }
+                .forgot-password{                   
+                    margin-top: 0;
+                    margin-bottom: 1em;  
+                    a{                   
+                        text-decoration: none;                      
+                    }             
+                }
+                .back-to-login{
+                    margin-top: 0; 
+                    a{
+                        text-decoration: none;
+                    }                                   
+                }
+            }
+        }
+        .verify-form{
+            .form-fields{        
+                label{
+                    min-width: 250px;
+                }
+            }
+        }
+        .forgot-password-form{
+            .form-fields{  
+                display: flex;
+                justify-content: center;                  
+                label{
+                    min-width: 250px;
+                }
+                #forgot-password-email{
+                    min-width: 110px;                   
+                }              
+            }
+            .btn-container{ 
+                display: flex;
+                flex-direction: column;
+                align-items: center;                            
+                button{
+                    width: 60%;
+                }
+            }
+        }
+    }
+}

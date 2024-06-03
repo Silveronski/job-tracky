@@ -109,6 +109,7 @@ const resetPassword = async (req,res) => {
 
     user.password = newPassword;
     user.verificationCode = '';
+    user.resetPasswordCodeExpirationDate = null;
     await user.save();
 
     res.status(StatusCodes.OK).json({ msg: 'Reset password succesfully' });

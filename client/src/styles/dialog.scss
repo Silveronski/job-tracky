@@ -1,0 +1,22 @@
+dialog{
+    margin: auto;
+    padding: 7em 2em;
+    border-radius: 16px;
+    background-color: $darkGrayColor;
+    box-shadow: 8px 5px 30px rgb(0, 0, 0);
+    color: white;
+    border: none;
+    text-align: center;
+    h2{
+        font-size: 2rem;
+    }
+    button{
+        margin-top: 1.4em;
+    }
+    .dialog-item{
+        margin-block: 0.6em;
+    }
+    &::backdrop{
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+}

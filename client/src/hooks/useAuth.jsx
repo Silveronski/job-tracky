@@ -10,7 +10,7 @@ export const useAuth = () => {
     const register = async (user) => {
         try {
             const response = await api.post('/auth/register', user);
-            if (response?.data) return true;                          
+            if (response?.data) return response.data.msg;                          
         } 
         catch (error) {
             console.error('error registering user', error);
@@ -40,6 +40,28 @@ export const useAuth = () => {
         } 
         catch (error) {
             console.error('error in user login', error);
+            return error;
+        }
+    }
+
+    const forgotPassword = async (email) => {
+        try {
+            const response = await api.post('/auth/forgot-password', { email });
+            if (response?.data) return response.data.msg;
+        } 
+        catch (error) {
+            console.error('error in forgot password', error);
+            return error;
+        }
+    }
+
+    const resetPassword = async (email, verificationCode, newPassword) => {
+        try {
+            const response = await api.post('/auth/reset-password', { email, verificationCode, newPassword });
+            if (response?.data) return response.data.msg;
+        } 
+        catch (error) {
+            console.error('error in password reset', error);
             return error;
         }
     }
@@ -90,5 +112,14 @@ export const useAuth = () => {
         checkToken();
     },[]);
 
-    return { user, loading, register, login, verifyVerificationCode, signOut };
+    return { 
+        user,
+        loading,
+        register,
+        login,
+        verifyVerificationCode,
+        signOut,
+        forgotPassword,
+        resetPassword
+    };
 }

@@ -66,7 +66,7 @@ const LoginRegister = () => {
                    <FormFields label="Password" inputType="password"/>
                     <div className="btn-container">
                         {error.activated && <p className="error">{error.msg}</p>}
-                        <Button text="Submit"/> 
+                        <Button text={isLogin ? "SIGN IN" : "SIGN UP"}/> 
                         {isLogin && <p className="toggler forgot-password"><Link to={"/forgot-password"}>Forgot your password?</Link></p>}                   
                         <p className="toggler">{isLogin ? 'Not a member yet?' : 'Already a member?'}
                             <a onClick={toggleLoginOrRegister}> {isLogin ? 'Register' : 'Login'}</a>

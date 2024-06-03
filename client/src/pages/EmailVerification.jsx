@@ -11,11 +11,11 @@ const EmailVerification = () => {
     const { verifyData } = location.state || {};
     const [error, setError] = useState({ msg: '', activated: false });
 
-    // useEffect(() => {
-    //     if (!loading) {
-    //         if (!verifyData) user?.token ? navigate("/dashboard") : navigate("/login");
-    //     }
-    // },[navigate, verifyData, loading]);
+    useEffect(() => {
+        if (!loading) {
+            if (!verifyData) user?.token ? navigate("/dashboard") : navigate("/login");
+        }
+    },[navigate, verifyData, loading]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();

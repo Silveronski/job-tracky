@@ -1,8 +1,8 @@
-import AddJob from "../components/AddJob";
-import Loading from "../components/Loading";
 import { Suspense, lazy, useContext, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import AddJob from "../components/AddJob";
+import Loading from "../components/Loading";
 
 const Jobs = lazy(() => import('../components/Jobs'));
 

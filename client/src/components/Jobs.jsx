@@ -1,6 +1,6 @@
-import Job from "./Job";
 import { useContext } from "react";
 import { JobContext } from "../context/JobContext";
+import Job from "./Job";
 
 const Jobs = () => {
   const { jobs, loading } = useContext(JobContext);

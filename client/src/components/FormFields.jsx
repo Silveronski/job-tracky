@@ -13,14 +13,15 @@ const FormFields = ({ label, inputType = 'text', labelId = '', defaultValue = ''
         : <input type={inputType} defaultValue={defaultValue}/>}        
     </div>
   )
-}
+};
 
 FormFields.prototypes = {
-    label: PropTypes.string.isRequired,
-    inputType: PropTypes.string,
-    defaultValue: PropTypes.string,
-    isSelect: PropTypes.bool,
-    selectOptions: PropTypes.arrayOf(PropTypes.string)
-}
+  label: PropTypes.string.isRequired,
+  inputType: PropTypes.string,
+  labelId: PropTypes.string,
+  defaultValue: PropTypes.string,
+  isSelect: PropTypes.bool,
+  selectOptions: PropTypes.arrayOf(PropTypes.string)
+};
 
 export default FormFields

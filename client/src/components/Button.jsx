@@ -4,7 +4,7 @@ const Button = ({ text, onClick = () => {}, className = 'primary-button', imgUrl
   return (
     <button className={className} onClick={onClick}>{text} {imgUrl && <img className={imgClass} src={imgUrl} alt="image"/>}</button>
   )
-}
+};
 
 Button.propTypes = {
   text: PropTypes.string.isRequired,

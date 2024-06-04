@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import FormFields from "../components/FormFields";
 import Button from "../components/Button";
 import loadingGif from "../assets/images/loadinggif.gif";
+import FormContainer from "../components/FormContainer";
 
 const LoginRegister = () => {
     const [error, setError] = useState({ msg: '', activated: false });
@@ -24,11 +25,14 @@ const LoginRegister = () => {
             setError({ msg: 'Please fill the form', activated: true });
             return;
         }
+        setIsLoading(true);
         const data = await login(user);
         if (data instanceof Error) {
             setError({ msg: data.response.data.msg, activated: true });
+            setIsLoading(false);
             return;
         }
+        setIsLoading(false);
         navigate("/dashboard");
     }
 
@@ -56,25 +60,23 @@ const LoginRegister = () => {
     }
 
     return (
-        <section className="form-container">
-            <div className={isLoading ? "wrapper loading" : "wrapper"}>
-                {isLoading && <img className="loading-indicator" src={loadingGif} alt="loading-gif"/>}
-                <h1>{isLogin ? 'Login' : 'Register'}</h1>
-                <form onSubmit={isLogin ? handleLogin : handleRegister}>
-                   {!isLogin && <FormFields label="Name"/>}        
-                   <FormFields label="Email" inputType="email"/>
-                   <FormFields label="Password" inputType="password"/>
-                    <div className="btn-container">
-                        {error.activated && <p className="error">{error.msg}</p>}
-                        <Button text={isLogin ? "SIGN IN" : "SIGN UP"}/> 
-                        {isLogin && <p className="toggler forgot-password"><Link to={"/forgot-password"}>Forgot your password?</Link></p>}                   
-                        <p className="toggler">{isLogin ? 'Not a member yet?' : 'Already a member?'}
-                            <a onClick={toggleLoginOrRegister}> {isLogin ? 'Register' : 'Login'}</a>
-                        </p>
-                    </div>                  
-                </form>
-            </div>
-        </section>
+        <FormContainer wrapperClass={isLoading ? "loading" : ""}>
+            {isLoading && <img className="loading-indicator" src={loadingGif} alt="loading-gif"/>}
+            <h1>{isLogin ? 'Login' : 'Register'}</h1>
+            <form onSubmit={isLogin ? handleLogin : handleRegister}>
+                {!isLogin && <FormFields label="Name"/>}        
+                <FormFields label="Email" inputType="email"/>
+                <FormFields label="Password" inputType="password"/>
+                <div className="btn-container">
+                    {error.activated && <p className="error">{error.msg}</p>}
+                    <Button text={isLogin ? "SIGN IN" : "SIGN UP"}/> 
+                    {isLogin && <p className="toggler forgot-password"><Link to={"/forgot-password"}>Forgot your password?</Link></p>}                   
+                    <p className="toggler">{isLogin ? 'Not a member yet?' : 'Already a member?'}
+                        <a onClick={toggleLoginOrRegister}> {isLogin ? 'Register' : 'Login'}</a>
+                    </p>
+                </div>                  
+            </form>
+        </FormContainer>                          
     )
 }
 

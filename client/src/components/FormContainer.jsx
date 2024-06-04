@@ -1,10 +1,10 @@
-
-const FormContainer = ({ children }) => {
+const FormContainer = ({ children, extraContent = null, containerClass = '',  wrapperClass = '', wrapperStyle = null }) => {
     return (
-        <section className="form-container">
-            <div className="wrapper">
+        <section className={`form-container ${containerClass}`}>
+            <div className={`wrapper ${wrapperClass}`} style={wrapperStyle}>
                 {children}    
-            </div>                               
+            </div>   
+            {extraContent}                           
         </section>
     )
 }

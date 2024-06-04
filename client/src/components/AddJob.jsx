@@ -3,6 +3,7 @@ import { JobContext } from "../context/JobContext";
 import { useToastr } from "../hooks/useToastr";
 import FormFields from "./FormFields";
 import Button from "./Button";
+import FormContainer from "./FormContainer";
 
 const AddJob = () => {
   const [error, setError] = useState({ msg: '', activated: false });
@@ -28,19 +29,17 @@ const AddJob = () => {
   }
 
   return (
-    <section className="form-container addjob-container">
-        <div className="wrapper">
-                <h1>Add a Job</h1>
-                <form onSubmit={handleFormSubmit}>
-                  <FormFields label="Company"/>
-                  <FormFields label="Position"/>
-                  <div className="btn-container">
-                      {error.activated && <p className="error">{error.msg}</p>}
-                      <Button text="Submit"/>
-                  </div>                  
-                </form>
-            </div>
-    </section>
+    <FormContainer containerClass="addjob-container">
+      <h1>Add a Job</h1>
+      <form onSubmit={handleFormSubmit}>
+        <FormFields label="Company"/>
+        <FormFields label="Position"/>
+        <div className="btn-container">
+            {error.activated && <p className="error">{error.msg}</p>}
+            <Button text="Create"/>
+        </div>                  
+      </form>
+    </FormContainer>
   )
 }
 

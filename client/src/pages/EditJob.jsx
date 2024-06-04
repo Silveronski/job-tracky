@@ -6,6 +6,7 @@ import { useToastr } from "../hooks/useToastr";
 import FormFields from "../components/FormFields";
 import Button from "../components/Button";
 import dashboard from "../assets/images/dashboard.png";
+import FormContainer from "../components/FormContainer";
 
 const EditJob = () => {
     const { user, loading } = useContext(AuthContext);
@@ -41,23 +42,30 @@ const EditJob = () => {
     }
 
     return (
-        <section className="form-container editjob-container">       
-            <div className="wrapper">
-                <h1>Edit Job</h1>
-                <form onSubmit={handleFormSubmit}>
-                    <FormFields label="Company" defaultValue={currentJob?.company}/>
-                    <FormFields label="Position" defaultValue={currentJob?.position}/>
-                    <FormFields label="Status" defaultValue={currentJob?.status} isSelect={true}
+        <FormContainer 
+            containerClass="editjob-container"
+            extraContent={
+                <Button 
+                    className="primary-button back-to-dashboard"
+                    text="Back to Dashboard"
+                    onClick={() => navigate('/dashboard')}
+                    imgUrl={dashboard}
+                    imgClass="dashboard-logo"
+                />
+            }
+        >
+            <h1>Edit Job</h1>
+            <form onSubmit={handleFormSubmit}>
+                <FormFields label="Company" defaultValue={currentJob?.company}/>
+                <FormFields label="Position" defaultValue={currentJob?.position}/>
+                <FormFields label="Status" defaultValue={currentJob?.status} isSelect={true}
                     selectOptions={["pending", "interview", "declined"]}/> 
-                    <div className="btn-container">
-                        {error.activated && <p className="error">{error.msg}</p>}
-                        <Button text="Submit"/>
-                    </div>                  
-                </form>
-            </div>
-            <Button className="primary-button back-to-dashboard" text="Back to Dashboard"
-             onClick={() => navigate('/dashboard')} imgUrl={dashboard} imgClass="dashboard-logo"/>
-        </section>
+                <div className="btn-container">
+                    {error.activated && <p className="error">{error.msg}</p>}
+                    <Button text="Submit"/>
+                </div>                  
+            </form>
+        </FormContainer>         
     )
 }
 

@@ -1,6 +1,7 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import { useErrorHandler } from "../hooks/useErrorHandler";
 import useAuthRedirect from "../hooks/useAuthRedirect";
 import FormFields from "../components/FormFields";
 import Button from "../components/Button";
@@ -8,10 +9,10 @@ import FormContainer from "../components/FormContainer";
 
 const EmailVerification = () => {
     const { verifyVerificationCode } = useContext(AuthContext);
+    const { error, displayClientError, displayServerError } = useErrorHandler();
     const navigate = useNavigate();
     const location = useLocation();
     const { verifyData } = location.state || {};
-    const [error, setError] = useState({ msg: '', activated: false });
 
     useAuthRedirect(verifyData);
 
@@ -19,12 +20,12 @@ const EmailVerification = () => {
         e.preventDefault();
         const verificationCode = e.target[0].value.trim();
         if (!verificationCode) {
-            setError({ msg: 'Please provide a code', activated: true });
+            displayClientError('Please provide a code');
             return;
         }
         const data = await verifyVerificationCode(verificationCode, verifyData.email);
         if (data instanceof Error) {
-            setError({ msg: data.response.data.msg, activated: true });
+            displayServerError(data);
             return;
         }
         navigate("/dashboard");

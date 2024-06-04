@@ -1,6 +1,7 @@
 import { AuthContext } from "../context/AuthContext";
 import { useContext, useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useErrorHandler } from "../hooks/useErrorHandler";
 import FormFields from "../components/FormFields";
 import Button from "../components/Button";
 import check from "../assets/images/check.png";
@@ -9,9 +10,9 @@ import FormContainer from "../components/FormContainer";
 
 const ForgotPassword = () => {
     const { forgotPassword, resetPassword } = useContext(AuthContext);
+    const { error, displayClientError, displayServerError, resetError } = useErrorHandler();
     const [isValidUser, setIsValidUser] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState({ msg: '', activated: false });
     const navigate = useNavigate();
     const dialogRef = useRef();
 
@@ -24,17 +25,16 @@ const ForgotPassword = () => {
         e.preventDefault();
         const email = e.target[0].value.trim();
         if (!email) {
-            setError({ msg: 'Please provide a valid email', activated: true });
+            displayClientError('Please provide a valid email');
             return;
         }
         setIsLoading(true);
         const data = await forgotPassword(email);
         if (data instanceof Error) {
-            setError({ msg: data.response.data.msg, activated: true });
-            setIsLoading(false);
+            displayServerError(data, setIsLoading);
             return;
         }
-        setError({ activated: false });
+        resetError();
         setIsValidUser(true);
         setIsLoading(false);
         sessionStorage.setItem('isValidUser', true);
@@ -47,19 +47,19 @@ const ForgotPassword = () => {
         const newPassword = e.target[1].value.trim();
         const email = JSON.parse(sessionStorage.getItem('userEmail'));
         if (!verificationCode || !newPassword) {
-            setError({ msg: 'Please fill out the form', activated: true });
+            displayClientError();
             return;
         }
         if (newPassword.length < 6) {
-            setError({ msg: 'Please provide a valid password', activated: true });
+            displayClientError('Please provide a valid password');
             return;
         }
         const data = await resetPassword(email, verificationCode, newPassword);
         if (data instanceof Error) {
-            setError({ msg: data.response.data.msg, activated: true });
+            displayServerError(data);
             return;
         }
-        setError({ activated: false });
+        resetError();
         sessionStorage.removeItem('isValidUser');
         sessionStorage.removeItem('userEmail');
         e.target.reset();

@@ -1,19 +1,23 @@
 import { useContext, useState } from "react"
 import { AuthContext } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
+import { useErrorHandler } from "../hooks/useErrorHandler";
 import FormFields from "../components/FormFields";
 import Button from "../components/Button";
 import loadingGif from "../assets/images/loadinggif.gif";
 import FormContainer from "../components/FormContainer";
 
 const LoginRegister = () => {
-    const [error, setError] = useState({ msg: '', activated: false });
     const [isLogin, setIsLogin] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
+    const { error, displayClientError, displayServerError, resetError } = useErrorHandler();
     const { register, login } = useContext(AuthContext);
     const navigate = useNavigate();
 
-    const toggleLoginOrRegister = () => setIsLogin(!isLogin);
+    const toggleLoginOrRegister = () => {
+        setIsLogin(!isLogin); 
+        resetError();
+    }
         
     const handleLogin = async (e) => {
         e.preventDefault();   
@@ -22,14 +26,13 @@ const LoginRegister = () => {
             password: e.target[1].value.trim()
         } 
         if (!user.email || !user.password) {
-            setError({ msg: 'Please fill the form', activated: true });
+            displayClientError();
             return;
         }
         setIsLoading(true);
         const data = await login(user);
         if (data instanceof Error) {
-            setError({ msg: data.response.data.msg, activated: true });
-            setIsLoading(false);
+            displayServerError(data, setIsLoading);
             return;
         }
         setIsLoading(false);
@@ -44,15 +47,18 @@ const LoginRegister = () => {
             password: e.target[2].value.trim()
         }
         if (!user.email || !user.password || !user.name) {
-            setError({ msg: 'Please fill the form', activated: true });
+            displayClientError();
             return;
         }
+        if (user.password.length < 6) {
+            displayClientError('Password must be at least 6 characters');
+            return;
+        }         
         setIsLoading(true);
         const data = await register(user);
         if (data instanceof Error) {
-            setIsLoading(false);
-            setError({ msg: data.response.data.msg, activated: true });
-            return;           
+            displayServerError(data, setIsLoading);
+            return;
         }
         setIsLoading(false);
         const verifyData = { msg: data.msg, email: user.email };

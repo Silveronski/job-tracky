@@ -1,12 +1,13 @@
-import { useContext, useState } from "react"
+import { useContext } from "react"
 import { JobContext } from "../context/JobContext";
 import { useToastr } from "../hooks/useToastr";
+import { useErrorHandler } from "../hooks/useErrorHandler";
 import FormFields from "./FormFields";
 import Button from "./Button";
 import FormContainer from "./FormContainer";
 
 const AddJob = () => {
-  const [error, setError] = useState({ msg: '', activated: false });
+  const { error, displayClientError, displayServerError, resetError } = useErrorHandler();
   const { addJob } = useContext(JobContext);
   const { generateToastr } = useToastr();
 
@@ -15,16 +16,16 @@ const AddJob = () => {
     const company = e.target[0].value.trim();
     const position = e.target[1].value.trim();
     if (!company || !position) {
-      setError({ msg: 'Please fill out the form', activated: true });
+      displayClientError();
       return;
     }
     const data = await addJob({ company, position });
     if (data instanceof Error) {
-      setError({ msg: data.response.data.msg, activated: true });
+      displayServerError(data);
       return;
     }
     generateToastr('success', 'Job has been successfully created');
-    setError({ activated: false });
+    resetError();
     e.target.reset();
   }
 

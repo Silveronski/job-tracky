@@ -1,22 +1,19 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import useAuthRedirect from "../hooks/useAuthRedirect";
 import FormFields from "../components/FormFields";
 import Button from "../components/Button";
 import FormContainer from "../components/FormContainer";
 
 const EmailVerification = () => {
-    const { user, loading, verifyVerificationCode } = useContext(AuthContext);
+    const { verifyVerificationCode } = useContext(AuthContext);
     const navigate = useNavigate();
     const location = useLocation();
     const { verifyData } = location.state || {};
     const [error, setError] = useState({ msg: '', activated: false });
 
-    useEffect(() => {
-        if (!loading) {
-            if (!verifyData) user?.token ? navigate("/dashboard") : navigate("/login");
-        }
-    },[navigate, verifyData, loading]);
+    useAuthRedirect(verifyData);
 
     const handleSubmit = async (e) => {
         e.preventDefault();

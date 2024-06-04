@@ -15,7 +15,7 @@ const FormFields = ({ label, inputType = 'text', labelId = '', defaultValue = ''
   )
 };
 
-FormFields.prototypes = {
+FormFields.propTypes = {
   label: PropTypes.string.isRequired,
   inputType: PropTypes.string,
   labelId: PropTypes.string,

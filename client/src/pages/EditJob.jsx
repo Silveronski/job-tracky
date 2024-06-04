@@ -1,15 +1,14 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { JobContext } from "../context/JobContext";
-import { AuthContext } from "../context/AuthContext";
 import { useToastr } from "../hooks/useToastr";
+import useAuthRedirect from "../hooks/useAuthRedirect";
 import FormFields from "../components/FormFields";
 import Button from "../components/Button";
 import dashboard from "../assets/images/dashboard.png";
 import FormContainer from "../components/FormContainer";
 
 const EditJob = () => {
-    const { user, loading } = useContext(AuthContext);
     const { updateJob } = useContext(JobContext);
     const { generateToastr } = useToastr();
     const navigate = useNavigate();
@@ -17,11 +16,7 @@ const EditJob = () => {
     const { currentJob } = location.state || {};
     const [error, setError] = useState({ msg: '', activated: false });
 
-    useEffect(() => {
-        if (!loading) {
-            if (!currentJob) user.token ? navigate("/dashboard") : navigate("/login");         
-        }
-    }, [currentJob, navigate, loading]);
+    useAuthRedirect(currentJob);
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();

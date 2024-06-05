@@ -58,7 +58,7 @@ const EditJob = () => {
                     selectOptions={["pending", "interview", "declined"]}/> 
                 <div className="btn-container">
                     {error.activated && <p className="error">{error.msg}</p>}
-                    <Button text="Submit"/>
+                    <Button text="Edit"/>
                 </div>                  
             </form>
         </FormContainer>         

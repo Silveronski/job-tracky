@@ -31,16 +31,19 @@ const ForgotPassword: React.FC = () => {
             return;
         }
         setIsLoading(true);
-        const data = await forgotPassword(email);
-        if (data instanceof Error) {
-            displayServerError(data, setIsLoading);
-            return;
+        try {
+            await forgotPassword(email);
+            resetError();
+            setIsValidUser(true);    
+            sessionStorage.setItem('isValidUser', JSON.stringify(true));
+            sessionStorage.setItem('userEmail', JSON.stringify(email));
+        } 
+        catch (error) {
+            displayServerError(error, setIsLoading);
+        }      
+        finally{
+            setIsLoading(false);
         }
-        resetError();
-        setIsValidUser(true);
-        setIsLoading(false);
-        sessionStorage.setItem('isValidUser', JSON.stringify(true));
-        sessionStorage.setItem('userEmail', JSON.stringify(email));
     }
 
     const handleResetPassword = async (e: FormEvent<HTMLFormElement>) => {
@@ -55,19 +58,24 @@ const ForgotPassword: React.FC = () => {
             return;
         }
         if (password.length < 6) {
-            displayClientError('Please provide a valid password');
+            displayClientError('Password must be at least 6 characters');
             return;
         }
-        const data = await resetPassword({ email, password, verificationCode });
-        if (data instanceof Error) {
-            displayServerError(data);
-            return;
+        setIsLoading(true);
+        try {
+            await resetPassword({ email, password, verificationCode });
+            resetError();
+            form.reset();
+            sessionStorage.removeItem('isValidUser');
+            sessionStorage.removeItem('userEmail');
+            dialogRef.current?.showModal();
+        } 
+        catch (error) {
+            displayServerError(error);
         }
-        resetError();
-        sessionStorage.removeItem('isValidUser');
-        sessionStorage.removeItem('userEmail');
-        form.reset();
-        dialogRef.current?.showModal();
+        finally{
+            setIsLoading(false);
+        }
     }
 
     return (

@@ -99,7 +99,7 @@ const forgotPassword = async (req,res) => {
 }
 
 const resetPassword = async (req,res) => {
-    const { email, verificationCode, newPassword } = req.body;
+    const { email, verificationCode, password } = req.body;
     const user = await User.findOne({ email });
 
     if (!user) throw new UnauthenticatedError('Invalid Email');
@@ -107,7 +107,7 @@ const resetPassword = async (req,res) => {
     if (user.verificationCode !== verificationCode) throw new UnauthenticatedError('Invalid verification code');
     if (user.resetPasswordCodeExpirationDate < Date.now()) throw new BadRequestError('Verification code expired');
 
-    user.password = newPassword;
+    user.password = password;
     user.verificationCode = '';
     user.resetPasswordCodeExpirationDate = null;
     await user.save();

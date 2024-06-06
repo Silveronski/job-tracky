@@ -1,6 +1,6 @@
 import { createContext, ReactNode } from "react";
 import { useAuth } from "../hooks/useAuth";
-import { CurrentUser, AuthApiResponse, UserAuth, UserRegister, ResetPassword } from '../types/authTypes';
+import { CurrentUser, UserAuth, UserRegister, ResetPassword } from '../types/authTypes';
 
 interface AuthContextProviderProps {
     children: ReactNode; 
@@ -9,11 +9,11 @@ interface AuthContextProviderProps {
 interface AuthContextType {
     user: CurrentUser,
     loading: boolean,
-    register: (user: UserRegister) => Promise<AuthApiResponse>,
-    login: (user: UserAuth) => Promise<AuthApiResponse>,
-    verifyVerificationCode: (verificationCode: string, email: string) => Promise<AuthApiResponse>,
-    forgotPassword: (email: string) => Promise<AuthApiResponse>,
-    resetPassword: (userData: ResetPassword) => Promise<AuthApiResponse>,
+    register: (user: UserRegister) => Promise<void>,
+    login: (user: UserAuth) => Promise<void>,
+    verifyVerificationCode: (verificationCode: string, email: string) => Promise<void>,
+    forgotPassword: (email: string) => Promise<void>,
+    resetPassword: (userData: ResetPassword) => Promise<void>,
     signOut: () => void
 };
 
@@ -23,12 +23,12 @@ const defaultState: AuthContextType = {
         token: null
     },
     loading: true,
-    register: () => Promise.resolve<AuthApiResponse>(""),
-    login: () => Promise.resolve<AuthApiResponse>(""),
-    verifyVerificationCode: () => Promise.resolve<AuthApiResponse>(""),
+    register: async () => {},
+    login: async () => {},
+    verifyVerificationCode: async () => {},
+    forgotPassword: async () => {},
+    resetPassword: async () => {},
     signOut: () => {},
-    forgotPassword: () => Promise.resolve<AuthApiResponse>(""),
-    resetPassword: () => Promise.resolve<AuthApiResponse>(""),
 };
 
 export const AuthContext = createContext<AuthContextType>(defaultState);

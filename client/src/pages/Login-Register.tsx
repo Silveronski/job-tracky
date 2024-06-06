@@ -32,13 +32,16 @@ const LoginRegister: React.FC = () => {
             return;
         }
         setIsLoading(true);
-        const data = await login(user);
-        if (data instanceof Error) {
-            displayServerError(data, setIsLoading);
-            return;
+        try {
+            await login(user);
+            navigate("/dashboard");
+        } 
+        catch (error) {
+            displayServerError(error, setIsLoading);
         }
-        setIsLoading(false);
-        navigate("/dashboard");
+        finally{
+            setIsLoading(false);
+        }              
     }
 
     const handleRegister = async (e: FormEvent<HTMLFormElement>) => {
@@ -58,14 +61,17 @@ const LoginRegister: React.FC = () => {
             return;
         }         
         setIsLoading(true);
-        const data = await register(user);
-        if (data instanceof Error) {
-            displayServerError(data, setIsLoading);
-            return;
+        try {
+            await register(user);
+            const verifyData = { email: user.email };
+            navigate("/verify-email", { state: {verifyData} }); 
+        } 
+        catch (error) {
+            displayServerError(error, setIsLoading);
         }
-        setIsLoading(false);
-        const verifyData = { msg: data, email: user.email };
-        navigate("/verify-email", { state: {verifyData} });   
+        finally{
+            setIsLoading(false);
+        }             
     }
 
     return (

@@ -24,12 +24,14 @@ const EmailVerification: React.FC = () => {
             displayClientError('Please provide a code');
             return;
         }
-        const data = await verifyVerificationCode(verificationCode, verifyData.email);
-        if (data instanceof Error) {
-            displayServerError(data);
-            return;
+        try {
+            await verifyVerificationCode(verificationCode, verifyData.email);
+            navigate("/dashboard");
+        } 
+        catch (error) {
+            displayServerError(error);
         }
-        navigate("/dashboard");
+        
     }
 
     return (    

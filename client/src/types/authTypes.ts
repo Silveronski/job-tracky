@@ -11,5 +11,3 @@ export type UserAuth = {
 export type UserRegister = UserAuth & { name: string };
 
 export type ResetPassword = UserAuth & { verificationCode: string };
-
-export type AuthApiResponse = string | undefined | object;

@@ -1,67 +1,60 @@
 import { useEffect, useState } from 'react';
 import { api } from '../api/api-config';
-import { CurrentUser, AuthApiResponse, UserAuth, UserRegister, ResetPassword } from '../types/authTypes';
+import { CurrentUser, UserAuth, UserRegister, ResetPassword } from '../types/authTypes';
 
 export const useAuth = () => {
     const [user, setUser] = useState<CurrentUser>({ name: '', token: null });
     const [loading, setLoading] = useState<boolean>(true);
     
-    const register = async (user: UserRegister): Promise<AuthApiResponse> => {
+    const register = async (user: UserRegister): Promise<void> => {
         try {
-            const response = await api.post('/auth/register', user);
-            if (response?.data) return response.data.msg;                          
+            await api.post('/auth/register', user);                         
         } 
         catch (error) {
             console.error('error registering user', error);
-            return error as object; // maybe need to chnage this, check if this axios error!
+            throw error;
         }
     }
 
-    const verifyVerificationCode = async (verificationCode: string, email: string): Promise<AuthApiResponse> => {
+    const verifyVerificationCode = async (verificationCode: string, email: string): Promise<void> => {
         try {
-            const response = await api.post('/auth/verify-email', { verificationCode, email });
-            if (response?.data) {
-                storeUser({ name: response.data.user.name, token: response.data.token });
-            }
+            const response = await api.post('/auth/verify-email', { verificationCode, email });         
+            storeUser({ name: response?.data?.user.name, token: response?.data?.token });         
         } 
         catch (error) {
             console.error('error verifying code', error);
-            return error as object;
+            throw error;
         }
     }
 
-    const login = async (user: UserAuth): Promise<AuthApiResponse> => {
+    const login = async (user: UserAuth): Promise<void> => {
         try {
-            const response = await api.post('/auth/login', user);
-            if (response?.data) {
-                storeUser({ name: response.data.user.name, token: response.data.token });
-            }
+            const response = await api.post('/auth/login', user);          
+            storeUser({ name: response?.data?.user.name, token: response?.data?.token });           
         } 
         catch (error) {
             console.error('error in user login', error);
-            return error as object;
+            throw error;
         }
     }
 
-    const forgotPassword = async (email: string): Promise<AuthApiResponse> => {
+    const forgotPassword = async (email: string): Promise<void> => {
         try {
-            const response = await api.post('/auth/forgot-password', { email });
-            if (response?.data) return response.data.msg;
+            await api.post('/auth/forgot-password', { email });
         } 
         catch (error) {
             console.error('error in forgot password', error);
-            return error as object;
+            throw error;
         }
     }
 
-    const resetPassword = async (userData: ResetPassword): Promise<AuthApiResponse> => {
+    const resetPassword = async (userData: ResetPassword): Promise<void> => {
         try {
-            const response = await api.post('/auth/reset-password', { userData });
-            if (response?.data) return response.data.msg;
+            await api.post('/auth/reset-password', { userData });
         } 
         catch (error) {
             console.error('error in password reset', error);
-            return error as object;
+            throw error;
         }
     }
 
@@ -81,14 +74,14 @@ export const useAuth = () => {
         setLoading(false);
     }
 
-    const verifyUser = async (token: string): Promise<CurrentUser | null | undefined> => {
+    const verifyUser = async (token: string): Promise<CurrentUser | null> => {
         try {
             const response = await api.post('/auth/verify-token', null, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
-            if (response?.data) return response.data.user as CurrentUser;                      
+            return response.data.user as CurrentUser;                      
         } 
         catch (error) {
             console.error('error validating token', error);

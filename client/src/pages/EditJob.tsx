@@ -1,4 +1,4 @@
-import { FormEvent, useContext } from "react";
+import React, { FormEvent, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { JobContext } from "../context/JobContext";
 import { useToastr } from "../hooks/useToastr";
@@ -10,7 +10,7 @@ import Button from "../components/Button";
 import dashboard from "../assets/images/dashboard.png";
 import FormContainer from "../components/FormContainer";
 
-const EditJob = () => {
+const EditJob: React.FC = () => {
     const { updateJob } = useContext(JobContext);
     const { error, displayClientError, displayServerError } = useErrorHandler();
     const { generateToastr } = useToastr();

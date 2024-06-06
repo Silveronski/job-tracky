@@ -15,9 +15,8 @@ const useAuthRedirect = (locationObject: Location = locationDefaultState) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!loading) {
-            if (locationObject.state !== "") return;
-            if (locationObject.state === "" ) user?.token ? navigate("/dashboard") : navigate("/login");
+        if (!loading && locationObject.state === "") {
+            user?.token ? navigate("/dashboard") : navigate("/login");
         }
     },[locationObject, navigate, user, loading]);
 }

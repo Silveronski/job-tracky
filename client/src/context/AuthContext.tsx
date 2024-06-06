@@ -14,7 +14,7 @@ interface AuthContextType {
     verifyVerificationCode: (verificationCode: string, email: string) => Promise<void>,
     forgotPassword: (email: string) => Promise<void>,
     resetPassword: (userData: ResetPassword) => Promise<void>,
-    signOut: () => void
+    signOut: () => void,
 };
 
 const defaultState: AuthContextType = {

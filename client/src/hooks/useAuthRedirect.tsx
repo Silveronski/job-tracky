@@ -2,14 +2,22 @@ import { useContext, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate, Location } from "react-router-dom";
 
-const useAuthRedirect = (locationObject: Location | boolean = true) => {
+const locationDefaultState: Location = {
+    state:"",
+    key:"", 
+    pathname:"",
+    search:"",
+    hash:""
+};
+
+const useAuthRedirect = (locationObject: Location = locationDefaultState) => {
     const { user, loading } = useContext(AuthContext);
     const navigate = useNavigate();
 
     useEffect(() => {
         if (!loading) {
-            if (!locationObject) user?.token ? navigate("/dashboard") : navigate("/login");
-            else !user.token && navigate("/login"); 
+            if (locationObject.state !== "") return;
+            if (locationObject.state === "" ) user?.token ? navigate("/dashboard") : navigate("/login");
         }
     },[locationObject, navigate, user, loading]);
 }

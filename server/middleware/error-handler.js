@@ -15,7 +15,7 @@ const errorHandler = (err,req,res,next) => {
         customError.statusCode = StatusCodes.BAD_REQUEST;
     }
     if (err.code && err.code === 11000) { // validation for duplicate email
-        customError.msg = `Duplicate value entered for ${Object.keys(err.keyValue)} field, please choose another value`;
+        customError.msg = `This ${Object.keys(err.keyValue)} address is already registered to Job Tracky`;
         customError.statusCode = StatusCodes.BAD_REQUEST;
     }
 

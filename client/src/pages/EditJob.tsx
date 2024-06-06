@@ -30,13 +30,14 @@ const EditJob = () => {
             displayClientError();
             return;
         }
-        const data = await updateJob(currentJob._id, { company, position, status });
-        if (data instanceof Error) {
-            displayServerError(data);
-            return;
-        }
-        generateToastr('success', 'Job has been successfully updated');
-        navigate("/dashboard");
+        try {
+            await updateJob(currentJob._id, { company, position, status });
+            generateToastr('success', 'Job has been successfully updated');
+            navigate("/dashboard");
+        } 
+        catch (error) {
+            displayServerError(error);
+        }             
     }
 
     return (

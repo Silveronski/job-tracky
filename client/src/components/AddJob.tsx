@@ -20,14 +20,15 @@ const AddJob = () => {
       displayClientError();
       return;
     }
-    const data = await addJob({ company, position });
-    if (data instanceof Error) {
-      displayServerError(data);
-      return;
-    }
-    generateToastr('success', 'Job has been successfully created');
-    resetError();
-    form.reset();
+    try {
+      await addJob({ company, position });
+      resetError();
+      form.reset();
+      generateToastr('success', 'Job has been successfully created');
+    } 
+    catch (error) {
+      displayServerError(error);
+    }     
   }
 
   return (

@@ -11,12 +11,13 @@ const Job: React.FC<JobType> = ({ _id, createdAt, position, company, status }) =
   const { generateToastr } = useToastr();
 
   const handleDelete = async () => {
-    const data = await deleteJob(_id);
-    if (data instanceof Error) {
+    try {
+      await deleteJob(_id);
+      generateToastr('success', 'Job has been successfully deleted');
+    } 
+    catch (error) {
       generateToastr('error', 'Could not delete the job');
-      return;
-    }
-    generateToastr('success', 'Job has been successfully deleted');
+    }  
   }
   
   return (

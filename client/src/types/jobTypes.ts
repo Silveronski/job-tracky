@@ -7,7 +7,7 @@ export type EditJobType = PartialJobType & {
     status: keyof typeof JobStatus
 };
 
-export type JobType = PartialJobType & EditJobType &{
+export type JobType = PartialJobType & EditJobType & {
     readonly _id: string,
     readonly __v: number,
     createdBy: string,
@@ -20,5 +20,3 @@ export const enum JobStatus {
     declined = 'declined',
     pending = 'pending'
 };
-
-export type JobApiResponse = JobType | JobType[] | object | undefined;

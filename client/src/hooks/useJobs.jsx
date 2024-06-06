@@ -1,14 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { api, setAuthToken } from '../api/api-config';
-import { EditJobType, JobApiResponse, JobType, PartialJobType } from "../types/jobTypes";
 
 export const useJobs = () => {
     const { user } = useContext(AuthContext);
-    const [jobs, setJobs] = useState<JobType[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
+    const [jobs, setJobs] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    const getJobs = async (): Promise<JobApiResponse> => {
+    const getJobs = async () => {
         try {
             const response = await api.get('/jobs');             
             if (response?.data) {
@@ -18,14 +17,14 @@ export const useJobs = () => {
         } 
         catch (error) {
             console.error('error in getting jobs', error);
-            return error as object;
+            return error;
         }
         finally {
             setLoading(false);
         }
     }
 
-    const addJob = async (job: PartialJobType): Promise<JobApiResponse> => {
+    const addJob = async (job) => {
         try {
             const response = await api.post('/jobs', job);          
             if (response?.data) {
@@ -35,11 +34,11 @@ export const useJobs = () => {
         } 
         catch (error) {
             console.error('error in adding a job', error);
-            return error as object;
+            return error;
         }
     }
 
-    const updateJob = async (jobId: string, editedJob: EditJobType): Promise<JobApiResponse> => {
+    const updateJob = async (jobId, editedJob) => {
         try {
             const response = await api.patch(`/jobs/${jobId}`, editedJob);                    
             if (response?.data) {
@@ -48,12 +47,12 @@ export const useJobs = () => {
             }
         } 
         catch (error) {
-            console.error('error in updating a job', error);
-            return error as object;
+            console.error('error in adding a job', error);
+            return error;
         }
     }
 
-    const deleteJob = async (jobId: string): Promise<JobApiResponse> => {
+    const deleteJob = async (jobId) => {
         try {
             const response = await api.delete(`/jobs/${jobId}`);         
             if (response?.data){
@@ -63,12 +62,12 @@ export const useJobs = () => {
         } 
         catch (error) {
             console.error('error in deleting a job', error);
-            return error as object;
+            return error;
         }
     }
 
     useEffect(() => {
-        if (user?.token) {
+        if (user.token) {
             setAuthToken(user.token);
             getJobs();
         }

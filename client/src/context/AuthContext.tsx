@@ -1,6 +1,6 @@
 import { createContext, ReactNode } from "react";
 import { useAuth } from "../hooks/useAuth";
-import { CurrentUser, AuthResponse, UserAuth, UserRegister, ResetPassword } from '../types/types';
+import { CurrentUser, AuthApiResponse, UserAuth, UserRegister, ResetPassword } from '../types/authTypes';
 
 interface AuthContextProviderProps {
     children: ReactNode; 
@@ -9,11 +9,11 @@ interface AuthContextProviderProps {
 interface AuthContextType {
     user: CurrentUser,
     loading: boolean,
-    register: (user: UserRegister) => Promise<AuthResponse>,
-    login: (user: UserAuth) => Promise<AuthResponse>,
-    verifyVerificationCode: (verificationCode: string, email: string) => Promise<AuthResponse>,
-    forgotPassword: (email: string) => Promise<AuthResponse>,
-    resetPassword: (userData: ResetPassword) => Promise<AuthResponse>,
+    register: (user: UserRegister) => Promise<AuthApiResponse>,
+    login: (user: UserAuth) => Promise<AuthApiResponse>,
+    verifyVerificationCode: (verificationCode: string, email: string) => Promise<AuthApiResponse>,
+    forgotPassword: (email: string) => Promise<AuthApiResponse>,
+    resetPassword: (userData: ResetPassword) => Promise<AuthApiResponse>,
     signOut: () => void
 };
 
@@ -23,13 +23,13 @@ const defaultState: AuthContextType = {
         token: null
     },
     loading: true,
-    register: () => Promise.resolve<AuthResponse>(""),
-    login: () => Promise.resolve<AuthResponse>(""),
-    verifyVerificationCode: () => Promise.resolve<AuthResponse>(""),
+    register: () => Promise.resolve<AuthApiResponse>(""),
+    login: () => Promise.resolve<AuthApiResponse>(""),
+    verifyVerificationCode: () => Promise.resolve<AuthApiResponse>(""),
     signOut: () => {},
-    forgotPassword: () => Promise.resolve<AuthResponse>(""),
-    resetPassword: () => Promise.resolve<AuthResponse>(""),
-}
+    forgotPassword: () => Promise.resolve<AuthApiResponse>(""),
+    resetPassword: () => Promise.resolve<AuthApiResponse>(""),
+};
 
 export const AuthContext = createContext<AuthContextType>(defaultState);
    
@@ -50,4 +50,4 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
             {children}
         </AuthContext.Provider>
     )
-}
+};

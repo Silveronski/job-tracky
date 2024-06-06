@@ -12,4 +12,4 @@ export type UserRegister = UserAuth & { name: string };
 
 export type ResetPassword = UserAuth & { verificationCode: string };
 
-export type AuthResponse = string | undefined | object;
+export type AuthApiResponse = string | undefined | object;

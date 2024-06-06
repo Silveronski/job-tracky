@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { api } from '../api/api-config';
-import { CurrentUser, AuthResponse, UserAuth, UserRegister, ResetPassword } from '../types/types';
+import { CurrentUser, AuthApiResponse, UserAuth, UserRegister, ResetPassword } from '../types/authTypes';
 
 export const useAuth = () => {
     const [user, setUser] = useState<CurrentUser>({ name: '', token: null });
     const [loading, setLoading] = useState<boolean>(true);
     
-    const register = async (user: UserRegister): Promise<AuthResponse> => {
+    const register = async (user: UserRegister): Promise<AuthApiResponse> => {
         try {
             const response = await api.post('/auth/register', user);
             if (response?.data) return response.data.msg;                          
@@ -17,7 +17,7 @@ export const useAuth = () => {
         }
     }
 
-    const verifyVerificationCode = async (verificationCode: string, email: string): Promise<AuthResponse> => {
+    const verifyVerificationCode = async (verificationCode: string, email: string): Promise<AuthApiResponse> => {
         try {
             const response = await api.post('/auth/verify-email', { verificationCode, email });
             if (response?.data) {
@@ -30,7 +30,7 @@ export const useAuth = () => {
         }
     }
 
-    const login = async (user: UserAuth): Promise<AuthResponse> => {
+    const login = async (user: UserAuth): Promise<AuthApiResponse> => {
         try {
             const response = await api.post('/auth/login', user);
             if (response?.data) {
@@ -43,7 +43,7 @@ export const useAuth = () => {
         }
     }
 
-    const forgotPassword = async (email: string): Promise<AuthResponse> => {
+    const forgotPassword = async (email: string): Promise<AuthApiResponse> => {
         try {
             const response = await api.post('/auth/forgot-password', { email });
             if (response?.data) return response.data.msg;
@@ -54,7 +54,7 @@ export const useAuth = () => {
         }
     }
 
-    const resetPassword = async (userData: ResetPassword): Promise<AuthResponse> => {
+    const resetPassword = async (userData: ResetPassword): Promise<AuthApiResponse> => {
         try {
             const response = await api.post('/auth/reset-password', { userData });
             if (response?.data) return response.data.msg;

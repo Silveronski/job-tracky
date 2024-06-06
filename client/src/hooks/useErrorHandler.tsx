@@ -1,7 +1,12 @@
 import { useState } from "react";
 
-export const useErrorHandler = (initialState = { msg: '', activated: false }) => {
-    const [error, setError] = useState(initialState);
+interface ErrorHandler {
+    msg: string,
+    activated: boolean
+}
+
+export const useErrorHandler = (initialState: ErrorHandler = { msg: '', activated: false }) => {
+    const [error, setError] = useState<ErrorHandler>(initialState);
 
     const displayClientError = (msg = 'Please fill out the form') => setError({ msg, activated: true });
         

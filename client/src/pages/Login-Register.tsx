@@ -1,3 +1,4 @@
+import React, { FormEvent } from "react";
 import { useContext, useState } from "react"
 import { AuthContext } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
@@ -7,9 +8,9 @@ import Button from "../components/Button";
 import loadingGif from "../assets/images/loadinggif.gif";
 import FormContainer from "../components/FormContainer";
 
-const LoginRegister = () => {
-    const [isLogin, setIsLogin] = useState(true);
-    const [isLoading, setIsLoading] = useState(false);
+const LoginRegister: React.FC = () => {
+    const [isLogin, setIsLogin] = useState<boolean>(true);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const { error, displayClientError, displayServerError, resetError } = useErrorHandler();
     const { register, login } = useContext(AuthContext);
     const navigate = useNavigate();
@@ -19,11 +20,12 @@ const LoginRegister = () => {
         resetError();
     }
         
-    const handleLogin = async (e) => {
-        e.preventDefault();   
+    const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault(); 
+        const form = e.target as HTMLFormElement;  
         const user = {
-            email: e.target[0].value.trim(),
-            password: e.target[1].value.trim()
+            email: (form[0] as HTMLInputElement).value.trim(),
+            password: (form[1] as HTMLInputElement).value.trim()
         } 
         if (!user.email || !user.password) {
             displayClientError();
@@ -39,12 +41,13 @@ const LoginRegister = () => {
         navigate("/dashboard");
     }
 
-    const handleRegister = async (e) => {
+    const handleRegister = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        const form = e.target as HTMLFormElement; 
         const user = {
-            name: e.target[0].value.trim(),
-            email: e.target[1].value.trim(),
-            password: e.target[2].value.trim()
+            name: (form[0] as HTMLInputElement).value.trim(),
+            email: (form[1] as HTMLInputElement).value.trim(),
+            password: (form[2] as HTMLInputElement).value.trim()
         }
         if (!user.email || !user.password || !user.name) {
             displayClientError();
@@ -61,7 +64,7 @@ const LoginRegister = () => {
             return;
         }
         setIsLoading(false);
-        const verifyData = { msg: data.msg, email: user.email };
+        const verifyData = { msg: data?.msg, email: user.email };
         navigate("/verify-email", { state: {verifyData} });   
     }
 

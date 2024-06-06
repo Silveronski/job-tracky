@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { FormEvent, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { JobContext } from "../context/JobContext";
 import { useToastr } from "../hooks/useToastr";
@@ -19,11 +19,12 @@ const EditJob = () => {
 
     useAuthRedirect(currentJob);
 
-    const handleFormSubmit = async (e) => {
+    const handleFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const company = e.target[0].value.trim();
-        const position = e.target[1].value.trim();
-        const status = e.target[2].value;
+        const form = e.target as HTMLFormElement;
+        const company = (form[0] as HTMLInputElement).value.trim();
+        const position = (form[1] as HTMLInputElement).value.trim();
+        const status = (form[2] as HTMLInputElement).value;
         if (!company || !position) {
             displayClientError();
             return;

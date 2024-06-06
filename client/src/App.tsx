@@ -1,12 +1,12 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { AuthContextProvider } from './context/AuthContext.jsx';
-import { JobContextProvider } from "./context/JobContext.jsx";
-import LoginRegister from "./pages/Login-Register";
-import Dashboard from "./pages/Dashboard";
-import Layout from "./layout/Layout.jsx";
-import EditJob from "./pages/EditJob.jsx";
-import EmailVerification from "./pages/EmailVerification.jsx";
-import ForgotPassword from "./pages/ForgotPassword.jsx";
+import { AuthContextProvider } from "./context/AuthContext.tsx";
+import { JobContextProvider } from "./context/JobContext.tsx";
+import Layout from "./layout/Layout.tsx";
+import LoginRegister from "./pages/Login-Register.tsx";
+import Dashboard from "./pages/Dashboard.tsx";
+import EmailVerification from "./pages/EmailVerification.tsx";
+import ForgotPassword from "./pages/ForgotPassword.tsx";
+import EditJob from "./pages/EditJob.tsx";
 import './styles/style.scss';
 
 function App() {

@@ -1,7 +1,9 @@
 import toastr from 'toastr';
 
+type ToastrType = 'error' | 'success' | 'info' | 'warning';
+
 export const useToastr = () => {
-    const generateToastr = (toastType = 'info', text = 'Message', duration = 5000) => {
+    const generateToastr = (toastType: ToastrType = 'info', text = 'Message', duration = 5000) => {
         const options = {
             timeOut: duration,
             extendedTimeOut: 0, 

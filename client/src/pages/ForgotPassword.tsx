@@ -1,5 +1,5 @@
+import React, { FormEvent, useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { useContext, useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useErrorHandler } from "../hooks/useErrorHandler";
 import FormFields from "../components/FormFields";
@@ -8,11 +8,11 @@ import check from "../assets/images/check.png";
 import loadingGif from "../assets/images/loadinggif.gif";
 import FormContainer from "../components/FormContainer";
 
-const ForgotPassword = () => {
+const ForgotPassword: React.FC = () => {
     const { forgotPassword, resetPassword } = useContext(AuthContext);
     const { error, displayClientError, displayServerError, resetError } = useErrorHandler();
-    const [isValidUser, setIsValidUser] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isValidUser, setIsValidUser] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const navigate = useNavigate();
     const dialogRef = useRef();
 
@@ -21,9 +21,10 @@ const ForgotPassword = () => {
         isValidUser && setIsValidUser(JSON.parse(isValidUser));
     },[]);
 
-    const handleForgotPassword = async (e) => {
+    const handleForgotPassword = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const email = e.target[0].value.trim();
+        const form = e.target as HTMLFormElement;
+        const email = (form[0] as HTMLInputElement).value.trim();
         if (!email) {
             displayClientError('Please provide a valid email');
             return;
@@ -54,7 +55,7 @@ const ForgotPassword = () => {
             displayClientError('Please provide a valid password');
             return;
         }
-        const data = await resetPassword(email, verificationCode, newPassword);
+        const data = await resetPassword({ email, newPassword, verificationCode });
         if (data instanceof Error) {
             displayServerError(data);
             return;

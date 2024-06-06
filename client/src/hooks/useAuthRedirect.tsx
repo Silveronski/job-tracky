@@ -1,8 +1,8 @@
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Location } from "react-router-dom";
 
-const useAuthRedirect =  (locationObject = true) => {
+const useAuthRedirect = (locationObject: Location | boolean = true) => {
     const { user, loading } = useContext(AuthContext);
     const navigate = useNavigate();
 

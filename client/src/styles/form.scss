@@ -132,6 +132,9 @@
             }
         }
     }
+    .no-inline-padding {
+        padding-inline: 0;
+    }
     .loading{
         &::after{
             content: "";

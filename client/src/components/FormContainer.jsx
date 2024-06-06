@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 
-const FormContainer = ({ children, extraContent = null, containerClass = '',  wrapperClass = '', wrapperStyle = null }) => {
+const FormContainer = ({ children, extraContent = null, containerClass = '',  wrapperClass = ''}) => {
     return (
         <section className={`form-container ${containerClass}`}>
-            <div className={`wrapper ${wrapperClass}`} style={wrapperStyle}>
+            <div className={`wrapper ${wrapperClass}`}>
                 {children}    
             </div>   
             {extraContent}                           
@@ -16,7 +16,6 @@ FormContainer.propTypes = {
     extraContent: PropTypes.node,
     containerClass: PropTypes.string,
     wrapperClass: PropTypes.string,
-    wrapperStyle: PropTypes.object,
 };
 
 export default FormContainer

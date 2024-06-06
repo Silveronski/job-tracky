@@ -67,7 +67,7 @@ const ForgotPassword = () => {
     }
 
     return (
-        <FormContainer wrapperClass={isLoading ? "wrapper loading" : "wrapper"} wrapperStyle={!isValidUser ? {paddingInline: 0} : {paddingInline: '7.5rem'}}>
+        <FormContainer wrapperClass={[isLoading ? "loading" : "", isValidUser ? "" : "no-inline-padding"].join(' ')}>
             {isLoading && <img className="loading-indicator" src={loadingGif} alt="loading-gif"/>}                          
             <h1 className={isValidUser ? "password-reset-title" : "forgot-password-title"}>Reset Password</h1>
             <p className={isValidUser ? "password-reset-success" : "password-reset-prompt"}>

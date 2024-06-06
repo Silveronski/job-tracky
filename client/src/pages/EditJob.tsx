@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { JobContext } from "../context/JobContext";
 import { useToastr } from "../hooks/useToastr";
 import { useErrorHandler } from "../hooks/useErrorHandler";
+import { JobStatus } from "../types/jobTypes";
 import useAuthRedirect from "../hooks/useAuthRedirect";
 import FormFields from "../components/FormFields";
 import Button from "../components/Button";
@@ -24,7 +25,7 @@ const EditJob = () => {
         const form = e.target as HTMLFormElement;
         const company = (form[0] as HTMLInputElement).value.trim();
         const position = (form[1] as HTMLInputElement).value.trim();
-        const status = (form[2] as HTMLInputElement).value;
+        const status = (form[2] as HTMLInputElement).value as JobStatus;
         if (!company || !position) {
             displayClientError();
             return;

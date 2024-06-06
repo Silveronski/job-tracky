@@ -14,7 +14,7 @@ const ForgotPassword: React.FC = () => {
     const [isValidUser, setIsValidUser] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const navigate = useNavigate();
-    const dialogRef = useRef();
+    const dialogRef = useRef<HTMLDialogElement>(null);
 
     useEffect(() => {
         const isValidUser = sessionStorage.getItem('isValidUser');
@@ -24,6 +24,7 @@ const ForgotPassword: React.FC = () => {
     const handleForgotPassword = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const form = e.target as HTMLFormElement;
+        
         const email = (form[0] as HTMLInputElement).value.trim();
         if (!email) {
             displayClientError('Please provide a valid email');
@@ -38,24 +39,26 @@ const ForgotPassword: React.FC = () => {
         resetError();
         setIsValidUser(true);
         setIsLoading(false);
-        sessionStorage.setItem('isValidUser', true);
+        sessionStorage.setItem('isValidUser', JSON.stringify(true));
         sessionStorage.setItem('userEmail', JSON.stringify(email));
     }
 
-    const handleResetPassword = async (e) => {
+    const handleResetPassword = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const verificationCode = e.target[0].value.trim();
-        const newPassword = e.target[1].value.trim();
-        const email = JSON.parse(sessionStorage.getItem('userEmail'));
-        if (!verificationCode || !newPassword) {
+        const form = e.target as HTMLFormElement;
+
+        const verificationCode = (form[0] as HTMLInputElement).value.trim();
+        const password = (form[1] as HTMLInputElement).value.trim();
+        const email = JSON.stringify(sessionStorage.getItem('userEmail'));
+        if (!verificationCode || !password) {
             displayClientError();
             return;
         }
-        if (newPassword.length < 6) {
+        if (password.length < 6) {
             displayClientError('Please provide a valid password');
             return;
         }
-        const data = await resetPassword({ email, newPassword, verificationCode });
+        const data = await resetPassword({ email, password, verificationCode });
         if (data instanceof Error) {
             displayServerError(data);
             return;
@@ -63,8 +66,8 @@ const ForgotPassword: React.FC = () => {
         resetError();
         sessionStorage.removeItem('isValidUser');
         sessionStorage.removeItem('userEmail');
-        e.target.reset();
-        dialogRef.current.showModal();
+        form.reset();
+        dialogRef.current?.showModal();
     }
 
     return (

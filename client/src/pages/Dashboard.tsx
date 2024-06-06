@@ -1,11 +1,11 @@
-import { Suspense, lazy } from "react";
+import React, {  Suspense, lazy } from "react";
 import useAuthRedirect from "../hooks/useAuthRedirect";
 import AddJob from "../components/AddJob";
 import Loading from "../components/Loading";
 
-const Jobs = lazy(() => import('../components/Jobs'));
+const Jobs = lazy(() => import("../components/Jobs"));
 
-const Dashboard = () => {
+const Dashboard: React.FC = () => {
     useAuthRedirect();
     return (
         <section className="dashboard-container">

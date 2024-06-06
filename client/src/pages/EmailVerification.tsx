@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import React, { FormEvent, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { useErrorHandler } from "../hooks/useErrorHandler";
@@ -7,7 +7,7 @@ import FormFields from "../components/FormFields";
 import Button from "../components/Button";
 import FormContainer from "../components/FormContainer";
 
-const EmailVerification = () => {
+const EmailVerification: React.FC = () => {
     const { verifyVerificationCode } = useContext(AuthContext);
     const { error, displayClientError, displayServerError } = useErrorHandler();
     const navigate = useNavigate();
@@ -16,9 +16,10 @@ const EmailVerification = () => {
 
     useAuthRedirect(verifyData);
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const verificationCode = e.target[0].value.trim();
+        const form = e.target as HTMLFormElement;
+        const verificationCode = (form[0] as HTMLInputElement).value.trim();
         if (!verificationCode) {
             displayClientError('Please provide a code');
             return;

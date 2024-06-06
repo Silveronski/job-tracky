@@ -64,7 +64,7 @@ const LoginRegister: React.FC = () => {
             return;
         }
         setIsLoading(false);
-        const verifyData = { msg: data?.msg, email: user.email };
+        const verifyData = { msg: data, email: user.email };
         navigate("/verify-email", { state: {verifyData} });   
     }
 

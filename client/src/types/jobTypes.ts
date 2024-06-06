@@ -4,7 +4,7 @@ export type PartialJobType = {
 };
 
 export type EditJobType = PartialJobType & {
-    status: JobStatus
+    status: keyof typeof JobStatus
 };
 
 export type JobType = PartialJobType & EditJobType &{
@@ -16,9 +16,9 @@ export type JobType = PartialJobType & EditJobType &{
 };
 
 export const enum JobStatus {
-    'interview',
-    'declined',
-    'pending'
+    interview = 'interview',
+    declined = 'declined',
+    pending = 'pending'
 };
 
 export type JobApiResponse = JobType | JobType[] | object | undefined;

@@ -10,7 +10,7 @@ export const useErrorHandler = (initialState: ErrorHandler = { msg: '', activate
 
     const displayClientError = (msg = 'Please fill out the form') => setError({ msg, activated: true });
         
-    const displayServerError = (data, setIsLoading = null) => {
+    const displayServerError = (data: any, setIsLoading: React.Dispatch<React.SetStateAction<boolean>> | null = null) => {
         setIsLoading && setIsLoading(false);
         setError({ msg: data.response.data.msg, activated: true });
     }

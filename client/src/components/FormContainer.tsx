@@ -1,6 +1,13 @@
-import PropTypes from 'prop-types';
+import React, { ReactNode } from "react"
 
-const FormContainer = ({ children, extraContent = null, containerClass = '',  wrapperClass = ''}) => {
+interface FormContainerProps {
+    children: ReactNode,
+    extraContent?: ReactNode,
+    containerClass?: string, 
+    wrapperClass?: string
+};
+
+const FormContainer: React.FC<FormContainerProps> = ({ children, extraContent = null, containerClass = '',  wrapperClass = ''}) => {
     return (
         <section className={`form-container ${containerClass}`}>
             <div className={`wrapper ${wrapperClass}`}>
@@ -10,12 +17,5 @@ const FormContainer = ({ children, extraContent = null, containerClass = '',  wr
         </section>
     )
 }
-
-FormContainer.propTypes = {
-    children: PropTypes.node.isRequired,
-    extraContent: PropTypes.node,
-    containerClass: PropTypes.string,
-    wrapperClass: PropTypes.string,
-};
 
 export default FormContainer

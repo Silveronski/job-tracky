@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import { FormEvent, useContext } from "react"
 import { JobContext } from "../context/JobContext";
 import { useToastr } from "../hooks/useToastr";
 import { useErrorHandler } from "../hooks/useErrorHandler";
@@ -11,10 +11,11 @@ const AddJob = () => {
   const { addJob } = useContext(JobContext);
   const { generateToastr } = useToastr();
 
-  const handleFormSubmit = async (e) => {
+  const handleFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const company = e.target[0].value.trim();
-    const position = e.target[1].value.trim();
+    const form = e.target as HTMLFormElement; 
+    const company = (form[0] as HTMLInputElement).value.trim();
+    const position = (form[1] as HTMLInputElement).value.trim();
     if (!company || !position) {
       displayClientError();
       return;
@@ -26,7 +27,7 @@ const AddJob = () => {
     }
     generateToastr('success', 'Job has been successfully created');
     resetError();
-    e.target.reset();
+    form.reset();
   }
 
   return (

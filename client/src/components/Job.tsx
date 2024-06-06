@@ -1,9 +1,10 @@
-import { useContext } from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom"
 import { JobContext } from "../context/JobContext";
 import { useToastr } from "../hooks/useToastr";
+import { JobType } from "../types/jobTypes";
 
-const Job = ({ _id, createdAt, position, company, status }) => {
+const Job: React.FC<JobType> = ({ _id, createdAt, position, company, status }) => {
   const currentJob = { _id, company, position, status };
   const navigate = useNavigate();
   const { deleteJob } = useContext(JobContext);

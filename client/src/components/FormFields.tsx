@@ -1,6 +1,16 @@
-import PropTypes from 'prop-types';
+import React from "react";
+import { JobStatus } from "../types/jobTypes";
 
-const FormFields = ({ label, inputType = 'text', labelId = '', defaultValue = '', isSelect = false, selectOptions = [] }) => {
+interface FormFieldsProps {
+  label: string,
+  inputType? : string,
+  labelId? : string, 
+  defaultValue? : string,
+  isSelect? : boolean,
+  selectOptions? : Array<keyof typeof JobStatus>
+};
+
+const FormFields: React.FC<FormFieldsProps> = ({ label, inputType = 'text', labelId = '', defaultValue = '', isSelect = false, selectOptions = [] }) => {
   return (
     <div className="form-fields">
         <label id={labelId}>{label}</label>
@@ -13,15 +23,6 @@ const FormFields = ({ label, inputType = 'text', labelId = '', defaultValue = ''
         : <input type={inputType} defaultValue={defaultValue}/>}        
     </div>
   )
-};
-
-FormFields.propTypes = {
-  label: PropTypes.string.isRequired,
-  inputType: PropTypes.string,
-  labelId: PropTypes.string,
-  defaultValue: PropTypes.string,
-  isSelect: PropTypes.bool,
-  selectOptions: PropTypes.arrayOf(PropTypes.string)
 };
 
 export default FormFields

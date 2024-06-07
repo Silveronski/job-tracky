@@ -1,3 +1,4 @@
+import axios, { AxiosError } from "axios";
 import { useState } from "react";
 
 interface ErrorHandler {
@@ -10,10 +11,13 @@ export const useErrorHandler = (initialState: ErrorHandler = { msg: '', activate
 
     const displayClientError = (msg = 'Please fill out the form') => setError({ msg, activated: true });
         
-    const displayServerError = (data: any, setIsLoading: React.Dispatch<React.SetStateAction<boolean>> | null = null) => {
+    const displayServerError = (errorMsg: unknown | AxiosError, setIsLoading: React.Dispatch<React.SetStateAction<boolean>> | null = null) => {
+        let msg: string;
+        if (axios.isAxiosError(errorMsg)) msg = errorMsg.response?.data?.msg || 'An unknown error occurred';
+        else msg = 'An unknown error occurred';     
         setIsLoading && setIsLoading(false);
-        setError({ msg: data.response.data.msg, activated: true });
-    }
+        setError({ msg: msg, activated: true });
+    } 
 
     const resetError = () => setError(initialState);
 

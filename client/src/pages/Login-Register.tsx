@@ -36,7 +36,7 @@ const LoginRegister: React.FC = () => {
             await login(user);
             navigate("/dashboard");
         } 
-        catch (error) {
+        catch (error: unknown) {
             displayServerError(error, setIsLoading);
         }
         finally{
@@ -66,7 +66,7 @@ const LoginRegister: React.FC = () => {
             const verifyData = { email: user.email };
             navigate("/verify-email", { state: {verifyData} }); 
         } 
-        catch (error) {
+        catch (error: unknown) {
             displayServerError(error, setIsLoading);
         }
         finally{

@@ -35,7 +35,7 @@ const EditJob: React.FC = () => {
             generateToastr('success', 'Job has been successfully updated');
             navigate("/dashboard");
         } 
-        catch (error) {
+        catch (error: unknown) {
             displayServerError(error);
         }             
     }

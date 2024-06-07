@@ -28,7 +28,7 @@ const EmailVerification: React.FC = () => {
             await verifyVerificationCode(verificationCode, verifyData.email);
             navigate("/dashboard");
         } 
-        catch (error) {
+        catch (error: unknown) {
             displayServerError(error);
         }
         

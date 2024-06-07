@@ -70,7 +70,7 @@ const ForgotPassword: React.FC = () => {
             sessionStorage.removeItem('userEmail');
             dialogRef.current?.showModal();
         } 
-        catch (error) {
+        catch (error: unknown) {
             displayServerError(error);
         }
         finally{

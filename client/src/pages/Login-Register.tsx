@@ -34,14 +34,12 @@ const LoginRegister: React.FC = () => {
         setIsLoading(true);
         try {
             await login(user);
+            setIsLoading(false);
             navigate("/dashboard");
         } 
         catch (error: unknown) {
-            displayServerError(error, setIsLoading);
-        }
-        finally{
-            setIsLoading(false);
-        }              
+            displayServerError({ error, setIsLoading });
+        }            
     }
 
     const handleRegister = async (e: FormEvent<HTMLFormElement>) => {
@@ -63,14 +61,12 @@ const LoginRegister: React.FC = () => {
         setIsLoading(true);
         try {
             await register(user);
+            setIsLoading(false);
             const verifyData = { email: user.email };
             navigate("/verify-email", { state: {verifyData} }); 
         } 
         catch (error: unknown) {
-            displayServerError(error, setIsLoading);
-        }
-        finally{
-            setIsLoading(false);
+            displayServerError({ error, setIsLoading });
         }             
     }
 

@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { api, setAuthToken } from '../api/api-config';
-import { EditJobType, JobType, PartialJobType } from "../types/jobTypes";
+import { JobType } from "../types/jobTypes";
 
 export const useJobs = () => {
     const { user } = useContext(AuthContext);
@@ -23,7 +23,7 @@ export const useJobs = () => {
         }
     }
 
-    const addJob = async (job: PartialJobType): Promise<void> => {
+    const addJob = async (job: Partial<JobType>): Promise<void> => {
         try {
             const response = await api.post('/jobs', job);                  
             setJobs((prevJobs) => [...prevJobs, response.data.job]);        
@@ -34,7 +34,7 @@ export const useJobs = () => {
         }
     }
 
-    const updateJob = async (jobId: string, editedJob: EditJobType): Promise<void> => {
+    const updateJob = async (jobId: string, editedJob: Partial<JobType>): Promise<void> => {
         try {
             const response = await api.patch(`/jobs/${jobId}`, editedJob);                           
             setJobs((prevJobs) => prevJobs.map(job => job._id === jobId ? response.data.job : job));       

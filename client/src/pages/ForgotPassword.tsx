@@ -39,7 +39,7 @@ const ForgotPassword: React.FC = () => {
             sessionStorage.setItem('userEmail', JSON.stringify(email));
         } 
         catch (error) {
-            displayServerError(error, setIsLoading);
+            displayServerError({ error, setIsLoading });
         }      
         finally{
             setIsLoading(false);
@@ -64,6 +64,7 @@ const ForgotPassword: React.FC = () => {
         setIsLoading(true);
         try {
             await resetPassword({ email, password, verificationCode });
+            setIsLoading(false);
             resetError();
             form.reset();
             sessionStorage.removeItem('isValidUser');
@@ -71,10 +72,7 @@ const ForgotPassword: React.FC = () => {
             dialogRef.current?.showModal();
         } 
         catch (error: unknown) {
-            displayServerError(error);
-        }
-        finally{
-            setIsLoading(false);
+            displayServerError({ error, setIsLoading });
         }
     }
 

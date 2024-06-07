@@ -1,15 +1,9 @@
-export type PartialJobType = {
-    company: string,
-    position: string,
-};
-
-export type EditJobType = PartialJobType & {
-    status: keyof typeof JobStatus
-};
-
-export type JobType = PartialJobType & EditJobType & {
+export type JobType = {
     readonly _id: string,
     readonly __v: number,
+    company: string,
+    position: string,
+    status: keyof typeof JobStatus,
     createdBy: string,
     createdAt: Date,
     updatedAt: Date,

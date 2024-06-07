@@ -1,6 +1,6 @@
 import { ReactNode, createContext } from "react";
 import { useJobs } from "../hooks/useJobs";
-import { EditJobType, JobType, PartialJobType } from "../types/jobTypes";
+import { JobType } from "../types/jobTypes";
 
 interface JobContextProviderProps {
     children: ReactNode;
@@ -9,8 +9,8 @@ interface JobContextProviderProps {
 interface JobContextType {
     jobs: JobType[],
     getJobs: () => Promise<JobType[]>,
-    addJob: (job: PartialJobType) => Promise<void>,
-    updateJob: (jobId: string, job: EditJobType) => Promise<void>,
+    addJob: (job: Partial<JobType>) => Promise<void>,
+    updateJob: (jobId: string, job: Partial<JobType>) => Promise<void>,
     deleteJob: (jobId: string) => Promise<void>,
     loading: boolean
 };

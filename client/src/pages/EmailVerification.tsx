@@ -29,7 +29,7 @@ const EmailVerification: React.FC = () => {
             navigate("/dashboard");
         } 
         catch (error: unknown) {
-            displayServerError(error);
+            displayServerError({ error });
         }
         
     }

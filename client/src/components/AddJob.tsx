@@ -27,7 +27,7 @@ const AddJob: React.FC = () => {
       generateToastr('success', 'Job has been successfully created');
     } 
     catch (error: unknown) {
-      displayServerError(error);
+      displayServerError({ error });
     }     
   }
 

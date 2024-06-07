@@ -5,8 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useErrorHandler } from "../hooks/useErrorHandler";
 import FormFields from "../components/FormFields";
 import Button from "../components/Button";
-import loadingGif from "../assets/images/loadinggif.gif";
 import FormContainer from "../components/FormContainer";
+import Loading from "../components/Loading";
 
 const LoginRegister: React.FC = () => {
     const [isLogin, setIsLogin] = useState<boolean>(true);
@@ -72,7 +72,7 @@ const LoginRegister: React.FC = () => {
 
     return (
         <FormContainer wrapperClass={isLoading ? "loading" : ""}>
-            {isLoading && <img className="loading-indicator" src={loadingGif} alt="loading-gif"/>}
+            {isLoading && <Loading/>}
             <h1>{isLogin ? 'Login' : 'Register'}</h1>
             <form onSubmit={isLogin ? handleLogin : handleRegister}>
                 {!isLogin && <FormFields label="Name"/>}        

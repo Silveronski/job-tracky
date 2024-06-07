@@ -1,12 +1,13 @@
 import React from "react"
+import loadingGif from "../assets/images/loadinggif.gif";
 
-const Loading: React.FC = () => {
+interface LoadingProps { className?: string }
+  
+const Loading: React.FC<LoadingProps> = ({ className = '' }) => {
   return (
-    <section className="spinner-container">
-        <div className="spinner">
-            <div className="inner"></div>
-        </div>
-    </section>
+    <div className={className}>
+      <img className="loading-indicator" src={loadingGif} alt="loading-gif"/>
+    </div>
   )
 }
 

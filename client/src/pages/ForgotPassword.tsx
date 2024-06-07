@@ -5,8 +5,8 @@ import { useErrorHandler } from "../hooks/useErrorHandler";
 import FormFields from "../components/FormFields";
 import Button from "../components/Button";
 import check from "../assets/images/check.png";
-import loadingGif from "../assets/images/loadinggif.gif";
 import FormContainer from "../components/FormContainer";
+import Loading from "../components/Loading";
 
 const ForgotPassword: React.FC = () => {
     const { forgotPassword, resetPassword } = useContext(AuthContext);
@@ -78,7 +78,7 @@ const ForgotPassword: React.FC = () => {
 
     return (
         <FormContainer wrapperClass={[isLoading ? "loading" : "", isValidUser ? "" : "no-inline-padding"].join(' ')}>
-            {isLoading && <img className="loading-indicator" src={loadingGif} alt="loading-gif"/>}                          
+            {isLoading && <Loading/>}                          
             <h1 className={isValidUser ? "password-reset-title" : "forgot-password-title"}>Reset Password</h1>
             <p className={isValidUser ? "password-reset-success" : "password-reset-prompt"}>
                 {isValidUser ? "Success! Please check your email to reset your password."  

@@ -10,7 +10,7 @@ const Dashboard: React.FC = () => {
     return (
         <section className="dashboard-container">
             <AddJob/>
-            <Suspense fallback={<Loading/>}>
+            <Suspense fallback={<Loading className="loading-center"/>}>
                 <Jobs/>
             </Suspense>       
         </section>

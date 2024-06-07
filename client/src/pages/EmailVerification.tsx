@@ -30,8 +30,7 @@ const EmailVerification: React.FC = () => {
         } 
         catch (error: unknown) {
             displayServerError({ error });
-        }
-        
+        }     
     }
 
     return (    

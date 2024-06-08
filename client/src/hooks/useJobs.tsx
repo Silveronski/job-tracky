@@ -3,16 +3,19 @@ import { AuthContext } from "../context/AuthContext";
 import { api, setAuthToken } from '../api/api-config';
 import { JobType } from "../types/jobTypes";
 
+interface GetJobsResponse { jobs: JobType[] };
+    
+interface JobResponse {job: JobType };
+
 export const useJobs = () => {
     const { user } = useContext(AuthContext);
     const [jobs, setJobs] = useState<JobType[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
-    const getJobs = async (): Promise<JobType[]> => {
+    const getJobs = async (): Promise<void> => {
         try {
-            const response = await api.get('/jobs');                    
-            setJobs(response?.data?.jobs);
-            return response?.data?.jobs;       
+            const response = await api.get<GetJobsResponse>('/jobs');                    
+            setJobs(response?.data?.jobs);     
         } 
         catch (error) {
             console.error('error in getting jobs', error);
@@ -25,7 +28,7 @@ export const useJobs = () => {
 
     const addJob = async (job: Partial<JobType>): Promise<void> => {
         try {
-            const response = await api.post('/jobs', job);                  
+            const response = await api.post<JobResponse>('/jobs', job);                  
             setJobs((prevJobs) => [...prevJobs, response.data.job]);        
         } 
         catch (error) {
@@ -36,7 +39,7 @@ export const useJobs = () => {
 
     const updateJob = async (jobId: string, editedJob: Partial<JobType>): Promise<void> => {
         try {
-            const response = await api.patch(`/jobs/${jobId}`, editedJob);                           
+            const response = await api.patch<JobResponse>(`/jobs/${jobId}`, editedJob);                           
             setJobs((prevJobs) => prevJobs.map(job => job._id === jobId ? response.data.job : job));       
         } 
         catch (error) {
@@ -47,7 +50,7 @@ export const useJobs = () => {
 
     const deleteJob = async (jobId: string): Promise<void> => {
         try {
-            await api.delete(`/jobs/${jobId}`);               
+            await api.delete<JobResponse>(`/jobs/${jobId}`);               
             setJobs((prevJobs) => prevJobs.filter((job) => job._id !== jobId));    
         } 
         catch (error) {

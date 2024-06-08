@@ -8,7 +8,7 @@ interface JobContextProviderProps {
 
 interface JobContextType {
     jobs: JobType[],
-    getJobs: () => Promise<JobType[]>,
+    getJobs: () => Promise<void>,
     addJob: (job: Partial<JobType>) => Promise<void>,
     updateJob: (jobId: string, job: Partial<JobType>) => Promise<void>,
     deleteJob: (jobId: string) => Promise<void>,
@@ -17,7 +17,7 @@ interface JobContextType {
 
 const defaultState: JobContextType = {
     jobs: [],
-    getJobs: async () => [],
+    getJobs: async () => {},
     addJob: async () => {},
     updateJob: async () => {},
     deleteJob: async () => {},

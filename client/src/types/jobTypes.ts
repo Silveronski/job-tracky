@@ -4,9 +4,9 @@ export type JobType = {
     company: string,
     position: string,
     status: keyof typeof JobStatus,
-    createdBy: string,
-    createdAt: Date,
-    updatedAt: Date,
+    readonly createdBy: string,
+    readonly createdAt: Date,
+    readonly updatedAt: Date,
 };
 
 export const enum JobStatus {

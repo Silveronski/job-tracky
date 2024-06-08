@@ -8,7 +8,7 @@ export const useAuth = () => {
     
     const register = async (user: UserRegister): Promise<void> => {
         try {
-            await api.post('/auth/register', user);                         
+            await api.post<string>('/auth/register', user);                         
         } 
         catch (error) {
             console.error('error registering user', error);
@@ -18,8 +18,8 @@ export const useAuth = () => {
 
     const verifyVerificationCode = async (verificationCode: string, email: string): Promise<void> => {
         try {
-            const response = await api.post('/auth/verify-email', { verificationCode, email });         
-            storeUser({ name: response?.data?.user.name, token: response?.data?.token });         
+            const response = await api.post<CurrentUser>('/auth/verify-email', { verificationCode, email });         
+            storeUser({ name: response?.data?.name, token: response?.data?.token });         
         } 
         catch (error) {
             console.error('error verifying code', error);
@@ -29,8 +29,8 @@ export const useAuth = () => {
 
     const login = async (user: UserAuth): Promise<void> => {
         try {
-            const response = await api.post('/auth/login', user);          
-            storeUser({ name: response?.data?.user.name, token: response?.data?.token });           
+            const response = await api.post<CurrentUser>('/auth/login', user);          
+            storeUser({ name: response?.data?.name, token: response?.data.token });           
         } 
         catch (error) {
             console.error('error in user login', error);
@@ -40,7 +40,7 @@ export const useAuth = () => {
 
     const forgotPassword = async (email: string): Promise<void> => {
         try {
-            await api.post('/auth/forgot-password', { email });
+            await api.post<string>('/auth/forgot-password', { email });
         } 
         catch (error) {
             console.error('error in forgot password', error);
@@ -50,7 +50,7 @@ export const useAuth = () => {
 
     const resetPassword = async (userData: ResetPassword): Promise<void> => {
         try {
-            await api.post('/auth/reset-password', { userData });
+            await api.post<string>('/auth/reset-password', { userData });
         } 
         catch (error) {
             console.error('error in password reset', error);
@@ -76,12 +76,12 @@ export const useAuth = () => {
 
     const verifyUser = async (token: string): Promise<CurrentUser | null> => {
         try {
-            const response = await api.post('/auth/verify-token', null, {
+            const response = await api.post<CurrentUser>('/auth/verify-token', null, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
-            return response.data.user as CurrentUser;                      
+            return response?.data || null;                      
         } 
         catch (error) {
             console.error('error validating token', error);

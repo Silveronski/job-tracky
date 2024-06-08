@@ -39,7 +39,7 @@ const verifyEmail = async (req,res) => {
 
     const token = user.createJWT();
 
-    res.status(StatusCodes.OK).json({ user: { name: user.name }, token });
+    res.status(StatusCodes.OK).json({ name: user.name, token });
 }
 
 const login = async (req,res) => { 
@@ -55,7 +55,7 @@ const login = async (req,res) => {
     if (!user.isVerified) throw new UnauthenticatedError('Please verify your email');
         
     const token = user.createJWT();
-    res.status(StatusCodes.OK).json({ user: { name: user.name }, token });
+    res.status(StatusCodes.OK).json({ name: user.name, token });
 }
 
 const verifyToken = async (req,res) => {
@@ -66,7 +66,7 @@ const verifyToken = async (req,res) => {
     const token = authHeader.split(' ')[1];
     try {
         const payload = jwt.verify(token, process.env.JWT_SECRET);
-        res.status(StatusCodes.OK).json({ user: { name: payload.name, token }})
+        res.status(StatusCodes.OK).json({ name: payload.name, token });
     } 
     catch (error) {
         throw new UnauthenticatedError('Authentication invalid');

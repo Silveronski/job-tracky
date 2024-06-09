@@ -11,7 +11,15 @@
         }
     }
     .jobs-container{
-        margin-bottom: 3.5em;       
+        margin-bottom: 3.5em;   
+        .excel-btn-container{
+            display: flex;
+            justify-content: center;
+            margin-bottom: 5em;
+            .excel-img{
+                margin-left: 0.7em;
+            }        
+        } 
         .jobs-wrapper{
             display: flex;
             align-items: center;
@@ -129,20 +137,10 @@
             }
         }
     } 
-    .back-to-dashboard{
-        display: flex;
-        align-items: center;
-        background: transparent;
-        border: 2px solid $primaryColorBrighter;
-        font-size: 2rem; 
-        border-radius: 40px;   
-        padding: 0.5em 1.8em;
-        margin-top: 1em;    
-        &:hover{
-            background-color: $primaryColorBrighter;
-        }  
-        .dashboard-logo{
-            margin-left: 0.7em;
-        }
-    }  
+    .back-to-dashboard{       
+        margin-top: 1em;            
+    } 
+    .dashboard-logo{
+        margin-left: 0.7em;
+    } 
 }

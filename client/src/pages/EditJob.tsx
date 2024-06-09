@@ -45,7 +45,7 @@ const EditJob: React.FC = () => {
             containerClass="editjob-container"
             extraContent={
                 <Button 
-                    className="primary-button back-to-dashboard"
+                    className="secondary-button"
                     text="Back to Dashboard"
                     onClick={() => navigate('/dashboard')}
                     imgUrl={dashboard}

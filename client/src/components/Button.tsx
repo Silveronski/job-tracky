@@ -8,9 +8,15 @@ interface ButtonProps {
   onClick?: () => void;
 }
 
-const Button: React.FC<ButtonProps> = ({ text, onClick = () => {}, className = 'primary-button', imgUrl = '', imgClass = '' }) => {
+const Button: React.FC<ButtonProps> = ({ 
+  text,
+  onClick = () => {},
+  className = '',
+  imgUrl = '',
+  imgClass = '' 
+  }) => {
   return (
-    <button className={className} onClick={onClick}>
+    <button className={`primary-button ${className}`} onClick={onClick}>
       {text} {imgUrl && <img className={imgClass} src={imgUrl} alt="image"/>}
     </button>
   )

@@ -17,7 +17,6 @@ export const exportJobsToExcel = async (jobs: JobType[]) => {
         { header: 'Company', key: 'company', width: 30 },
         { header: 'Status', key: 'status', width: 20 }
     ];
-
     jobs.forEach((job) => {
         worksheet.addRow({
             createdAt: job.createdAt,
@@ -25,14 +24,12 @@ export const exportJobsToExcel = async (jobs: JobType[]) => {
             company: job.company,
             status: job.status
         });
-    })
-
+    });
     const buffer = await workbook.xlsx.writeBuffer();
     const data = new Blob(
         [buffer], 
         {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}
     );
-
     saveAs(data, 'jobs.xlsx');
     generateToastr('success', 'Jobs exported successfully!');
 }

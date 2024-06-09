@@ -19,6 +19,6 @@ const useAuthRedirect = (locationObject: Location = locationDefaultState) => {
             user?.token ? navigate("/dashboard") : navigate("/login");
         }
     },[locationObject, navigate, user, loading]);
-}
+};
 
 export default useAuthRedirect

@@ -1,4 +1,7 @@
 .loading-center {
     display: grid;
     place-items: center;
+    .loading-indicator{
+        z-index: 999;
+    }
 }

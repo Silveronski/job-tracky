@@ -1,12 +1,12 @@
 export type JobType = {
     readonly _id: string,
     readonly __v: number,
-    company: string,
-    position: string,
-    status: keyof typeof JobStatus,
     readonly createdBy: string,
     readonly createdAt: Date,
     readonly updatedAt: Date,
+    status: keyof typeof JobStatus,
+    company: string,
+    position: string,
 };
 
 export const enum JobStatus {

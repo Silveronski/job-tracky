@@ -7,7 +7,7 @@ interface FormContainerProps {
     wrapperClass?: string
 };
 
-const FormContainer: React.FC<FormContainerProps> = ({ children, extraContent = null, containerClass = '',  wrapperClass = ''}) => {
+const FormContainer: React.FC<FormContainerProps> = ({ children, extraContent, containerClass, wrapperClass }) => {
     return (
         <section className={`form-container ${containerClass}`}>
             <div className={`wrapper ${wrapperClass}`}>

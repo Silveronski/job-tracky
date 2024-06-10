@@ -66,6 +66,8 @@ const verifyToken = async (req,res) => {
     const token = authHeader.split(' ')[1];
     try {
         const payload = jwt.verify(token, process.env.JWT_SECRET);
+        const user = await User.findById(payload.userId);
+        if (!user) throw new UnauthenticatedError('Authentication invalid');
         res.status(StatusCodes.OK).json({ name: payload.name, token });
     } 
     catch (error) {

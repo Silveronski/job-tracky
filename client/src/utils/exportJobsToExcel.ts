@@ -1,12 +1,11 @@
-import { useToastr } from "../hooks/useToastr";
+import { generateToastr } from "./generateToastr";
 import { JobType } from "../types/jobTypes";
 import { saveAs } from 'file-saver';
 import ExcelJS from 'exceljs';
 
 export const exportJobsToExcel = async (jobs: JobType[]) => {
-    const { generateToastr } = useToastr();
     if (jobs.length === 0) {
-        generateToastr('error', 'No jobs!');
+        generateToastr('No jobs!', 'error');
         return;
     }
     const workbook = new ExcelJS.Workbook();
@@ -31,5 +30,5 @@ export const exportJobsToExcel = async (jobs: JobType[]) => {
         {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}
     );
     saveAs(data, 'jobs.xlsx');
-    generateToastr('success', 'Jobs exported successfully!');
+    generateToastr('Jobs exported successfully!', 'success');
 }

@@ -1,22 +1,21 @@
 import React from "react";
 import { useNavigate } from "react-router-dom"
 import { useJobContext } from "../context/JobContext";
-import { useToastr } from "../hooks/useToastr";
 import { JobType } from "../types/jobTypes";
+import { generateToastr } from "../utils/generateToastr";
 
 const Job: React.FC<JobType> = ({ _id, createdAt, position, company, status }) => {
   const currentJob = { _id, company, position, status };
   const navigate = useNavigate();
   const { deleteJob } = useJobContext();
-  const { generateToastr } = useToastr();
 
   const handleDelete = async () => {
     try {
       await deleteJob(_id);
-      generateToastr('success', 'Job has been successfully deleted');
+      generateToastr('Job has been successfully deleted', 'success');
     } 
     catch (error) {
-      generateToastr('error', 'Could not delete the job');
+      generateToastr('Could not delete the job', 'error');
     }  
   }
   

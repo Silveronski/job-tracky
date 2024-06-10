@@ -32,4 +32,4 @@ export const useJobContext = () => {
         throw new Error('JobContext must be used within a JobContextProvider');
     }
     return context;
-}
+};

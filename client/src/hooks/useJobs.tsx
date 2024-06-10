@@ -5,7 +5,7 @@ import { JobType } from "../types/jobTypes";
 
 interface GetJobsResponse { jobs: JobType[] };
     
-interface JobResponse {job: JobType };
+interface JobResponse { job: JobType };
 
 export const useJobs = () => {
     const { user } = useAuthContext();

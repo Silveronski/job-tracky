@@ -1,14 +1,16 @@
-import React, { FormEvent } from "react"
+import React, { FormEvent, useState } from "react"
 import { useJobContext } from "../context/JobContext";
 import { useErrorHandler } from "../hooks/useErrorHandler";
+import { generateToastr } from "../utils/generateToastr";
 import FormFields from "./FormFields";
 import Button from "./Button";
 import FormContainer from "./FormContainer";
-import { generateToastr } from "../utils/generateToastr";
+import Loading from "./Loading";
 
 const AddJob: React.FC = () => {
   const { error, displayClientError, displayServerError, resetError } = useErrorHandler();
   const { addJob } = useJobContext();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -19,6 +21,7 @@ const AddJob: React.FC = () => {
       displayClientError();
       return;
     }
+    setIsLoading(true);
     try {
       await addJob({ company, position });
       resetError();
@@ -27,11 +30,15 @@ const AddJob: React.FC = () => {
     } 
     catch (error: unknown) {
       displayServerError({ error });
-    }     
+    }    
+    finally{
+      setIsLoading(false);
+    } 
   }
 
   return (
-    <FormContainer containerClass="addjob-container">
+    <FormContainer containerClass="addjob-container" wrapperClass={isLoading ? "loading" : ""}>
+      {isLoading && <Loading/>}
       <h1>Add a Job</h1>
       <form onSubmit={handleFormSubmit}>
         <FormFields label="Company"/>

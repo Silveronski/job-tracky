@@ -1,4 +1,4 @@
-import React, { FormEvent } from "react";
+import React, { FormEvent, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useJobContext } from "../context/JobContext";
 import { useErrorHandler } from "../hooks/useErrorHandler";
@@ -9,8 +9,10 @@ import FormFields from "../components/FormFields";
 import Button from "../components/Button";
 import dashboard from "../assets/images/dashboard.png";
 import FormContainer from "../components/FormContainer";
+import Loading from "../components/Loading";
 
 const EditJob: React.FC = () => {
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const { updateJob } = useJobContext();
     const { error, displayClientError, displayServerError } = useErrorHandler();
     const navigate = useNavigate();
@@ -29,6 +31,7 @@ const EditJob: React.FC = () => {
             displayClientError();
             return;
         }
+        setIsLoading(true);
         try {
             await updateJob(currentJob._id, { company, position, status });
             generateToastr('Job has been successfully updated', 'success');
@@ -36,12 +39,16 @@ const EditJob: React.FC = () => {
         } 
         catch (error: unknown) {
             displayServerError({ error });
-        }             
+        }    
+        finally{
+            setIsLoading(false);
+        }          
     }
 
     return (
         <FormContainer 
             containerClass="editjob-container"
+            wrapperClass={isLoading ? "loading" : ""}
             extraContent={
                 <Button 
                     className="secondary-button"
@@ -52,6 +59,7 @@ const EditJob: React.FC = () => {
                 />
             }
         >
+            {isLoading && <Loading/>}
             <h1>Edit Job</h1>
             <form onSubmit={handleFormSubmit}>
                 <FormFields label="Company" defaultValue={currentJob?.company}/>

@@ -1,4 +1,4 @@
-import { createContext, ReactNode } from "react";
+import { createContext, ReactNode, useContext } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { CurrentUser, UserAuth, UserRegister, ResetPassword } from '../types/authTypes';
 
@@ -17,21 +17,7 @@ interface AuthContextType {
     signOut: () => void,
 };
 
-const defaultState: AuthContextType = {
-    user: {
-        name: "",
-        token: null
-    },
-    loading: true,
-    register: async () => {},
-    login: async () => {},
-    verifyVerificationCode: async () => {},
-    forgotPassword: async () => {},
-    resetPassword: async () => {},
-    signOut: () => {},
-};
-
-export const AuthContext = createContext<AuthContextType>(defaultState);
+export const AuthContext = createContext<AuthContextType | null>(null);
    
 export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     const { 
@@ -51,3 +37,11 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
         </AuthContext.Provider>
     )
 };
+
+export const useAuthContext = () => {
+    const context = useContext(AuthContext);
+    if (!context) {
+        throw new Error('AuthContext must be used within a AuthContextProvider');
+    }
+    return context;
+}

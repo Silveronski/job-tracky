@@ -1,5 +1,5 @@
-import React, { FormEvent, useContext } from "react"
-import { JobContext } from "../context/JobContext";
+import React, { FormEvent } from "react"
+import { useJobContext } from "../context/JobContext";
 import { useToastr } from "../hooks/useToastr";
 import { useErrorHandler } from "../hooks/useErrorHandler";
 import FormFields from "./FormFields";
@@ -8,7 +8,7 @@ import FormContainer from "./FormContainer";
 
 const AddJob: React.FC = () => {
   const { error, displayClientError, displayServerError, resetError } = useErrorHandler();
-  const { addJob } = useContext(JobContext);
+  const { addJob } = useJobContext();
   const { generateToastr } = useToastr();
 
   const handleFormSubmit = async (e: FormEvent<HTMLFormElement>) => {

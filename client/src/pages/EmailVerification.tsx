@@ -1,6 +1,6 @@
-import React, { FormEvent, useContext } from "react";
+import React, { FormEvent } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
+import { useAuthContext } from "../context/AuthContext";
 import { useErrorHandler } from "../hooks/useErrorHandler";
 import useAuthRedirect from "../hooks/useAuthRedirect";
 import FormFields from "../components/FormFields";
@@ -8,7 +8,7 @@ import Button from "../components/Button";
 import FormContainer from "../components/FormContainer";
 
 const EmailVerification: React.FC = () => {
-    const { verifyVerificationCode } = useContext(AuthContext);
+    const { verifyVerificationCode } = useAuthContext();
     const { error, displayClientError, displayServerError } = useErrorHandler();
     const navigate = useNavigate();
     const location = useLocation();

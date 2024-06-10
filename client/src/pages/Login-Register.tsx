@@ -1,6 +1,6 @@
 import React, { FormEvent } from "react";
-import { useContext, useState } from "react"
-import { AuthContext } from "../context/AuthContext";
+import { useState } from "react"
+import { useAuthContext } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { useErrorHandler } from "../hooks/useErrorHandler";
 import FormFields from "../components/FormFields";
@@ -12,7 +12,7 @@ const LoginRegister: React.FC = () => {
     const [isLogin, setIsLogin] = useState<boolean>(true);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const { error, displayClientError, displayServerError, resetError } = useErrorHandler();
-    const { register, login } = useContext(AuthContext);
+    const { register, login } = useAuthContext();
     const navigate = useNavigate();
 
     const toggleLoginOrRegister = () => {

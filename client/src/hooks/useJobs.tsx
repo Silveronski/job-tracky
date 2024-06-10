@@ -1,5 +1,5 @@
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../context/AuthContext";
+import { useEffect, useState } from "react";
+import { useAuthContext } from "../context/AuthContext";
 import { api, setAuthToken } from '../api/api-config';
 import { JobType } from "../types/jobTypes";
 
@@ -8,7 +8,7 @@ interface GetJobsResponse { jobs: JobType[] };
 interface JobResponse {job: JobType };
 
 export const useJobs = () => {
-    const { user } = useContext(AuthContext);
+    const { user } = useAuthContext();
     const [jobs, setJobs] = useState<JobType[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 

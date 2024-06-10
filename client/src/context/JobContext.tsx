@@ -1,4 +1,4 @@
-import { ReactNode, createContext } from "react";
+import { ReactNode, createContext, useContext } from "react";
 import { useJobs } from "../hooks/useJobs";
 import { JobType } from "../types/jobTypes";
 
@@ -15,16 +15,7 @@ interface JobContextType {
     loading: boolean
 };
 
-const defaultState: JobContextType = {
-    jobs: [],
-    getJobs: async () => {},
-    addJob: async () => {},
-    updateJob: async () => {},
-    deleteJob: async () => {},
-    loading: true
-};
-
-export const JobContext = createContext<JobContextType>(defaultState);
+export const JobContext = createContext<JobContextType | null>(null);
 
 export const JobContextProvider = ({ children }: JobContextProviderProps) => {
     const { jobs, getJobs, addJob, updateJob, deleteJob, loading } = useJobs();
@@ -34,3 +25,11 @@ export const JobContextProvider = ({ children }: JobContextProviderProps) => {
         </JobContext.Provider>
     )
 };
+
+export const useJobContext = () => {
+    const context = useContext(JobContext);
+    if (!context) {
+        throw new Error('JobContext must be used within a JobContextProvider');
+    }
+    return context;
+}

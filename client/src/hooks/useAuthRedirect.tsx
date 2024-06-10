@@ -1,5 +1,5 @@
-import { useContext, useEffect } from "react";
-import { AuthContext } from "../context/AuthContext";
+import { useEffect } from "react";
+import { useAuthContext } from "../context/AuthContext";
 import { useNavigate, Location } from "react-router-dom";
 
 const locationDefaultState: Location = {
@@ -11,7 +11,7 @@ const locationDefaultState: Location = {
 };
 
 const useAuthRedirect = (locationObject: Location = locationDefaultState) => {
-    const { user, loading } = useContext(AuthContext);
+    const { user, loading } = useAuthContext();
     const navigate = useNavigate();
 
     useEffect(() => {

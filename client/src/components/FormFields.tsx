@@ -10,7 +10,7 @@ interface FormFieldsProps {
   selectOptions? : Array<keyof typeof JobStatus>
 };
 
-const FormFields: React.FC<FormFieldsProps> = ({ label, inputType = 'text', labelId, defaultValue = '', isSelect = false, selectOptions = [] }) => {
+const FormFields: React.FC<FormFieldsProps> = ({ label, inputType = 'text', labelId, defaultValue, isSelect, selectOptions = [] }) => {
   return (
     <div className="form-fields">
         <label id={labelId}>{label}</label>

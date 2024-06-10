@@ -1,5 +1,5 @@
-import React, { FormEvent, useContext, useEffect, useRef, useState } from "react";
-import { AuthContext } from "../context/AuthContext";
+import React, { FormEvent, useEffect, useRef, useState } from "react";
+import { useAuthContext } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { useErrorHandler } from "../hooks/useErrorHandler";
 import FormFields from "../components/FormFields";
@@ -9,7 +9,7 @@ import FormContainer from "../components/FormContainer";
 import Loading from "../components/Loading";
 
 const ForgotPassword: React.FC = () => {
-    const { forgotPassword, resetPassword } = useContext(AuthContext);
+    const { forgotPassword, resetPassword } = useAuthContext();
     const { error, displayClientError, displayServerError, resetError } = useErrorHandler();
     const [isValidUser, setIsValidUser] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);

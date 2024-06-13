@@ -20,6 +20,20 @@ body{
     color: white;
 }
 
+::-webkit-scrollbar {
+    width: 0.7em; 
+}
+
+::-webkit-scrollbar-track {
+    background: $darkGrayColor;
+    border-radius: 100vw;
+}
+                
+::-webkit-scrollbar-thumb {
+    background-color: $primaryColor;
+    border-radius: 100vw;              
+}     
+
 main{
     margin-top: 150px;
 }

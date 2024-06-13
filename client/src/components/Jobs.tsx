@@ -1,24 +1,11 @@
 import React from "react";
 import { useJobContext } from "../context/JobContext";
-import { exportJobsToExcel } from "../utils/exportJobsToExcel";
-import excel from "../assets/images/excel.png";
 import Job from "./Job";
-import Button from "./Button";
 
 const Jobs: React.FC = () => {
   const { jobs, loading } = useJobContext();
-
   return (
     <section className="jobs-container">
-      <div className="excel-btn-container">
-        <Button 
-          text="Export to excel"
-          onClick={() => exportJobsToExcel(jobs)}
-          className="secondary-button"
-          imgUrl={excel}
-          imgClass="excel-img"
-        />    
-      </div>
       <div className="jobs-wrapper">
         {jobs.length > 0 &&
           jobs.map((job) => (

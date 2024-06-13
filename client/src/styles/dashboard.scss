@@ -10,16 +10,16 @@
             padding-inline: 8em;        
         }    
     }
+    .actions-container{
+        display: flex;
+        justify-content: center;
+        margin-bottom: 5em;
+        .excel-img{
+            margin-left: 0.7em;
+        }        
+    } 
     .jobs-container{
         margin-bottom: 3.5em;   
-        .excel-btn-container{
-            display: flex;
-            justify-content: center;
-            margin-bottom: 5em;
-            .excel-img{
-                margin-left: 0.7em;
-            }        
-        } 
         .jobs-wrapper{
             display: flex;
             align-items: center;

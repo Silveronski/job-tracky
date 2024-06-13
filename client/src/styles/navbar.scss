@@ -11,8 +11,9 @@ header{
         .logo{
             width: 16em;
             margin-left: 2em;         
-            object-fit: cover;   
             padding-bottom: 0.5em; 
+            cursor: pointer;
+            object-fit: cover;   
         }
         .centered-logo{
             margin: auto;

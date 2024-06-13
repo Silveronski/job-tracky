@@ -10,7 +10,7 @@ interface GenerateToastr {
     ): void;
 };
 
-export const generateToastr: GenerateToastr = (text, displayMethod, duration) => {
+export const generateToastr: GenerateToastr = (text, displayMethod, duration): void => {
     const options = {
         timeOut: duration || 5000,
         extendedTimeOut: 0, 

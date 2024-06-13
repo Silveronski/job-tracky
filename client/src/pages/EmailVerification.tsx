@@ -1,4 +1,4 @@
-import React, { FormEvent } from "react";
+import React, { FormEvent, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 import { useErrorHandler } from "../hooks/useErrorHandler";
@@ -6,8 +6,10 @@ import useAuthRedirect from "../hooks/useAuthRedirect";
 import FormFields from "../components/FormFields";
 import Button from "../components/Button";
 import FormContainer from "../components/FormContainer";
+import Loading from "../components/Loading";
 
 const EmailVerification: React.FC = () => {
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const { verifyVerificationCode } = useAuthContext();
     const { error, displayClientError, displayServerError } = useErrorHandler();
     const navigate = useNavigate();
@@ -24,17 +26,22 @@ const EmailVerification: React.FC = () => {
             displayClientError('Please provide a code');
             return;
         }
+        setIsLoading(true);
         try {
             await verifyVerificationCode(verificationCode, verifyData.email);
             navigate("/dashboard");
         } 
         catch (error: unknown) {
             displayServerError({ error });
-        }     
+        }  
+        finally{
+            setIsLoading(false);
+        }    
     }
 
     return (    
-        <FormContainer>
+        <FormContainer wrapperClass={isLoading ? "loading" : ""}>
+            {isLoading && <Loading/>}
             <h1 className="verify-email-title">Verify email</h1>
             <p className="verify-email-success">Success! Please check your email to verify your account.</p>
             <form onSubmit={handleSubmit} className="verify-form">  

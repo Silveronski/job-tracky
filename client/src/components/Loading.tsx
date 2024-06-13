@@ -5,9 +5,9 @@ interface LoadingProps { className?: string }
   
 const Loading: React.FC<LoadingProps> = ({ className = '' }) => {
   return (
-    <div className={className}>
+    <section className={className}>
       <img className="loading-indicator" src={loadingGif} alt="loading-gif"/>
-    </div>
+    </section>
   )
 }
 

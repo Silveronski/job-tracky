@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useContext } from "react";
 import { useAuth } from "../hooks/useAuth";
-import { CurrentUser, UserAuth, UserRegister, ResetPassword } from '../types/authTypes';
+import { CurrentUser, UserAuth, ResetPassword } from '../types/authTypes';
 
 interface AuthContextProviderProps {
     children: ReactNode; 
@@ -14,7 +14,7 @@ interface AuthContextType {
     verifyVerificationCode: (verificationCode: string, email: string) => Promise<void>,
     forgotPassword: (email: string) => Promise<void>,
     resetPassword: (userData: ResetPassword) => Promise<void>,
-    signOut: () => void,
+    signOut: () => void
 };
 
 export const AuthContext = createContext<AuthContextType | null>(null);

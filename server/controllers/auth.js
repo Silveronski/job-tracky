@@ -3,9 +3,9 @@ const jwt = require('jsonwebtoken');
 const sendVerificationEmail = require('../utils/sendVerificationEmail');
 const sendResetPasswordEmail = require('../utils/sendResetPasswordEmail');
 const crypto = require('crypto');
-const cloudinary = require('cloudinary').v2;
 const { BadRequestError, UnauthenticatedError } = require('../errors');
 const { StatusCodes } = require('http-status-codes');
+const uploadAvatarToCloud = require('../utils/uploadAvatarToCloud');
 
 const register = async (req,res) => { 
     const { email, name, password } = req.body;
@@ -13,20 +13,8 @@ const register = async (req,res) => {
  
     let avatarUrl = null;
 
-    if (req.files && req.files.avatar) {
-        const avatar = req.files.avatar;
-        const maxSize = 1024 * 1024 // 1MB  
-        if (avatar.size > maxSize) throw new BadRequestError('Please upload an image smaller than 1MB');
-        if (!avatar.mimetype.startsWith('image')) throw new BadRequestError('Please upload an image file');
-
-        const result = await cloudinary.uploader.upload(avatar.tempFilePath, {
-            folder: 'avatars',
-            use_filename: true,
-            unique_filename: false,
-        });
-        avatarUrl = result.secure_url;
-    }
-
+    if (req.files && req.files.avatar) avatarUrl = await uploadAvatarToCloud(req.files.avatar);
+        
     const verificationCode = crypto.randomBytes(3).toString('hex');
     const user = await User.create({ 
         name,

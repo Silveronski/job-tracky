@@ -12,7 +12,7 @@ const Navbar: React.FC = () => {
                 <img className={(!loading && !user?.token) ? 'centered-logo logo' : 'logo'} src={logo} alt="logo"/>
                 {(!loading && user?.token) && 
                 <div>
-                    {user?.avatar && <img src={user.avatar} alt="user avatar"/>}                   
+                    {user?.avatar && <img src={user.avatar} style={{width: '75px'}} alt="user avatar"/>}                   
                     <p>Hello, {user?.name || 'User'}</p>
                     <Button text="Sign Out" onClick={() => signOut()} imgUrl={logout} imgClass="logout"/>
                 </div>}

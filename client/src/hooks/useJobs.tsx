@@ -15,7 +15,7 @@ export const useJobs = () => {
     const getJobs = async (): Promise<void> => {
         try {
             const response = await api.get<GetJobsResponse>('/jobs');                    
-            setJobs(response?.data?.jobs);     
+            setJobs(response.data?.jobs);     
         } 
         catch (error) {
             console.error('error in getting jobs', error);
@@ -60,10 +60,8 @@ export const useJobs = () => {
     }
 
     useEffect(() => {
-        if (user?.token) {
-            setAuthToken(user.token);
-            getJobs();
-        }
+        setAuthToken(user.token);
+        if (user?.token) getJobs();      
     }, [user.token]);
 
     return { jobs, getJobs, addJob, updateJob, deleteJob, loading }

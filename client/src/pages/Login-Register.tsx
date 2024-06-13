@@ -1,8 +1,9 @@
-import React, { FormEvent } from "react";
+import React, { FormEvent, useEffect } from "react";
 import { useState } from "react"
 import { useAuthContext } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { useErrorHandler } from "../hooks/useErrorHandler";
+import { UserAuth } from "../types/authTypes";
 import FormFields from "../components/FormFields";
 import Button from "../components/Button";
 import FormContainer from "../components/FormContainer";
@@ -11,19 +12,30 @@ import Loading from "../components/Loading";
 const LoginRegister: React.FC = () => {
     const [isLogin, setIsLogin] = useState<boolean>(true);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [avatarFile, setAvatarFile] = useState<File | null>(null);
     const { error, displayClientError, displayServerError, resetError } = useErrorHandler();
     const { register, login } = useAuthContext();
     const navigate = useNavigate();
 
-    const toggleLoginOrRegister = () => {
+    useEffect(() => {
+        const isLogin = sessionStorage.getItem('isLogin');
+        isLogin && setIsLogin(JSON.parse(isLogin));      
+        return () => {
+            sessionStorage.removeItem('isLogin');
+            setIsLoading(false);
+        }
+    },[]);
+
+    const toggleLoginOrRegister = (): void => {
+        sessionStorage.setItem('isLogin', JSON.stringify(!isLogin));
         setIsLogin(!isLogin); 
         resetError();
     }
         
-    const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
+    const handleLogin = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault(); 
         const form = e.target as HTMLFormElement;  
-        const user = {
+        const user: UserAuth = {
             email: (form[0] as HTMLInputElement).value.trim(),
             password: (form[1] as HTMLInputElement).value.trim()
         } 
@@ -33,8 +45,7 @@ const LoginRegister: React.FC = () => {
         }
         setIsLoading(true);
         try {
-            await login(user);
-            setIsLoading(false);
+            await login(user);          
             navigate("/dashboard");
         } 
         catch (error: unknown) {
@@ -42,27 +53,29 @@ const LoginRegister: React.FC = () => {
         }            
     }
 
-    const handleRegister = async (e: FormEvent<HTMLFormElement>) => {
+    const handleRegister = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
         const form = e.target as HTMLFormElement; 
-        const user = {
-            name: (form[0] as HTMLInputElement).value.trim(),
-            email: (form[1] as HTMLInputElement).value.trim(),
-            password: (form[2] as HTMLInputElement).value.trim()
-        }
-        if (!user.email || !user.password || !user.name) {
+        const name = (form[0] as HTMLInputElement).value.trim();
+        const email = (form[1] as HTMLInputElement).value.trim();
+        const password = (form[2] as HTMLInputElement).value.trim();  
+        if (!name || !email || !password) {
             displayClientError();
             return;
         }
-        if (user.password.length < 6) {
+        if (password.length < 6) {
             displayClientError('Password must be at least 6 characters');
             return;
-        }         
+        }     
+        const formData = new FormData();
+        formData.append("name", name);
+        formData.append("email", email);
+        formData.append("password", password);
+        avatarFile && formData.append("avatar", avatarFile);    
         setIsLoading(true);
         try {
-            await register(user);
-            setIsLoading(false);
-            const verifyData = { email: user.email };
+            await register(formData);
+            const verifyData = { email };
             navigate("/verify-email", { state: {verifyData} }); 
         } 
         catch (error: unknown) {
@@ -75,9 +88,10 @@ const LoginRegister: React.FC = () => {
             {isLoading && <Loading/>}
             <h1>{isLogin ? 'Login' : 'Register'}</h1>
             <form onSubmit={isLogin ? handleLogin : handleRegister}>
-                {!isLogin && <FormFields label="Name"/>}        
-                <FormFields label="Email" inputType="email"/>
-                <FormFields label="Password" inputType="password"/>
+                {!isLogin && <FormFields label="Name *"/>}        
+                <FormFields label="Email *" inputType="email"/>
+                <FormFields label="Password *" inputType="password"/>
+                {!isLogin && <FormFields label="Avatar" isTypeFile={true} handleFileChange={setAvatarFile}/>} 
                 <div className="btn-container">
                     {error.activated && <p className="error">{error.msg}</p>}
                     <Button text={isLogin ? "SIGN IN" : "SIGN UP"}/> 

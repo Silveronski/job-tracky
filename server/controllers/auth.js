@@ -3,17 +3,37 @@ const jwt = require('jsonwebtoken');
 const sendVerificationEmail = require('../utils/sendVerificationEmail');
 const sendResetPasswordEmail = require('../utils/sendResetPasswordEmail');
 const crypto = require('crypto');
+const cloudinary = require('cloudinary').v2;
 const { BadRequestError, UnauthenticatedError } = require('../errors');
 const { StatusCodes } = require('http-status-codes');
 
 const register = async (req,res) => { 
     const { email, name, password } = req.body;
+    if (!email || !name || !password) throw new BadRequestError('Please provide email, name & password');
+ 
+    let avatarUrl = null;
+
+    if (req.files && req.files.avatar) {
+        const avatar = req.files.avatar;
+        const maxSize = 1024 * 1024 // 1MB  
+        if (avatar.size > maxSize) throw new BadRequestError('Please upload an image smaller than 1MB');
+        if (!avatar.mimetype.startsWith('image')) throw new BadRequestError('Please upload an image file');
+
+        const result = await cloudinary.uploader.upload(avatar.tempFilePath, {
+            folder: 'avatars',
+            use_filename: true,
+            unique_filename: false,
+        });
+        avatarUrl = result.secure_url;
+    }
+
     const verificationCode = crypto.randomBytes(3).toString('hex');
     const user = await User.create({ 
         name,
         email,
         password,
-        verificationCode
+        verificationCode,
+        avatar: avatarUrl
     });
 
     await sendVerificationEmail({
@@ -39,7 +59,7 @@ const verifyEmail = async (req,res) => {
 
     const token = user.createJWT();
 
-    res.status(StatusCodes.OK).json({ name: user.name, token });
+    res.status(StatusCodes.OK).json({ name: user.name, avatar: user.avatar ,token });
 }
 
 const login = async (req,res) => { 
@@ -55,7 +75,7 @@ const login = async (req,res) => {
     if (!user.isVerified) throw new UnauthenticatedError('Please verify your email');
         
     const token = user.createJWT();
-    res.status(StatusCodes.OK).json({ name: user.name, token });
+    res.status(StatusCodes.OK).json({ name: user.name, avatar: user.avatar ,token });
 }
 
 const verifyToken = async (req,res) => {
@@ -68,7 +88,7 @@ const verifyToken = async (req,res) => {
         const payload = jwt.verify(token, process.env.JWT_SECRET);
         const user = await User.findById(payload.userId);
         if (!user) throw new UnauthenticatedError('Authentication invalid');
-        res.status(StatusCodes.OK).json({ name: payload.name, token });
+        res.status(StatusCodes.OK).json({ name: payload.name, avatar: user.avatar, token });
     } 
     catch (error) {
         throw new UnauthenticatedError('Authentication invalid');

@@ -15,11 +15,19 @@ const userRouter = require('./routes/user');
 const authenticateUser = require('./middleware/authentication');
 const errorHandler = require('./middleware/error-handler');
 const notFound = require('./middleware/not-found');
+const fileUpload = require('express-fileupload');
+const cloudinary = require('cloudinary').v2;
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.CLOUD_API_KEY,
+    api_secret: process.env.CLOUD_API_SECRET
+});
 
 const app = express();
 const PORT = process.env.PORT || 3002;
 
 app.use(express.json());
+app.use(fileUpload({ useTempFiles: true }));
 app.use(cors());
 app.use(helmet());
 app.use(xss());

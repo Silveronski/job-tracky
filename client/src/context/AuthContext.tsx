@@ -9,7 +9,7 @@ interface AuthContextProviderProps {
 interface AuthContextType {
     user: CurrentUser,
     loading: boolean,
-    register: (user: UserRegister) => Promise<void>,
+    register: (user: FormData) => Promise<void>,
     login: (user: UserAuth) => Promise<void>,
     verifyVerificationCode: (verificationCode: string, email: string) => Promise<void>,
     forgotPassword: (email: string) => Promise<void>,

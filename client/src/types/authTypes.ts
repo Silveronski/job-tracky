@@ -1,13 +1,12 @@
 export type CurrentUser = {
     name: string,
-    token: string | null
+    token: string | null,
+    avatar: string | null
 };
 
 export type UserAuth = { 
     email: string,
     password: string
 };
-
-export type UserRegister = UserAuth & { name: string };
 
 export type ResetPassword = UserAuth & { verificationCode: string };

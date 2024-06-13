@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { api } from '../api/api-config';
-import { CurrentUser, UserAuth, UserRegister, ResetPassword } from '../types/authTypes';
+import { CurrentUser, UserAuth, ResetPassword } from '../types/authTypes';
 
 export const useAuth = () => {
-    const [user, setUser] = useState<CurrentUser>({ name: '', token: null });
+    const [user, setUser] = useState<CurrentUser>({ name: '', token: null, avatar: null });
     const [loading, setLoading] = useState<boolean>(true);
     
-    const register = async (user: UserRegister): Promise<void> => {
+    const register = async (user: FormData): Promise<void> => {
         try {
             await api.post<string>('/auth/register', user);                         
         } 
@@ -19,7 +19,11 @@ export const useAuth = () => {
     const verifyVerificationCode = async (verificationCode: string, email: string): Promise<void> => {
         try {
             const response = await api.post<CurrentUser>('/auth/verify-email', { verificationCode, email });         
-            storeUser({ name: response?.data?.name, token: response?.data?.token });         
+            storeUser({
+                name: response.data?.name,
+                token: response.data?.token,
+                avatar: response.data?.avatar
+            });         
         } 
         catch (error) {
             console.error('error verifying code', error);
@@ -30,7 +34,11 @@ export const useAuth = () => {
     const login = async (user: UserAuth): Promise<void> => {
         try {
             const response = await api.post<CurrentUser>('/auth/login', user);          
-            storeUser({ name: response?.data?.name, token: response?.data.token });           
+            storeUser({
+                name: response.data?.name,
+                token: response.data?.token,
+                avatar: response.data?.avatar
+            });            
         } 
         catch (error) {
             console.error('error in user login', error);
@@ -60,7 +68,7 @@ export const useAuth = () => {
 
     const signOut = (): void => {
         localStorage.getItem('userData') && localStorage.removeItem('userData');
-        setUser({ name: '', token: null });
+        setUser({ name: '', token: null, avatar: null });
     }
 
     const checkToken = async (): Promise<void> => {
@@ -68,7 +76,7 @@ export const useAuth = () => {
         if (userData) {
             const parsedUserData = JSON.parse(userData);
             const validUser = await verifyUser(parsedUserData.token);
-            if (validUser) setUser({ name: validUser.name, token: validUser.token });                         
+            if (validUser) setUser({ name: validUser.name, token: validUser.token, avatar: validUser.avatar });                         
             else signOut();                     
         }      
         setLoading(false);

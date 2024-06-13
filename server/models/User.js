@@ -25,6 +25,9 @@ const UserScheme = new mongoose.Schema({
         required: [true, 'Please provide password'],
         minlength: 6
     },
+    avatar: {
+        type: String
+    },
     verificationCode: {
         type: String
     },

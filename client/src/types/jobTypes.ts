@@ -1,4 +1,4 @@
-export type JobType = {
+type JobType = {
     readonly _id: string,
     readonly __v: number,
     readonly createdBy: string,
@@ -9,7 +9,7 @@ export type JobType = {
     position: string,
 };
 
-export const enum JobStatus {
+const enum JobStatus {
     interview = 'interview',
     declined = 'declined',
     pending = 'pending'

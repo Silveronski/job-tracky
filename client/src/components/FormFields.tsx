@@ -1,5 +1,4 @@
 import React, { ChangeEvent, useRef } from "react";
-import { JobStatus } from "../types/jobTypes";
 import { isFileValidImage } from "../utils/validations";
 import addAvatar from "../assets/images/addAvatar.png";
 

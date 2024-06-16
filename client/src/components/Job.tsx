@@ -1,7 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom"
 import { useJobContext } from "../context/JobContext";
-import { JobType } from "../types/jobTypes";
 import { generateToastr } from "../utils/generateToastr";
 
 const Job: React.FC<JobType> = ({ _id, createdAt, position, company, status }) => {

@@ -2,7 +2,6 @@ import React, { FormEvent, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useJobContext } from "../context/JobContext";
 import { useErrorHandler } from "../hooks/useErrorHandler";
-import { JobStatus } from "../types/jobTypes";
 import { generateToastr } from "../utils/generateToastr";
 import useAuthRedirect from "../hooks/useAuthRedirect";
 import FormFields from "../components/FormFields";

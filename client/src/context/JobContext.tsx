@@ -1,6 +1,5 @@
 import { ReactNode, createContext, useContext } from "react";
 import { useJobs } from "../hooks/useJobs";
-import { JobType } from "../types/jobTypes";
 
 interface JobContextProviderProps {
     children: ReactNode;

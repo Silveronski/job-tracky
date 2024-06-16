@@ -1,12 +1,12 @@
-export type CurrentUser = {
+type CurrentUser = {
     name: string,
     token: string | null,
     avatar: string | null
 };
 
-export type UserAuth = { 
+type UserAuth = { 
     email: string,
     password: string
 };
 
-export type ResetPassword = UserAuth & { verificationCode: string };
+type ResetPassword = UserAuth & { verificationCode: string };

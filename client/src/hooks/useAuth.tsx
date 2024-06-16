@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { api } from '../api/api-config';
-import { CurrentUser, UserAuth, ResetPassword } from '../types/authTypes';
 
 export const useAuth = () => {
     const [user, setUser] = useState<CurrentUser>({ name: '', token: null, avatar: null });

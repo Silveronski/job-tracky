@@ -3,7 +3,6 @@ import { useState } from "react"
 import { useAuthContext } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { useErrorHandler } from "../hooks/useErrorHandler";
-import { UserAuth } from "../types/authTypes";
 import FormFields from "../components/FormFields";
 import Button from "../components/Button";
 import FormContainer from "../components/FormContainer";
@@ -89,8 +88,8 @@ const LoginRegister: React.FC = () => {
             <h1>{isLogin ? 'Login' : 'Register'}</h1>
             <form onSubmit={isLogin ? handleLogin : handleRegister}>
                 {!isLogin && <FormFields label="Name *"/>}        
-                <FormFields label="Email *" inputType="email"/>
-                <FormFields label="Password *" inputType="password"/>
+                <FormFields label={isLogin ? "Email" : "Email *"} inputType="email"/>
+                <FormFields label={isLogin ? "Password " : "Password *"} inputType="password"/>
                 {!isLogin && <FormFields label="Avatar" isTypeFile={true} handleFileChange={setAvatarFile}/>} 
                 <div className="btn-container">
                     {error.activated && <p className="error">{error.msg}</p>}

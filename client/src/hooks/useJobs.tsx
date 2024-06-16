@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuthContext } from "../context/AuthContext";
 import { api, setAuthToken } from '../api/api-config';
-import { JobType } from "../types/jobTypes";
 
 interface GetJobsResponse { jobs: JobType[] };
     

@@ -1,6 +1,5 @@
 import { createContext, ReactNode, useContext } from "react";
 import { useAuth } from "../hooks/useAuth";
-import { CurrentUser, UserAuth, ResetPassword } from '../types/authTypes';
 
 interface AuthContextProviderProps {
     children: ReactNode; 

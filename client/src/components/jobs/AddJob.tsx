@@ -1,11 +1,11 @@
 import React, { FormEvent, useState } from "react"
-import { useJobContext } from "../context/JobContext";
-import { useErrorHandler } from "../hooks/useErrorHandler";
-import { generateToastr } from "../utils/generateToastr";
-import FormFields from "./FormFields";
-import Button from "./Button";
-import FormContainer from "./FormContainer";
-import Loading from "./Loading";
+import { useJobContext } from "../../context/JobContext";
+import { useErrorHandler } from "../../hooks/useErrorHandler";
+import { generateToastr } from "../../utils/generateToastr";
+import FormFields from "../form/FormFields";
+import Button from "../ui/Button";
+import FormContainer from "../form/FormContainer";
+import Loading from "../ui/Loading";
 
 const AddJob: React.FC = () => {
   const { error, displayClientError, displayServerError, resetError } = useErrorHandler();
@@ -15,8 +15,8 @@ const AddJob: React.FC = () => {
   const handleFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;   
-    const company = (form[0] as HTMLInputElement).value.trim();
-    const position = (form[1] as HTMLInputElement).value.trim();
+    const position = (form[0] as HTMLInputElement).value.trim();
+    const company = (form[1] as HTMLInputElement).value.trim();
     if (!company || !position) {
       displayClientError();
       return;
@@ -41,8 +41,8 @@ const AddJob: React.FC = () => {
       {isLoading && <Loading/>}
       <h1>Add a Job</h1>
       <form onSubmit={handleFormSubmit}>
-        <FormFields label="Company"/>
-        <FormFields label="Position"/>
+        <FormFields inputType="regular" label="Position"/>
+        <FormFields inputType="regular" label="Company"/>
         <div className="btn-container">
             {error.activated && <p className="error">{error.msg}</p>}
             <Button text="Create"/>

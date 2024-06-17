@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom"
-import { useJobContext } from "../context/JobContext";
-import { generateToastr } from "../utils/generateToastr";
+import { useJobContext } from "../../context/JobContext";
+import { generateToastr } from "../../utils/generateToastr";
 
 const Job: React.FC<JobType> = ({ _id, createdAt, position, company, status }) => {
   const currentJob = { _id, company, position, status };

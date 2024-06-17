@@ -3,10 +3,11 @@ import { useState } from "react"
 import { useAuthContext } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { useErrorHandler } from "../hooks/useErrorHandler";
-import FormFields from "../components/FormFields";
-import Button from "../components/Button";
-import FormContainer from "../components/FormContainer";
-import Loading from "../components/Loading";
+import FormFields from "../components/form/FormFields";
+import Button from "../components/ui/Button";
+import FormContainer from "../components/form/FormContainer";
+import Loading from "../components/ui/Loading";
+import addAvatar from "../assets/images/addAvatar.png";
 
 const LoginRegister: React.FC = () => {
     const [isLogin, setIsLogin] = useState<boolean>(true);
@@ -87,10 +88,18 @@ const LoginRegister: React.FC = () => {
             {isLoading && <Loading/>}
             <h1>{isLogin ? 'Login' : 'Register'}</h1>
             <form onSubmit={isLogin ? handleLogin : handleRegister}>
-                {!isLogin && <FormFields label="Name *"/>}        
-                <FormFields label={isLogin ? "Email" : "Email *"} inputType="email"/>
-                <FormFields label={isLogin ? "Password " : "Password *"} inputType="password"/>
-                {!isLogin && <FormFields label="Avatar" isTypeFile={true} handleFileChange={setAvatarFile}/>} 
+                {!isLogin && <FormFields inputType="regular" label="Name *"/>}        
+                <FormFields inputType="regular" label={isLogin ? "Email" : "Email *"} type="email"/>
+                <FormFields inputType="regular" label={isLogin ? "Password " : "Password *"} type="password"/>
+                {!isLogin && 
+                    <FormFields 
+                        inputType="file" 
+                        label="Avatar"
+                        InputImg={addAvatar} 
+                        inputName="avatar" 
+                        handleFileChange={setAvatarFile}
+                    />
+                } 
                 <div className="btn-container">
                     {error.activated && <p className="error">{error.msg}</p>}
                     <Button text={isLogin ? "SIGN IN" : "SIGN UP"}/> 

@@ -4,11 +4,11 @@ import { useJobContext } from "../context/JobContext";
 import { useErrorHandler } from "../hooks/useErrorHandler";
 import { generateToastr } from "../utils/generateToastr";
 import useAuthRedirect from "../hooks/useAuthRedirect";
-import FormFields from "../components/FormFields";
-import Button from "../components/Button";
+import FormFields from "../components/form/FormFields";
+import Button from "../components/ui/Button";
 import dashboard from "../assets/images/dashboard.png";
-import FormContainer from "../components/FormContainer";
-import Loading from "../components/Loading";
+import FormContainer from "../components/form/FormContainer";
+import Loading from "../components/ui/Loading";
 
 const EditJob: React.FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -61,10 +61,22 @@ const EditJob: React.FC = () => {
             {isLoading && <Loading/>}
             <h1>Edit Job</h1>
             <form onSubmit={handleFormSubmit}>
-                <FormFields label="Company" defaultValue={currentJob?.company}/>
-                <FormFields label="Position" defaultValue={currentJob?.position}/>
-                <FormFields label="Status" defaultValue={currentJob?.status} isSelect={true}
-                    selectOptions={["pending", "interview", "declined"]}/> 
+                <FormFields 
+                    inputType="regular"
+                    label="Company"
+                    defaultValue={currentJob?.company}
+                />
+                <FormFields 
+                    inputType="regular" 
+                    label="Position"
+                    defaultValue={currentJob?.position}
+                />
+                <FormFields 
+                    inputType="select"
+                    label="Status"
+                    defaultValue={currentJob?.status} 
+                    selectOptions={["pending", "interview", "declined"]}
+                /> 
                 <div className="btn-container">
                     {error.activated && <p className="error">{error.msg}</p>}
                     <Button text="Edit"/>

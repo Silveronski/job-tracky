@@ -1,6 +1,6 @@
 import React from "react";
 import Job from "./Job";
-import { useJobContext } from "../context/JobContext";
+import { useJobContext } from "../../context/JobContext";
 
 const Jobs: React.FC = () => {
   const { jobs, loading } = useJobContext();

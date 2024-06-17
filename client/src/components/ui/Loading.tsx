@@ -1,5 +1,5 @@
 import React from "react"
-import loadingGif from "../assets/images/loadinggif.gif";
+import loadingGif from "../../assets/images/loadinggif.gif";
 
 interface LoadingProps { className?: string }
   

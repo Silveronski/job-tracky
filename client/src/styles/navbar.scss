@@ -10,7 +10,7 @@ header{
         background-color: $darkGrayColor;         
         .logo{
             width: 16em;
-            margin-left: 2em;         
+            margin-left: 4em;         
             padding-bottom: 0.5em; 
             cursor: pointer;
             object-fit: cover;   
@@ -18,23 +18,64 @@ header{
         .centered-logo{
             margin: auto;
         }
-        div{
+        .dropdown-container{
+            position: relative;
             display: flex;
             margin-left: auto;
             align-items: center;
-            gap: 2em;
-            margin-right: 2rem;
-            p{
-                font-size: 1.8rem;
-            }
-            button{              
-                letter-spacing: 1px; 
-                display: flex;
-                align-items: center;
-                .logout{
-                    margin-left: 0.5em;
-                }                
-            }
+            gap: 1.2em;
+            margin-right: 4em;           
+            .user-avatar{
+                width: 4em;
+            }               
+            .arrow{
+                cursor: pointer;
+                transition: 0.3s; 
+                &:hover{
+                    scale: 1.2;
+                }
+            } 
+            .dropdown-menu-wrapper{
+                position: absolute;
+                right: 0;
+                .up-arrow{                   
+                    top: 4.2em;
+                    right: 0.2em;
+                    position: absolute;
+                    transform: rotate(180deg);
+                }
+                .dropdwon-menu{
+                    position: absolute;
+                    list-style: none;
+                    background-color: $darkGrayColor;
+                    top: 6.5em;
+                    right: 0.1em;
+                    padding-block: 0.7em;
+                    border-radius: 8px;
+                    border-top-right-radius: 0px;
+                    .dropdown-menu-item{ 
+                        cursor: pointer;  
+                        display: flex;
+                        align-items: center;             
+                        padding-left: 0.5em;              
+                        padding-block: 0.4em;
+                        font-size: 1.4rem;
+                        min-width: 330px;
+                        &:hover a{
+                            text-decoration: underline;
+                        }
+                        img{
+                            padding-left: 0.3em;
+                            margin-right: 0.7em;                                        
+                        }
+                        a{
+                            text-decoration: none;
+                            color: white;
+                            transition: 0.3s;
+                        }
+                    } 
+                } 
+            }             
         }
     }
 }

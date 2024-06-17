@@ -2,11 +2,11 @@ import React, { FormEvent, useEffect, useRef, useState } from "react";
 import { useAuthContext } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { useErrorHandler } from "../hooks/useErrorHandler";
-import FormFields from "../components/FormFields";
-import Button from "../components/Button";
+import FormFields from "../components/form/FormFields";
+import Button from "../components/ui/Button";
 import check from "../assets/images/check.png";
-import FormContainer from "../components/FormContainer";
-import Loading from "../components/Loading";
+import FormContainer from "../components/form/FormContainer";
+import Loading from "../components/ui/Loading";
 
 const ForgotPassword: React.FC = () => {
     const { forgotPassword, resetPassword } = useAuthContext();
@@ -86,10 +86,10 @@ const ForgotPassword: React.FC = () => {
             </p>             
             <form onSubmit={!isValidUser ? handleForgotPassword : handleResetPassword} className="forgot-password-form"> 
                 {!isValidUser ?         
-                    <FormFields label="Email" inputType="email" labelId="forgot-password-email"/>                                                 
+                    <FormFields inputType="regular" label="Email" type="email" labelId="forgot-password-email"/>                                                 
                 :<>
-                    <FormFields label="Verification Code"/>
-                    <FormFields label="New Password" inputType="password"/>
+                    <FormFields inputType="regular" label="Verification Code"/>
+                    <FormFields inputType="regular" label="New Password" type="password"/>
                 </>}                   
                 <div className="btn-container">
                     {error.activated && <p className="error">{error.msg}</p>}

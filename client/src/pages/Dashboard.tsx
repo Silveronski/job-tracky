@@ -1,10 +1,10 @@
 import React, {  Suspense, lazy } from "react";
 import useAuthRedirect from "../hooks/useAuthRedirect";
-import AddJob from "../components/AddJob";
-import Loading from "../components/Loading";
-import Actions from "../components/Actions";
+import AddJob from "../components/jobs/AddJob";
+import Loading from "../components/ui/Loading";
+import Actions from "../components/jobs/Actions";
 
-const Jobs = lazy(() => import("../components/Jobs"));
+const Jobs = lazy(() => import("../components/jobs/Jobs"));
 
 const Dashboard: React.FC = () => {
     useAuthRedirect();

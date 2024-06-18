@@ -1,5 +1,4 @@
 import { generateToastr } from "./generateToastr";
-import { JobType } from "../types/jobTypes";
 import { saveAs } from 'file-saver';
 import ExcelJS from 'exceljs';
 

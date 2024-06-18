@@ -26,6 +26,7 @@ header{
             gap: 1.2em;
             margin-right: 4em;           
             .user-avatar{
+                cursor: pointer;
                 width: 4em;
             }               
             .arrow{
@@ -36,23 +37,29 @@ header{
                 }
             } 
             .dropdown-menu-wrapper{
+                display: none;
                 position: absolute;
                 right: 0;
-                .up-arrow{                   
-                    top: 4.2em;
-                    right: 0.2em;
-                    position: absolute;
-                    transform: rotate(180deg);
-                }
                 .dropdwon-menu{
                     position: absolute;
                     list-style: none;
                     background-color: $darkGrayColor;
-                    top: 6.5em;
+                    top: 5em;
                     right: 0.1em;
                     padding-block: 0.7em;
-                    border-radius: 8px;
+                    border-radius: 12px;
                     border-top-right-radius: 0px;
+                    box-shadow: 0px 10px 35px black;
+                    .username{                 
+                        text-align: center;
+                        letter-spacing: 2px;
+                        font-size: 2rem;
+                        font-weight: 900;
+                        font-family: Cambria, sans-serif;
+                        margin-block: 0.3em;
+                        padding-bottom: 0.5em;
+                        border-bottom: 2px $primaryColor solid;                
+                    }
                     .dropdown-menu-item{ 
                         cursor: pointer;  
                         display: flex;
@@ -60,7 +67,7 @@ header{
                         padding-left: 0.5em;              
                         padding-block: 0.4em;
                         font-size: 1.4rem;
-                        min-width: 330px;
+                        min-width: 350px;
                         &:hover a{
                             text-decoration: underline;
                         }

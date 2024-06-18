@@ -2,7 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { AuthContextProvider } from "./context/AuthContext.tsx";
 import { JobContextProvider } from "./context/JobContext.tsx";
 import Layout from "./layout/Layout.tsx";
-import LoginRegister from "./pages/Login-Register.tsx";
+import Auth from "./pages/Auth.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
 import EmailVerification from "./pages/EmailVerification.tsx";
 import ForgotPassword from "./pages/ForgotPassword.tsx";
@@ -15,7 +15,7 @@ function App() {
       <JobContextProvider>       
         <Layout>
           <Routes>
-            <Route path="/login" element={<LoginRegister/>}></Route>   
+            <Route path="/login" element={<Auth/>}></Route>   
             <Route path="/verify-email" element={<EmailVerification/>}></Route>  
             <Route path="/forgot-password" element={<ForgotPassword/>}></Route>   
             <Route path="/dashboard" element={<Dashboard/>}></Route>

@@ -2,6 +2,7 @@ import React, { FormEvent, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 import { useErrorHandler } from "../hooks/useErrorHandler";
+import { InputType } from "../types/inputTypes";
 import useAuthRedirect from "../hooks/useAuthRedirect";
 import FormFields from "../components/form/FormFields";
 import Button from "../components/ui/Button";
@@ -45,7 +46,7 @@ const EmailVerification: React.FC = () => {
             <h1 className="verify-email-title">Verify email</h1>
             <p className="verify-email-success">Success! Please check your email to verify your account.</p>
             <form onSubmit={handleSubmit} className="verify-form">  
-                <FormFields inputType="regular" label="Verification Code"/>
+                <FormFields inputType={InputType.regular} label="Verification Code"/>
                 <div className="btn-container">
                     {error.activated && <p className="error">{error.msg}</p>}
                     <Button text="Verify"/>                 

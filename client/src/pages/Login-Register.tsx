@@ -3,6 +3,7 @@ import { useState } from "react"
 import { useAuthContext } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { useErrorHandler } from "../hooks/useErrorHandler";
+import { InputType } from "../types/inputTypes";
 import FormFields from "../components/form/FormFields";
 import Button from "../components/ui/Button";
 import FormContainer from "../components/form/FormContainer";
@@ -88,12 +89,12 @@ const LoginRegister: React.FC = () => {
             {isLoading && <Loading/>}
             <h1>{isLogin ? 'Login' : 'Register'}</h1>
             <form onSubmit={isLogin ? handleLogin : handleRegister}>
-                {!isLogin && <FormFields inputType="regular" label="Name *"/>}        
-                <FormFields inputType="regular" label={isLogin ? "Email" : "Email *"} type="email"/>
-                <FormFields inputType="regular" label={isLogin ? "Password " : "Password *"} type="password"/>
+                {!isLogin && <FormFields inputType={InputType.regular} label="Name *"/>}        
+                <FormFields inputType={InputType.regular} label={isLogin ? "Email" : "Email *"} type="email"/>
+                <FormFields inputType={InputType.regular} label={isLogin ? "Password " : "Password *"} type="password"/>
                 {!isLogin && 
                     <FormFields 
-                        inputType="file" 
+                        inputType={InputType.file}
                         label="Avatar"
                         InputImg={addAvatar} 
                         inputName="avatar" 

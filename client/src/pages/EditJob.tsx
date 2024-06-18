@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useJobContext } from "../context/JobContext";
 import { useErrorHandler } from "../hooks/useErrorHandler";
 import { generateToastr } from "../utils/generateToastr";
+import { InputType } from "../types/inputTypes";
 import useAuthRedirect from "../hooks/useAuthRedirect";
 import FormFields from "../components/form/FormFields";
 import Button from "../components/ui/Button";
@@ -62,17 +63,17 @@ const EditJob: React.FC = () => {
             <h1>Edit Job</h1>
             <form onSubmit={handleFormSubmit}>
                 <FormFields 
-                    inputType="regular"
+                    inputType={InputType.regular}
                     label="Company"
                     defaultValue={currentJob?.company}
                 />
                 <FormFields 
-                    inputType="regular" 
+                    inputType={InputType.regular} 
                     label="Position"
                     defaultValue={currentJob?.position}
                 />
                 <FormFields 
-                    inputType="select"
+                    inputType={InputType.select}
                     label="Status"
                     defaultValue={currentJob?.status} 
                     selectOptions={["pending", "interview", "declined"]}

@@ -2,6 +2,7 @@ import React, { FormEvent, useEffect, useRef, useState } from "react";
 import { useAuthContext } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { useErrorHandler } from "../hooks/useErrorHandler";
+import { InputType } from "../types/inputTypes";
 import FormFields from "../components/form/FormFields";
 import Button from "../components/ui/Button";
 import check from "../assets/images/check.png";
@@ -86,10 +87,10 @@ const ForgotPassword: React.FC = () => {
             </p>             
             <form onSubmit={!isValidUser ? handleForgotPassword : handleResetPassword} className="forgot-password-form"> 
                 {!isValidUser ?         
-                    <FormFields inputType="regular" label="Email" type="email" labelId="forgot-password-email"/>                                                 
+                    <FormFields inputType={InputType.regular} label="Email" type="email" labelId="forgot-password-email"/>                                                 
                 :<>
-                    <FormFields inputType="regular" label="Verification Code"/>
-                    <FormFields inputType="regular" label="New Password" type="password"/>
+                    <FormFields inputType={InputType.regular} label="Verification Code"/>
+                    <FormFields inputType={InputType.regular} label="New Password" type="password"/>
                 </>}                   
                 <div className="btn-container">
                     {error.activated && <p className="error">{error.msg}</p>}

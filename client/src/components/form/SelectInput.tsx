@@ -1,4 +1,5 @@
 import React from 'react';
+import { SelectInputProps } from '../../types/inputTypes';
 
 const SelectInput: React.FC<SelectInputProps> = ({ label, defaultValue, selectOptions, labelId }) => {
     return (

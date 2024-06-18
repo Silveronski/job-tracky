@@ -1,4 +1,5 @@
 import React from 'react';
+import { RegularInputProps } from '../../types/inputTypes';
 
 const RegularInput: React.FC<RegularInputProps> = ({ label, type, labelId, defaultValue }) => {
     return (     

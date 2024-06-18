@@ -2,6 +2,7 @@ import React, { FormEvent, useState } from "react"
 import { useJobContext } from "../../context/JobContext";
 import { useErrorHandler } from "../../hooks/useErrorHandler";
 import { generateToastr } from "../../utils/generateToastr";
+import { InputType } from "../../types/inputTypes";
 import FormFields from "../form/FormFields";
 import Button from "../ui/Button";
 import FormContainer from "../form/FormContainer";
@@ -41,8 +42,8 @@ const AddJob: React.FC = () => {
       {isLoading && <Loading/>}
       <h1>Add a Job</h1>
       <form onSubmit={handleFormSubmit}>
-        <FormFields inputType="regular" label="Position"/>
-        <FormFields inputType="regular" label="Company"/>
+        <FormFields inputType={InputType.regular} label="Position"/>
+        <FormFields inputType={InputType.regular} label="Company"/>
         <div className="btn-container">
             {error.activated && <p className="error">{error.msg}</p>}
             <Button text="Create"/>

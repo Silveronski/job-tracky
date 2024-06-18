@@ -1,11 +1,12 @@
 import React, { ChangeEvent, useRef } from "react";
 import { isFileValidImage } from "../../utils/validations";
+import { FileInputProps } from "../../types/inputTypes";
 
 const FileInput: React.FC<FileInputProps> = ({ label, handleFileChange, inputName, InputImg, accepts, labelClassName }) => {
     const vMarkRef = useRef<HTMLElement>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
     
-    const handleAvatarUpload = (e: ChangeEvent<HTMLInputElement>): void => {
+    const handleFileUpload = (e: ChangeEvent<HTMLInputElement>): void => {
       if (e.target.files && vMarkRef.current) {
         if (!isFileValidImage(e.target.files)) {
           alert("File must be an image with a maximum size of 1MB!");
@@ -33,7 +34,7 @@ const FileInput: React.FC<FileInputProps> = ({ label, handleFileChange, inputNam
                 id={inputName}
                 name={inputName}
                 accept={accepts || "image/*"}
-                onChange={handleAvatarUpload}
+                onChange={handleFileUpload}
                 ref={fileInputRef}
             />
             <label htmlFor={inputName} className={labelClassName || "add-avatar-container"}>

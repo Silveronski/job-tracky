@@ -54,8 +54,8 @@ const Navbar: React.FC = () => {
                             <ul className="dropdwon-menu">
                                 <h3 className="username">{user?.name}</h3>
                                 <NavItem text="Update Profile" linkTo="#" imgUrl={updateProfile}/>
-                                <NavItem text="Delete Account" linkTo="#" imgUrl={deleteAccount}/>
-                                <NavItem text="Sign Out" linkTo="#" imgUrl={logout} onClick={signUserOut}/>                                                           
+                                <NavItem text="Delete Account" imgUrl={deleteAccount}/>
+                                <NavItem text="Sign Out" imgUrl={logout} onClick={signUserOut}/>                                                           
                             </ul>
                         </section>                                                                                            
                     </div>                                     

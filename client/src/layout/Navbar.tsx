@@ -19,11 +19,11 @@ const Navbar: React.FC = () => {
     }
 
     const toggleDropdwonApearence = (): void => {
-        if (dropdownMenuRef.current?.style.display === 'none') {
-            dropdownMenuRef.current.style.display = 'block';
+        if (dropdownMenuRef.current?.style.display === 'block') {
+            dropdownMenuRef.current.style.display = 'none';
             return;
         }
-        else dropdownMenuRef.current!.style.display = 'none';             
+        else dropdownMenuRef.current!.style.display = 'block';             
     }
 
     return (

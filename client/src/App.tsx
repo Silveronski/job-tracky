@@ -5,7 +5,7 @@ import Layout from "./layout/Layout.tsx";
 import Auth from "./pages/Auth.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
 import EmailVerification from "./pages/EmailVerification.tsx";
-import ForgotPassword from "./pages/ForgotPassword.tsx";
+import PasswordRecovery from "./pages/PasswordRecovery.tsx";
 import EditJob from "./pages/EditJob.tsx";
 import './styles/style.scss';
 
@@ -17,7 +17,7 @@ function App() {
           <Routes>
             <Route path="/login" element={<Auth/>}></Route>   
             <Route path="/verify-email" element={<EmailVerification/>}></Route>  
-            <Route path="/forgot-password" element={<ForgotPassword/>}></Route>   
+            <Route path="/forgot-password" element={<PasswordRecovery/>}></Route>   
             <Route path="/dashboard" element={<Dashboard/>}></Route>
             <Route path="/edit" element={<EditJob/>}></Route>         
             <Route path="*" element={<Navigate to="/login"/>}></Route>

@@ -5,7 +5,7 @@ const SelectInput: React.FC<SelectInputProps> = ({ label, defaultValue, selectOp
     return (
         <section className="form-fields">
             <label id={labelId}>{label}</label>
-            <select defaultValue={defaultValue}>
+            <select className='select-input' defaultValue={defaultValue}>
                 {selectOptions.map((option,index) => (
                     <option key={index} value={option}>{option}</option>
                 ))}

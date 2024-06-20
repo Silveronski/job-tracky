@@ -16,15 +16,18 @@ const AddJob: React.FC = () => {
   const handleFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;   
-    const position = (form[0] as HTMLInputElement).value.trim();
-    const company = (form[1] as HTMLInputElement).value.trim();
-    if (!company || !position) {
+    const job: Partial<JobType> = {
+      position : (form[0] as HTMLInputElement).value.trim(),
+      company : (form[1] as HTMLInputElement).value.trim(),
+      jobType : (form[2] as HTMLInputElement).value as JobType['jobType']
+    };  
+    if (!job.company || !job.position) {
       displayClientError();
       return;
-    }
-    setIsLoading(true);
+    }    
     try {
-      await addJob({ company, position });
+      setIsLoading(true);
+      await addJob(job);
       resetError();
       form.reset();
       generateToastr('Job has been successfully created', 'success');
@@ -44,6 +47,12 @@ const AddJob: React.FC = () => {
       <form onSubmit={handleFormSubmit}>
         <FormFields inputType={InputType.regular} label="Position"/>
         <FormFields inputType={InputType.regular} label="Company"/>
+        <FormFields 
+          inputType={InputType.select} 
+          label="Job Type" 
+          defaultValue="full-time" 
+          selectOptions={['full-time', 'part-time', 'remote', 'internship']}
+        />
         <div className="btn-container">
             {error.activated && <p className="error">{error.msg}</p>}
             <Button text="Create"/>

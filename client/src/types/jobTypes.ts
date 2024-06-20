@@ -4,13 +4,8 @@ type JobType = {
     readonly createdBy: string,
     readonly createdAt: Date,
     readonly updatedAt: Date,
-    status: keyof typeof JobStatus,
+    status: 'interview' | 'declined' | 'pending',
+    jobType: 'full-time' | 'part-time' | 'remote' | 'internship',
     company: string,
     position: string,
-};
-
-const enum JobStatus {
-    interview = 'interview',
-    declined = 'declined',
-    pending = 'pending'
 };

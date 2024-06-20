@@ -10,7 +10,7 @@ export interface SelectInputProps {
     inputType: InputType.select,
     label: string,
     defaultValue: string,
-    selectOptions: Array<keyof typeof JobStatus>,
+    selectOptions: Array<string>,
     labelId?: string
 };
   

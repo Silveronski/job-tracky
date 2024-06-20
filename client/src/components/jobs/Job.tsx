@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom"
 import { useJobContext } from "../../context/JobContext";
 import { generateToastr } from "../../utils/generateToastr";
 
-const Job: React.FC<JobType> = ({ _id, createdAt, position, company, status }) => {
-  const currentJob = { _id, company, position, status };
+const Job: React.FC<JobType> = ({ _id, createdAt, position, company, status, jobType }) => {
+  const currentJob = { _id, company, position, status, jobType };
   const navigate = useNavigate();
   const { deleteJob } = useJobContext();
 
@@ -24,8 +24,8 @@ const Job: React.FC<JobType> = ({ _id, createdAt, position, company, status }) =
           <small className="job-date">{new Date(createdAt).toLocaleDateString()}</small>
       </div>       
       <div className="positon-company">
-          <h3>{position}</h3>
-          <p>{company}</p>
+          <h3>{position} - {jobType}</h3>
+          <p>{company}</p>      
       </div>
       <div className="btns-status">
           <div className="btn-container">

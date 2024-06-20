@@ -1,69 +1,40 @@
 import { useEffect, useState } from 'react';
 import { api } from '../api/api-config';
+import asyncWrapper from '../utils/asyncWrapper';
 
 export const useAuth = () => {
     const [user, setUser] = useState<CurrentUser>({ name: '', token: null, avatar: null });
-    const [loading, setLoading] = useState<boolean>(true);
-    
-    const register = async (user: FormData): Promise<void> => {
-        try {
-            await api.post<string>('/auth/register', user);                         
-        } 
-        catch (error) {
-            console.error('error registering user', error);
-            throw error;
-        }
-    }
+    const [loading, setLoading] = useState<boolean>(true); 
 
-    const verifyVerificationCode = async (verificationCode: string, email: string): Promise<void> => {
-        try {
-            const response = await api.post<CurrentUser>('/auth/verify-email', { verificationCode, email });         
-            storeUser({
-                name: response.data?.name,
-                token: response.data?.token,
-                avatar: response.data?.avatar
-            });         
-        } 
-        catch (error) {
-            console.error('error verifying code', error);
-            throw error;
-        }
-    }
+    const register = asyncWrapper(async (user: FormData): Promise<void> => {     
+        await api.post<string>('/auth/register', user);                              
+    });
 
-    const login = async (user: UserAuth): Promise<void> => {
-        try {
-            const response = await api.post<CurrentUser>('/auth/login', user);          
-            storeUser({
-                name: response.data?.name,
-                token: response.data?.token,
-                avatar: response.data?.avatar
-            });            
-        } 
-        catch (error) {
-            console.error('error in user login', error);
-            throw error;
-        }
-    }
+    const verifyVerificationCode = asyncWrapper(async (verificationCode: string, email: string): Promise<void> => {     
+        const response = await api.post<CurrentUser>('/auth/verify-email', { verificationCode, email });         
+        storeUser({
+            name: response.data?.name,
+            token: response.data?.token,
+            avatar: response.data?.avatar
+        });         
+    });
 
-    const forgotPassword = async (email: string): Promise<void> => {
-        try {
-            await api.post<string>('/auth/forgot-password', { email });
-        } 
-        catch (error) {
-            console.error('error in forgot password', error);
-            throw error;
-        }
-    }
+    const login = asyncWrapper(async (user: UserAuth): Promise<void> => {      
+        const response = await api.post<CurrentUser>('/auth/login', user);         
+        storeUser({
+            name: response.data?.name,
+            token: response.data?.token,
+            avatar: response.data?.avatar
+        });                  
+    });
 
-    const resetPassword = async (userData: ResetPassword): Promise<void> => {
-        try {
-            await api.post<string>('/auth/reset-password', { userData });
-        } 
-        catch (error) {
-            console.error('error in password reset', error);
-            throw error;
-        }
-    }
+    const forgotPassword = asyncWrapper(async (email: string): Promise<void> => {   
+        await api.post<string>('/auth/forgot-password', { email });      
+    });
+
+    const resetPassword = asyncWrapper(async (userData: ResetPassword): Promise<void> => {     
+        await api.post<string>('/auth/reset-password', userData);            
+    });
 
     const signOut = (): void => {
         localStorage.getItem('userData') && localStorage.removeItem('userData');

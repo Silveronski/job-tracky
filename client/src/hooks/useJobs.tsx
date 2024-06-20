@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuthContext } from "../context/AuthContext";
 import { api, setAuthToken } from '../api/api-config';
+import asyncWrapper from "../utils/asyncWrapper";
 
 interface GetJobsResponse { jobs: JobType[] };
     
@@ -25,38 +26,20 @@ export const useJobs = () => {
         }
     }
 
-    const addJob = async (job: Partial<JobType>): Promise<void> => {
-        try {
-            const response = await api.post<JobResponse>('/jobs', job);                  
-            setJobs((prevJobs) => [...prevJobs, response.data.job]);        
-        } 
-        catch (error) {
-            console.error('error in adding a job', error);
-            throw error;
-        }
-    }
+    const addJob = asyncWrapper(async (job: Partial<JobType>): Promise<void> => {       
+        const response = await api.post<JobResponse>('/jobs', job);                  
+        setJobs((prevJobs) => [...prevJobs, response.data.job]);        
+    });
 
-    const updateJob = async (jobId: string, editedJob: Partial<JobType>): Promise<void> => {
-        try {
-            const response = await api.patch<JobResponse>(`/jobs/${jobId}`, editedJob);                           
-            setJobs((prevJobs) => prevJobs.map(job => job._id === jobId ? response.data.job : job));       
-        } 
-        catch (error) {
-            console.error('error in updating a job', error);
-            throw error;
-        }
-    }
+    const updateJob = asyncWrapper(async (jobId: string, editedJob: Partial<JobType>): Promise<void> => {      
+        const response = await api.patch<JobResponse>(`/jobs/${jobId}`, editedJob);                           
+        setJobs((prevJobs) => prevJobs.map(job => job._id === jobId ? response.data.job : job));       
+    });
 
-    const deleteJob = async (jobId: string): Promise<void> => {
-        try {
-            await api.delete<JobResponse>(`/jobs/${jobId}`);               
-            setJobs((prevJobs) => prevJobs.filter((job) => job._id !== jobId));    
-        } 
-        catch (error) {
-            console.error('error in deleting a job', error);
-            throw error;
-        }
-    }
+    const deleteJob = asyncWrapper(async (jobId: string): Promise<void> => {      
+        await api.delete<JobResponse>(`/jobs/${jobId}`);               
+        setJobs((prevJobs) => prevJobs.filter((job) => job._id !== jobId));            
+    });
 
     useEffect(() => {
         setAuthToken(user.token);

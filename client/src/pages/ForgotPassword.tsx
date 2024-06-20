@@ -1,6 +1,6 @@
 import React, { FormEvent, useEffect, useRef, useState } from "react";
 import { useAuthContext } from "../context/AuthContext";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useErrorHandler } from "../hooks/useErrorHandler";
 import { InputType } from "../types/inputTypes";
 import FormFields from "../components/form/FormFields";
@@ -8,6 +8,7 @@ import Button from "../components/ui/Button";
 import check from "../assets/images/check.png";
 import FormContainer from "../components/form/FormContainer";
 import Loading from "../components/ui/Loading";
+import ModalDialog from "../components/ui/ModalDialog";
 
 const ForgotPassword: React.FC = () => {
     const { forgotPassword, resetPassword } = useAuthContext();
@@ -20,12 +21,12 @@ const ForgotPassword: React.FC = () => {
     useEffect(() => {
         const isValidUser = sessionStorage.getItem('isValidUser');
         isValidUser && setIsValidUser(JSON.parse(isValidUser));
+        return () => resetState();
     },[]);
 
     const handleForgotPassword = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const form = e.target as HTMLFormElement;
-        
+        const form = e.target as HTMLFormElement;      
         const email = (form[0] as HTMLInputElement).value.trim();
         if (!email) {
             displayClientError('Please provide a valid email');
@@ -50,32 +51,44 @@ const ForgotPassword: React.FC = () => {
     const handleResetPassword = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const form = e.target as HTMLFormElement;
-
-        const verificationCode = (form[0] as HTMLInputElement).value.trim();
-        const password = (form[1] as HTMLInputElement).value.trim();
-        const email = JSON.stringify(sessionStorage.getItem('userEmail'));
-        if (!verificationCode || !password) {
+        const email = sessionStorage.getItem('userEmail');
+        if (!email) return; // handle later
+        const user: ResetPassword = {
+            verificationCode: (form[0] as HTMLInputElement).value.trim(),
+            password: (form[1] as HTMLInputElement).value.trim(),
+            email: JSON.parse(email)
+        };     
+        if (!user.verificationCode || !user.password) {
             displayClientError();
             return;
         }
-        if (password.length < 6) {
+        if (user.password.length < 6) {
             displayClientError('Password must be at least 6 characters');
             return;
-        }
-        setIsLoading(true);
+        }   
         try {
-            await resetPassword({ email, password, verificationCode });
+            setIsLoading(true);
+            await resetPassword(user);
             setIsLoading(false);
-            resetError();
             form.reset();
-            sessionStorage.removeItem('isValidUser');
-            sessionStorage.removeItem('userEmail');
+            resetState();
             dialogRef.current?.showModal();
         } 
         catch (error: unknown) {
             displayServerError({ error, setIsLoading });
         }
     }
+
+    const resetState = () => {
+        resetError();
+        sessionStorage.getItem('isValidUser') && sessionStorage.removeItem('isValidUser');
+        sessionStorage.getItem('userEmail') && sessionStorage.removeItem('userEmail');
+    }
+
+    const backToLogin = () => {
+        resetState();
+        navigate("/login");
+    } 
 
     return (
         <FormContainer wrapperClass={[isLoading ? "loading" : "", isValidUser ? "" : "no-inline-padding"].join(' ')}>
@@ -95,15 +108,17 @@ const ForgotPassword: React.FC = () => {
                 <div className="btn-container">
                     {error.activated && <p className="error">{error.msg}</p>}
                     <Button text={isValidUser ? "Change Password" : "Send me a reset code"}/> 
-                    <p className="toggler back-to-login"><Link to={"/login"}>Back to login</Link></p>                  
+                    <p className="toggler back-to-login"><a onClick={backToLogin}>Back to login</a></p>                  
                 </div>               
             </form>  
-            <dialog ref={dialogRef}>
-                <img className="dialog-item" src={check} alt="success"/>
-                <h2 className="dialog-item">Password Changed!</h2>
-                <p className="dialog-item">Your password has been changed successfully</p>
-                <Button text="Back to Login" onClick={() => navigate("/login")}/>
-            </dialog>      
+            <ModalDialog 
+                dialogRef={dialogRef}
+                imgUrl={check}
+                header="Password Changed!"
+                subHeader="Your password has been changed successfully"
+                btnOnClick={() => navigate("/login")}
+                btnText="Back to Login"
+            />  
         </FormContainer>                                                                        
     )
 }

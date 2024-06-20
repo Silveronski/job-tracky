@@ -1,24 +1,19 @@
 import { useEffect } from "react";
 import { api, setAuthToken } from "../api/api-config";
 import { useAuthContext } from "../context/AuthContext";
+import asyncWrapper from "../utils/asyncWrapper";
 
 interface UpdateProfileProps {
     
 }
 
 export const useUserActions = () => {
-    const { user, signOut } = useAuthContext();
+    const { user, signOut } = useAuthContext(); 
 
-    const deleteAccount = async (): Promise<void> => {
-        try {
-            await api.post<string>('/user/delete-account', null);
-            signOut();
-        } 
-        catch (error) {
-            console.log(error);
-            throw error;
-        }        
-    };
+    const deleteAccount = asyncWrapper(async (): Promise<void> => {      
+        await api.post<string>('/user/delete-account', null);
+        signOut();    
+    });
 
     const updateProfile = async (): Promise<void> => {
         

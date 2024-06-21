@@ -2,10 +2,10 @@ const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const sendVerificationEmail = require('../utils/sendVerificationEmail');
 const sendResetPasswordEmail = require('../utils/sendResetPasswordEmail');
+const uploadAvatarToCloud = require('../utils/uploadAvatarToCloud');
 const crypto = require('crypto');
 const { BadRequestError, UnauthenticatedError } = require('../errors');
 const { StatusCodes } = require('http-status-codes');
-const uploadAvatarToCloud = require('../utils/uploadAvatarToCloud');
 
 const register = async (req,res) => { 
     const { email, name, password } = req.body;
@@ -35,9 +35,8 @@ const register = async (req,res) => {
 
 const verifyEmail = async (req,res) => {
     const { verificationCode, email } = req.body;
-    const user = await User.findOne({ email });
+    const user = getUserFromDb(email);
 
-    if (!user) throw new UnauthenticatedError('Verification Failed');
     if (user.verificationCode !== verificationCode) throw new UnauthenticatedError('Verification Failed');
     if (user.isVerified) throw new BadRequestError('User is already verified');
 
@@ -54,8 +53,7 @@ const login = async (req,res) => {
     const { email, password } = req.body;
     if (!email || !password) throw new BadRequestError('Please provide email and password');
         
-    const user = await User.findOne({ email });
-    if (!user) throw new UnauthenticatedError('Invalid Credentials');
+    const user = getUserFromDb(email);
 
     const isPasswordCorrect = await user.comparePassword(password);
     if (!isPasswordCorrect) throw new UnauthenticatedError('Invalid Credentials');
@@ -87,8 +85,7 @@ const forgotPassword = async (req,res) => {
     const { email } = req.body;
     if (!email) throw new BadRequestError('Please provide your email');
 
-    const user = await User.findOne({ email });
-    if (!user) throw new UnauthenticatedError('Invalid Email');
+    const user = getUserFromDb(email);
     if (!user.isVerified) throw new UnauthenticatedError('User is not verified');
 
     const resetPasswordCode = crypto.randomBytes(6).toString('hex');
@@ -110,9 +107,7 @@ const forgotPassword = async (req,res) => {
 
 const resetPassword = async (req,res) => {
     const { email, verificationCode, password } = req.body;
-    const user = await User.findOne({ email });
-
-    if (!user) throw new UnauthenticatedError('Invalid Email');
+    const user = getUserFromDb(email);
     if (!user.isVerified) throw new UnauthenticatedError('User is not verified'); 
     if (user.verificationCode !== verificationCode) throw new UnauthenticatedError('Invalid verification code');
     if (user.resetPasswordCodeExpirationDate < Date.now()) throw new BadRequestError('Verification code expired');
@@ -123,6 +118,12 @@ const resetPassword = async (req,res) => {
     await user.save();
 
     res.status(StatusCodes.OK).json({ msg: 'Reset password succesfully' });
+}
+
+const getUserFromDb = async (email) => {
+    const user = await User.findOne({ email });
+    if (!user) throw new UnauthenticatedError('Invalid Email');
+    return user;
 }
 
 module.exports = {

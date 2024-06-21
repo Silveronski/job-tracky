@@ -35,7 +35,7 @@ const AddJob: React.FC = () => {
     catch (error: unknown) {
       displayServerError({ error });
     }    
-    finally{
+    finally {
       setIsLoading(false);
     } 
   }
@@ -50,7 +50,6 @@ const AddJob: React.FC = () => {
         <FormFields 
           inputType={InputType.select} 
           label="Job Type" 
-          defaultValue="full-time" 
           selectOptions={['full-time', 'part-time', 'remote', 'internship']}
         />
         <div className="btn-container">

@@ -9,8 +9,8 @@ export interface RegularInputProps {
 export interface SelectInputProps {
     inputType: InputType.select,
     label: string,
-    defaultValue: string,
     selectOptions: Array<string>,
+    defaultValue?: string,
     labelId?: string
 };
   

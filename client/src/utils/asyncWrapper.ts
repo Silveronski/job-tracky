@@ -4,7 +4,7 @@ export default function asyncWrapper <T>(fn: (...args: any[]) => Promise<T>): ((
             return await fn(...args);
         } 
         catch (error) {
-            console.error('Error:', error);
+            console.error('error:', error);
             throw error;
         }
     };

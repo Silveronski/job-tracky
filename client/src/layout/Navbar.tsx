@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import React, { useRef} from "react"
 import logo from "../assets/images/jobtrackyLogo.png";
 import logout from "../assets/images/logout.png";
-import deleteAccount from "../assets/images/delete-account.png";
 import updateProfile from "../assets/images/user.png";
 import downArrow from "../assets/images/down-arrow.png";
+import graph from "../assets/images/graph.png";
 import NavItem from "./NavItem";
 
 const Navbar: React.FC = () => {
@@ -13,17 +13,22 @@ const Navbar: React.FC = () => {
     const dropdownMenuRef = useRef<HTMLElement | null>(null);
     const navigate = useNavigate(); 
 
-    const signUserOut = (): void => {
-        signOut();
-        dropdownMenuRef.current!.style.display = 'none';
-    }
-
     const toggleDropdwonApearence = (): void => {
         if (dropdownMenuRef.current?.style.display === 'block') {
             dropdownMenuRef.current.style.display = 'none';
             return;
         }
         else dropdownMenuRef.current!.style.display = 'block';             
+    }
+
+    const signUserOut = (): void => {
+        signOut();
+        toggleDropdwonApearence();
+    }
+
+    const navigateToAccount = (): void => {
+        navigate("/account");
+        dropdownMenuRef.current!.style.display = 'none'; 
     }
 
     return (
@@ -53,8 +58,8 @@ const Navbar: React.FC = () => {
                         <section className="dropdown-menu-wrapper" ref={dropdownMenuRef}>                         
                             <ul className="dropdwon-menu">
                                 <h3 className="username">{user?.name}</h3>
-                                <NavItem text="Update Profile" linkTo="#" imgUrl={updateProfile}/>
-                                <NavItem text="Delete Account" imgUrl={deleteAccount}/>
+                                <NavItem text="Account" imgUrl={updateProfile} onClick={navigateToAccount}/>
+                                <NavItem text="Job Stats" imgUrl={graph}/>
                                 <NavItem text="Sign Out" imgUrl={logout} onClick={signUserOut}/>                                                           
                             </ul>
                         </section>                                                                                            

@@ -1,0 +1,14 @@
+.editjob-container{
+    flex-direction: column;
+    gap: 5em;  
+    margin-top: 15rem;
+    .wrapper{
+        padding-inline: 8em; 
+    } 
+    .back-to-dashboard{       
+        margin-top: 1em;            
+    } 
+    .dashboard-logo{
+        margin-left: 0.7em;
+    } 
+}

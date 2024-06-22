@@ -1,8 +1,17 @@
 @import './base.scss';
 @import './mixins.scss';
-@import './form.scss';
-@import './navbar.scss';
-@import './dashboard.scss';
-@import './toastr.scss';
-@import './loading.scss';
-@import './dialog.scss';
+
+@import './components/dashboard.scss';
+@import './components/navbar.scss';
+
+@import './form/form.scss';
+@import './form/formFields.scss';
+@import './form/formBtnContainer.scss';
+
+@import './jobs/jobCard.scss';
+@import './jobs/editJob.scss';
+@import './jobs/jobActions.scss';
+
+@import './ui/toastr.scss';
+@import './ui/loading.scss';
+@import './ui/dialog.scss';

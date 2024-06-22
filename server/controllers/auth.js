@@ -35,8 +35,9 @@ const register = async (req,res) => {
 
 const verifyEmail = async (req,res) => {
     const { verificationCode, email } = req.body;
-    const user = getUserFromDb(email);
+    const user = await User.findOne({ email });
 
+    if (!user) throw new UnauthenticatedError('Invalid Email');
     if (user.verificationCode !== verificationCode) throw new UnauthenticatedError('Verification Failed');
     if (user.isVerified) throw new BadRequestError('User is already verified');
 
@@ -53,7 +54,8 @@ const login = async (req,res) => {
     const { email, password } = req.body;
     if (!email || !password) throw new BadRequestError('Please provide email and password');
         
-    const user = getUserFromDb(email);
+    const user = await User.findOne({ email });
+    if (!user) throw new UnauthenticatedError('Invalid Email');
 
     const isPasswordCorrect = await user.comparePassword(password);
     if (!isPasswordCorrect) throw new UnauthenticatedError('Invalid Credentials');
@@ -120,7 +122,7 @@ const resetPassword = async (req,res) => {
     res.status(StatusCodes.OK).json({ msg: 'Reset password succesfully' });
 }
 
-const getUserFromDb = async (email) => {
+const getUserFromDb = async (email) => { // can't use if if returned user needs to call a user fucntion
     const user = await User.findOne({ email });
     if (!user) throw new UnauthenticatedError('Invalid Email');
     return user;

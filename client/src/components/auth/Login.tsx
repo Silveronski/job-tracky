@@ -50,7 +50,7 @@ const Login: React.FC<LoginProps> = ({ toggleLoginOrRegister }) => {
             <form onSubmit={handleLogin}>       
                 <FormFields inputType={InputType.regular} label="Email" type="email"/>
                 <FormFields inputType={InputType.regular} label="Password" type="password"/>
-                <div className="btn-container">
+                <div className="form-btn-container">
                     {error.activated && <p className="error">{error.msg}</p>}
                     <Button text="SIGN IN"/>                   
                     <p className="toggler forgot-password">

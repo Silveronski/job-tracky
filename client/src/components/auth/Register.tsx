@@ -81,7 +81,7 @@ const Register: React.FC<RegisterProps> = ({ toggleLoginOrRegister }) => {
                     inputName="avatar" 
                     handleFileChange={setAvatarFile}
                 />            
-                <div className="btn-container">
+                <div className="form-btn-container">
                     {error.activated && <p className="error">{error.msg}</p>}
                     <Button text="SIGN UP"/> 
                     <p className="toggler">Already a member? <a onClick={toggleLoginOrRegister}>Login</a></p>                                      

@@ -1,0 +1,31 @@
+.dashboard-container{    
+    margin-top: 12.5em;
+    @include laptop{
+        margin-top: 10.5rem;
+    }
+    .addjob-container{
+        margin-top: 0;
+        margin-bottom: 5em;      
+        .wrapper{       
+            padding-inline: 8em;        
+        }    
+    }
+    .jobs-container{
+        margin-bottom: 3.5em;   
+        .jobs-wrapper{
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 4rem;
+            padding-left: 6em;
+            
+        }      
+        .no-jobs{
+            width: 100%;
+            text-align: center;
+            padding-left: 0;
+            font-size: 2rem;
+            margin-top: 1.8em;
+        }
+    }
+}

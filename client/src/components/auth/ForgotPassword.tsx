@@ -50,7 +50,7 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({ setIsValidUser, backToL
             </p>             
             <form onSubmit={handleForgotPassword} className="forgot-password-form">                   
                 <FormFields inputType={InputType.regular} label="Email" type="email" labelId="forgot-password-email"/>                                                                            
-                <div className="btn-container">
+                <div className="form-btn-container">
                     {error.activated && <p className="error">{error.msg}</p>}
                     <Button text="Send me a reset code"/> 
                     <p className="toggler back-to-login"><a onClick={backToLogin}>Back to login</a></p>                  

@@ -63,7 +63,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ resetState, backToLogin }
             <form onSubmit={handleResetPassword} className="forgot-password-form"> 
                 <FormFields inputType={InputType.regular} label="Verification Code"/>
                 <FormFields inputType={InputType.regular} label="New Password" type="password"/>                          
-                <div className="btn-container">
+                <div className="form-btn-container">
                     {error.activated && <p className="error">{error.msg}</p>}
                     <Button text="Change Password"/> 
                     <p className="toggler back-to-login"><a onClick={backToLogin}>Back to login</a></p>                  

@@ -28,7 +28,7 @@ const Job: React.FC<JobType> = ({ _id, createdAt, position, company, status, job
           <p>{company}</p>      
       </div>
       <div className="btns-status">
-          <div className="btn-container">
+          <div className="jobCard-btn-container">
               <button onClick={() => navigate('/edit', { state: {currentJob} })}>Edit</button>
               <button onClick={handleDelete}>Delete</button>
           </div>

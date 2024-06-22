@@ -1,0 +1,38 @@
+.form-btn-container{             
+    .error{
+        text-align: center;
+        color: red;                
+        font-size: 1.2rem;
+    }
+    button{
+        width: 100%;
+        margin-block: 1.6rem;
+        font-weight: 600;               
+    }           
+    .toggler{
+        text-align: center;
+        font-size: 1.2rem;
+        margin-top: 0.5rem;
+        a{
+            cursor: pointer;
+            color: $primaryColor;
+            transition: 0.3s;
+            &:hover{
+                color: $primaryColorBrighter;
+            }
+        }
+    }
+    .forgot-password{                   
+        margin-top: 0;
+        margin-bottom: 1em;  
+        a{                   
+            text-decoration: none;                      
+        }             
+    }
+    .back-to-login{
+        margin-top: 0; 
+        a{
+            text-decoration: none;
+        }                                   
+    }
+}

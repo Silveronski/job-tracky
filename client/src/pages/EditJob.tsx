@@ -87,7 +87,7 @@ const EditJob: React.FC = () => {
                     defaultValue={currentJob?.jobType} 
                     selectOptions={['full-time', 'part-time', 'remote', 'internship']}
                 />
-                <div className="btn-container">
+                <div className="form-btn-container">
                     {error.activated && <p className="error">{error.msg}</p>}
                     <Button text="Edit"/>
                 </div>                  

@@ -47,7 +47,7 @@ const EmailVerification: React.FC = () => {
             <p className="verify-email-success">Success! Please check your email to verify your account.</p>
             <form onSubmit={handleSubmit} className="verify-form">  
                 <FormFields inputType={InputType.regular} label="Verification Code"/>
-                <div className="btn-container">
+                <div className="form-btn-container">
                     {error.activated && <p className="error">{error.msg}</p>}
                     <Button text="Verify"/>                 
                 </div>                  

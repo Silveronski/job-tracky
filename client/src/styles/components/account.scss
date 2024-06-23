@@ -1,0 +1,43 @@
+.account-container{
+    h1{
+        color: $primaryColorBrighter;
+        text-align: center;
+        font-size: 4rem;
+        margin-top: 4em;
+        margin-bottom: 0.7em;
+    }
+    .account-wrapper{
+        display: flex;
+        justify-content: center;   
+        min-width: fit-content;        
+        .account-btn-container{                    
+            padding-block: 0.8em;
+            padding-inline: 8em;
+            border-radius: 24px;
+            box-shadow: 8px 5px 30px rgb(0, 0, 0);
+            background-color: $darkGrayColor;
+            button{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-width: 420px;
+                font-size: 1.7rem;  
+                margin-block: 1.4em; 
+                border-radius: 32px;
+                &:last-child {         
+                    background-color: transparent;
+                    border: 2px solid $primaryColor;
+                    font-weight: bold;
+                    &:hover{
+                        background-color: $primaryColor;
+                    }
+                }     
+                img{
+                    margin-left: auto;
+                }
+            }
+            
+        }  
+    }
+    
+}

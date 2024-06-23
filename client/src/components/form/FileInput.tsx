@@ -37,9 +37,9 @@ const FileInput: React.FC<FileInputProps> = ({ label, handleFileChange, inputNam
                 onChange={handleFileUpload}
                 ref={fileInputRef}
             />
-            <label htmlFor={inputName} className={labelClassName || "add-avatar-container"}>
-                <span className='avatar-span'>{label}</span>
-                <img src={InputImg} alt='add avatar icon'/>     
+            <label htmlFor={inputName} className={labelClassName || "add-file-container"}>
+                <span className='file-span'>{label}</span>
+                <img src={InputImg} alt={inputName}/>     
             </label>        
             <i className="v-mark" ref={vMarkRef}>✔</i>
             <i className="trash-can" onClick={handleResetFileInput}>

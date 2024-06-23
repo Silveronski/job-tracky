@@ -1,22 +1,28 @@
 import React from 'react';
 import useAuthRedirect from '../hooks/useAuthRedirect';
-import { useLocation, useNavigate } from 'react-router-dom';
 import Button from '../components/ui/Button';
+import changePassword from '../assets/images/changePassword.png';
+import updateUser from '../assets/images/updateUser.png';
+import deleteAccount from '../assets/images/delete-account.png';
+import dashboard from '../assets/images/dashboard.png';
+import { useNavigate } from 'react-router-dom';
 
 const Account: React.FC = () => {
     const navigate = useNavigate();
-    const location = useLocation();
-    const { currentUser } = location.state || {};
 
-    // useAuthRedirect(currentUser);
+    useAuthRedirect(null, "/account");
 
     return (
-        <section>
-            <div>
-                <Button text='Update Profile Details'/>
-                <Button text='Change Passsword'/>
-                <Button text='Delete Account'/>
-            </div>
+        <section className='account-container'>
+            <h1>Account</h1>
+            <div className='account-wrapper'>
+                <div className='account-btn-container'>
+                    <Button text='Update Profile Details' imgUrl={updateUser}/>
+                    <Button text='Change Passsword' imgUrl={changePassword}/>
+                    <Button text='Delete Account' imgUrl={deleteAccount}/>
+                    <Button text='Back to Dashboard' imgUrl={dashboard} onClick={() => navigate("/dashboard")}/>
+                </div>
+            </div>          
         </section>
     )
 }

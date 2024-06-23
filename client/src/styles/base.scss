@@ -37,31 +37,3 @@ body{
 main{
     margin-top: 150px;
 }
-
-.primary-button{
-    cursor: pointer;
-    border: none;
-    min-width: fit-content;
-    font-size: 1.5rem;
-    padding: 0.5em 1.2em;
-    border-radius: 24px;
-    transition: 0.3s;
-    background-color: $primaryColor;
-    color: white;
-    &:hover{
-        background-color: $primaryColorBrighter;
-    }
-}
-
-.secondary-button{
-    display: flex;
-    align-items: center;
-    background: transparent;
-    border: 2px solid $primaryColorBrighter;
-    font-size: 2rem; 
-    border-radius: 40px;   
-    padding: 0.5em 1.8em;    
-    &:hover{
-        background-color: $primaryColorBrighter;
-    }  
-}

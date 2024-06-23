@@ -15,13 +15,13 @@ const PasswordRecovery: React.FC = () => {
         return () => resetState();
     },[]);
 
-    const resetState = () => {
+    const resetState = (): void => {
         resetError();
         sessionStorage.getItem('isValidUser') && sessionStorage.removeItem('isValidUser');
         sessionStorage.getItem('userEmail') && sessionStorage.removeItem('userEmail');
     }
 
-    const backToLogin = () => {
+    const backToLogin = (): void => {
         resetState();
         navigate("/login");
     } 

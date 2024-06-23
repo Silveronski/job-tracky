@@ -7,11 +7,13 @@ import updateProfile from "../assets/images/user.png";
 import downArrow from "../assets/images/down-arrow.png";
 import graph from "../assets/images/graph.png";
 import NavItem from "./NavItem";
+import { useAuth } from "../hooks/useAuth";
 
 const Navbar: React.FC = () => {
-    const { user, loading, signOut } = useAuthContext(); 
-    const dropdownMenuRef = useRef<HTMLElement | null>(null);
+    const { user, loading  } = useAuthContext();
+    const { signOut } = useAuth();
     const navigate = useNavigate(); 
+    const dropdownMenuRef = useRef<HTMLElement | null>(null);
 
     const toggleDropdwonApearence = async (): Promise<void> => {
         if (dropdownMenuRef.current?.style.display === 'block') {

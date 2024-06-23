@@ -1,6 +1,5 @@
 import React, { FormEvent, MouseEventHandler } from "react";
 import { useState } from "react"
-import { useAuthContext } from "../../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { useErrorHandler } from "../../hooks/useErrorHandler";
 import { InputType } from "../../types/inputTypes";
@@ -8,6 +7,7 @@ import FormFields from "../../components/form/FormFields";
 import Button from "../../components/ui/Button";
 import FormContainer from "../../components/form/FormContainer";
 import Loading from "../../components/ui/Loading";
+import { useAuth } from "../../hooks/useAuth";
 
 interface LoginProps {
     toggleLoginOrRegister: MouseEventHandler<HTMLAnchorElement>
@@ -16,7 +16,7 @@ interface LoginProps {
 const Login: React.FC<LoginProps> = ({ toggleLoginOrRegister }) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const { error, displayClientError, displayServerError } = useErrorHandler();
-    const { login } = useAuthContext();
+    const { login } = useAuth();
     const navigate = useNavigate();
         
     const handleLogin = async (e: FormEvent<HTMLFormElement>): Promise<void> => {

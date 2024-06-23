@@ -1,5 +1,4 @@
 import React, { FormEvent, useRef, useState } from "react";
-import { useAuthContext } from "../../context/AuthContext";
 import { useErrorHandler } from "../../hooks/useErrorHandler";
 import { InputType } from "../../types/inputTypes";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +8,7 @@ import check from "../../assets/images/check.png";
 import FormContainer from "../../components/form/FormContainer";
 import Loading from "../../components/ui/Loading";
 import ModalDialog from "../../components/ui/ModalDialog";
+import { useAuth } from "../../hooks/useAuth";
 
 interface ResetPasswordProps {
     resetState: () => void,
@@ -16,10 +16,10 @@ interface ResetPasswordProps {
 };
 
 const ResetPassword: React.FC<ResetPasswordProps> = ({ resetState, backToLogin }) => {
-    const { resetPassword } = useAuthContext();
-    const navigate = useNavigate();
+    const { resetPassword } = useAuth();
     const { error, displayClientError, displayServerError } = useErrorHandler();
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const navigate = useNavigate();
     const dialogRef = useRef<HTMLDialogElement>(null);  
 
     const handleResetPassword = async (e: FormEvent<HTMLFormElement>) => {

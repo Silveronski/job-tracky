@@ -1,11 +1,11 @@
 import React, { FormEvent, useState } from "react";
-import { useAuthContext } from "../../context/AuthContext";
 import { useErrorHandler } from "../../hooks/useErrorHandler";
 import { InputType } from "../../types/inputTypes";
 import FormFields from "../form/FormFields";
 import Button from "../ui/Button";
 import FormContainer from "../form/FormContainer";
 import Loading from "../ui/Loading";
+import { useAuth } from "../../hooks/useAuth";
 
 interface ForgotPasswordProps {
     setIsValidUser: React.Dispatch<React.SetStateAction<boolean>>,
@@ -13,7 +13,7 @@ interface ForgotPasswordProps {
 };
 
 const ForgotPassword: React.FC<ForgotPasswordProps> = ({ setIsValidUser, backToLogin }) => {
-    const { forgotPassword } = useAuthContext();
+    const { forgotPassword } = useAuth();
     const { error, displayClientError, displayServerError, resetError } = useErrorHandler();
     const [isLoading, setIsLoading] = useState<boolean>(false);
 

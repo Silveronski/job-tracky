@@ -1,8 +1,8 @@
 import React, { FormEvent, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useAuthContext } from "../context/AuthContext";
 import { useErrorHandler } from "../hooks/useErrorHandler";
 import { InputType } from "../types/inputTypes";
+import { useAuth } from "../hooks/useAuth";
 import useAuthRedirect from "../hooks/useAuthRedirect";
 import FormFields from "../components/form/FormFields";
 import Button from "../components/ui/Button";
@@ -11,7 +11,7 @@ import Loading from "../components/ui/Loading";
 
 const EmailVerification: React.FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const { verifyVerificationCode } = useAuthContext();
+    const { verifyVerificationCode } = useAuth();
     const { error, displayClientError, displayServerError } = useErrorHandler();
     const navigate = useNavigate();
     const location = useLocation();

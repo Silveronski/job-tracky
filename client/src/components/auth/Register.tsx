@@ -1,6 +1,5 @@
 import React, { FormEvent, MouseEventHandler } from "react";
 import { useState } from "react"
-import { useAuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useErrorHandler } from "../../hooks/useErrorHandler";
 import { InputType } from "../../types/inputTypes";
@@ -11,6 +10,7 @@ import FormContainer from "../../components/form/FormContainer";
 import Loading from "../../components/ui/Loading";
 import addAvatar from "../../assets/images/addAvatar.png";
 import defaultAvatar from "../../assets/images/jobtracky-favicon.png"; 
+import { useAuth } from "../../hooks/useAuth";
 
 interface RegisterProps {
     toggleLoginOrRegister: MouseEventHandler<HTMLAnchorElement>
@@ -20,7 +20,7 @@ const Register: React.FC<RegisterProps> = ({ toggleLoginOrRegister }) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [avatarFile, setAvatarFile] = useState<File | null>(null);
     const { error, displayClientError, displayServerError } = useErrorHandler();
-    const { register } = useAuthContext();
+    const { register } = useAuth();
     const navigate = useNavigate();
             
     const handleRegister = async (e: FormEvent<HTMLFormElement>): Promise<void> => {

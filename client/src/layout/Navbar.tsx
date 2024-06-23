@@ -13,12 +13,22 @@ const Navbar: React.FC = () => {
     const dropdownMenuRef = useRef<HTMLElement | null>(null);
     const navigate = useNavigate(); 
 
-    const toggleDropdwonApearence = (): void => {
+    const toggleDropdwonApearence = async (): Promise<void> => {
         if (dropdownMenuRef.current?.style.display === 'block') {
-            dropdownMenuRef.current.style.display = 'none';
+            await closeDropdownMenu();     
             return;
         }
-        else dropdownMenuRef.current!.style.display = 'block';             
+        else await openDropdownMenu();                                      
+    }
+
+    const closeDropdownMenu = async (): Promise<void> => {
+        dropdownMenuRef.current!.style.animation = await 'vanish 0.3s';     
+        dropdownMenuRef.current!.style.display = 'none';
+    }
+
+    const openDropdownMenu = async (): Promise<void> => {
+        dropdownMenuRef.current!.style.animation = await ''; 
+        dropdownMenuRef.current!.style.display = 'block';
     }
 
     const signUserOut = (): void => {
@@ -26,9 +36,9 @@ const Navbar: React.FC = () => {
         toggleDropdwonApearence();
     }
 
-    const navigateToAccount = (): void => {
+    const navigateToAccount = async (): Promise<void> => {
         navigate("/account");
-        dropdownMenuRef.current!.style.display = 'none'; 
+        await closeDropdownMenu();
     }
 
     return (

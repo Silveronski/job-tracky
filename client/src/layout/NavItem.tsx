@@ -3,14 +3,14 @@ import React, { MouseEventHandler } from 'react';
 interface NavItemProps {
     text: string,
     imgUrl: string,
-    onClick?: MouseEventHandler<HTMLAnchorElement>
+    onClick?: MouseEventHandler<HTMLLIElement>
 };
 
 const NavItem: React.FC<NavItemProps> = ({ text, imgUrl, onClick }) => {
     return (
-        <li className="dropdown-menu-item">
+        <li className="dropdown-menu-item" onClick={onClick}>
             <img src={imgUrl} alt={text}/>
-            <a onClick={onClick}>{text}</a>
+            <a>{text}</a>
         </li>
     )
 }

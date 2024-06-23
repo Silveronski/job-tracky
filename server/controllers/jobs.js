@@ -3,29 +3,41 @@ const { StatusCodes } = require('http-status-codes');
 const { BadRequestError, NotFoundError } = require('../errors');
 
 const getAllJobs = async (req,res) => {
-    // const { search, status, jobType, sort } = req.query;
-    // const queryObject = { createdBy: req.user.userId };
+    const { search, status, jobType, sort } = req.query;
+    const queryObject = { createdBy: req.user.userId };
         
-    // if (search) queryObject.position = { $regex: search, $options: 'i' };
-    // if (status && status !== 'all') queryObject.status = status;
-    // if (jobType && jobType !== 'all') queryObject.jobType = jobType;
+    if (search) queryObject.position = { $regex: search, $options: 'i' };
+    if (status && status !== 'all') queryObject.status = status;
+    if (jobType && jobType !== 'all') queryObject.jobType = jobType;
 
-    // let result = Job.find(queryObject);
+    let result = Job.find(queryObject);
 
-    // if (sort === 'latest') result = result.sort('-createdAt');
-    // if (sort === 'oldest') result = result.sort('createdAt');
-    // if (sort === 'a-z') result = result.sort('position');
-    // if (sort === 'z-a') result = result.sort('-position');
+    switch (sort) {
+        case 'latest':
+            result = result.sort('-createdAt');
+            break;
+        case 'oldest':
+            result = result.sort('createdAt');
+            break;
+        case 'a-z':
+            result = result.sort('position');
+            break;
+        case 'z-a':
+            result = result.sort('-position');
+            break;
+        default:
+            result = result.sort('-createdAt');
+            break;
+    }
 
-    // const page = Number(req.query.page) || 1;
-    // const limit = Number(req.query.limit) || 10;
-    // const skip = (page - 1) * limit;
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
 
-    // result = result.skip(skip).limit(limit);
+    result = result.skip(skip).limit(limit);
 
-    // const jobs = await result;
-    const jobs = await Job.find({ createdBy: req.user.userId }).sort('-createdAt');
-    res.status(StatusCodes.OK).json({ jobs, count: jobs.length });
+    const jobs = await result;
+    res.status(StatusCodes.OK).json({ jobs, count: jobs.length });  
 }
 
 const getJob = async (req,res) => {
@@ -45,10 +57,8 @@ const createJob = async (req,res) => {
 
 const updateJob = async (req,res) => {
     const { company, position } = req.body;
-    if (company.trim() === '' || position.trim() === '') {
-        throw new BadRequestError('Please provide company and postion');
-    }
-
+    if (!company || !position)  throw new BadRequestError('Please provide company and postion');
+       
     const job = await Job.findOneAndUpdate({
         _id: req.params.id,
         createdBy: req.user.userId
@@ -57,6 +67,7 @@ const updateJob = async (req,res) => {
         new: true, // to return the updated job
         runValidators: true // to enforce model validators
     });
+    
     if (!job) throw new NotFoundError('No job found');
 
     res.status(StatusCodes.OK).json({ job });

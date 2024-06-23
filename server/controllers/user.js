@@ -9,11 +9,20 @@ const getUserDetails = async (req,res) => {
 };
 
 const deleteAccount = async (req,res) => {
-    const user = await getUserFromDb(req.user.userId);
+    const { password } = req.body;
+    if (!password) throw new BadRequestError('Please provide a password');
+
+    const user = await User.findById(req.user.userId);
+    isUserValid(user);
+
+    const isPasswordCorrect = await user.comparePassword(password);
+    if (!isPasswordCorrect) throw new UnauthenticatedError('Invalid Credentials');
+
     await Promise.all([      
         Job.deleteMany({ createdBy: userId }),
         user.deleteOne()  
-    ]);   
+    ]);  
+
     res.status(StatusCodes.OK).json({ msg: 'user account deleted successfully' });
 };
 
@@ -22,7 +31,7 @@ const changePassword = async (req,res) => {
     if (!password || !newPassword) throw new BadRequestError('Please provide current and new password');
 
     const user = await getUserFromDb(req.user.userId);
-
+    
     const isPasswordCorrect = await user.comparePassword(password);
     if (!isPasswordCorrect) throw new UnauthenticatedError('Invalid Credentials');
 
@@ -34,9 +43,13 @@ const changePassword = async (req,res) => {
 
 const getUserFromDb = async (userId) => {
     const user = await User.findById(userId);
+    isUserValid(user);
+    return user;
+};
+
+const isUserValid = (user) => {
     if (!user) throw new BadRequestError('User not found');
     if (!user.isVerified) throw new UnauthenticatedError('User is not verified');
-    return user;
 };
 
 module.exports = {

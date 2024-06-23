@@ -5,7 +5,7 @@ import FormFields from "../form/FormFields";
 import Button from "../ui/Button";
 import FormContainer from "../form/FormContainer";
 import Loading from "../ui/Loading";
-import { useAuth } from "../../hooks/useAuth";
+import { useAuthContext } from "../../context/AuthContext";
 
 interface ForgotPasswordProps {
     setIsValidUser: React.Dispatch<React.SetStateAction<boolean>>,
@@ -13,7 +13,7 @@ interface ForgotPasswordProps {
 };
 
 const ForgotPassword: React.FC<ForgotPasswordProps> = ({ setIsValidUser, backToLogin }) => {
-    const { forgotPassword } = useAuth();
+    const { forgotPassword } = useAuthContext();
     const { error, displayClientError, displayServerError, resetError } = useErrorHandler();
     const [isLoading, setIsLoading] = useState<boolean>(false);
 

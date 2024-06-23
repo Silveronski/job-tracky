@@ -1,5 +1,5 @@
 import React, { FormEvent, useState } from "react"
-import { useJobs } from "../../hooks/useJobs";
+import { useJobContext } from "../../context/JobContext";
 import { useErrorHandler } from "../../hooks/useErrorHandler";
 import { generateToastr } from "../../utils/generateToastr";
 import { InputType } from "../../types/inputTypes";
@@ -10,7 +10,7 @@ import Loading from "../ui/Loading";
 
 const AddJob: React.FC = () => {
   const { error, displayClientError, displayServerError, resetError } = useErrorHandler();
-  const { addJob } = useJobs();
+  const { addJob } = useJobContext()
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleFormSubmit = async (e: FormEvent<HTMLFormElement>) => {

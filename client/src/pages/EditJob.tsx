@@ -1,6 +1,6 @@
 import React, { FormEvent, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useJobs } from "../hooks/useJobs";
+import { useJobContext } from "../context/JobContext";
 import { useErrorHandler } from "../hooks/useErrorHandler";
 import { generateToastr } from "../utils/generateToastr";
 import { InputType } from "../types/inputTypes";
@@ -13,7 +13,7 @@ import Loading from "../components/ui/Loading";
 
 const EditJob: React.FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const { updateJob } = useJobs();
+    const { updateJob } = useJobContext();
     const { error, displayClientError, displayServerError } = useErrorHandler();
     const navigate = useNavigate();
     const location = useLocation();

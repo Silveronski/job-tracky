@@ -8,18 +8,14 @@ interface JobContextProviderProps {
 interface JobContextType {
     jobs: JobType[],
     loading: boolean,
-    getJobs: () => Promise<void>,
-    addJob: (job: Partial<JobType>) => Promise<void>,
-    updateJob: (jobId: string, job: Partial<JobType>) => Promise<void>,
-    deleteJob: (jobId: string) => Promise<void>, 
 };
 
 export const JobContext = createContext<JobContextType | null>(null);
 
 export const JobContextProvider = ({ children }: JobContextProviderProps) => {
-    const { jobs, getJobs, addJob, updateJob, deleteJob, loading } = useJobs();
+    const { jobs, loading } = useJobs();
     return (
-        <JobContext.Provider value={{ jobs, loading, getJobs, addJob, updateJob, deleteJob }}>                                   
+        <JobContext.Provider value={{ jobs, loading }}>                                   
             {children}
         </JobContext.Provider>
     )

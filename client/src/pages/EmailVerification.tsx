@@ -26,9 +26,9 @@ const EmailVerification: React.FC = () => {
         if (!verificationCode) {
             displayClientError('Please provide a code');
             return;
-        }
-        setIsLoading(true);
+        }    
         try {
+            setIsLoading(true);
             await verifyVerificationCode(verificationCode, verifyData.email);
             navigate("/dashboard");
         } 

@@ -1,6 +1,6 @@
 import React, { FormEvent, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useJobContext } from "../context/JobContext";
+import { useJobs } from "../hooks/useJobs";
 import { useErrorHandler } from "../hooks/useErrorHandler";
 import { generateToastr } from "../utils/generateToastr";
 import { InputType } from "../types/inputTypes";
@@ -13,7 +13,7 @@ import Loading from "../components/ui/Loading";
 
 const EditJob: React.FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const { updateJob } = useJobContext();
+    const { updateJob } = useJobs();
     const { error, displayClientError, displayServerError } = useErrorHandler();
     const navigate = useNavigate();
     const location = useLocation();
@@ -36,14 +36,14 @@ const EditJob: React.FC = () => {
         }    
         try {
             setIsLoading(true);
-            await updateJob(currentJob._id, job );
+            await updateJob(currentJob._id, job);
             generateToastr('Job has been successfully updated', 'success');
             navigate("/dashboard");
         } 
         catch (error: unknown) {
             displayServerError({ error });
         }    
-        finally{
+        finally {
             setIsLoading(false);
         }          
     }

@@ -1,13 +1,13 @@
 import { useAuthContext } from "../context/AuthContext"
 import { useNavigate } from "react-router-dom";
 import React, { useRef} from "react"
+import { useAuth } from "../hooks/useAuth";
 import logo from "../assets/images/jobtrackyLogo.png";
 import logout from "../assets/images/logout.png";
 import updateProfile from "../assets/images/user.png";
 import downArrow from "../assets/images/down-arrow.png";
 import graph from "../assets/images/graph.png";
 import NavItem from "./NavItem";
-import { useAuth } from "../hooks/useAuth";
 
 const Navbar: React.FC = () => {
     const { user, loading  } = useAuthContext();

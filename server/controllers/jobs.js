@@ -6,7 +6,7 @@ const getAllJobs = async (req,res) => {
     const { search, status, jobType, sort } = req.query;
     const queryObject = { createdBy: req.user.userId };
         
-    if (search) queryObject.position = { $regex: search, $options: 'i' };
+    if (search) queryObject.position = { $regex: search, $options: 'i' }; // i = case insensitive
     if (status && status !== 'all') queryObject.status = status;
     if (jobType && jobType !== 'all') queryObject.jobType = jobType;
 
@@ -31,7 +31,7 @@ const getAllJobs = async (req,res) => {
     }
 
     const page = Number(req.query.page) || 1;
-    const limit = Number(req.query.limit) || 10;
+    const limit = Number(req.query.limit) || 100;
     const skip = (page - 1) * limit;
 
     result = result.skip(skip).limit(limit);

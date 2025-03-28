@@ -1,138 +1,158 @@
-const User = require('../models/User');
-const jwt = require('jsonwebtoken');
-const sendVerificationEmail = require('../utils/sendVerificationEmail');
-const sendResetPasswordEmail = require('../utils/sendResetPasswordEmail');
-const uploadAvatarToCloud = require('../utils/uploadAvatarToCloud');
-const crypto = require('crypto');
-const { BadRequestError, UnauthenticatedError } = require('../errors');
-const { StatusCodes } = require('http-status-codes');
+const User = require("../models/User");
+const jwt = require("jsonwebtoken");
+const sendVerificationEmail = require("../utils/sendVerificationEmail");
+const sendResetPasswordEmail = require("../utils/sendResetPasswordEmail");
+const uploadAvatarToCloud = require("../utils/uploadAvatarToCloud");
+const crypto = require("crypto");
+const { BadRequestError, UnauthenticatedError } = require("../errors");
+const { StatusCodes } = require("http-status-codes");
+const { dd } = require("../utils/debugging");
 
-const register = async (req,res) => { 
-    const { email, name, password } = req.body;
-    if (!email || !name || !password) throw new BadRequestError('Please provide email, name & password');
- 
-    let avatarUrl = null;
+const register = async (req, res) => {
+  const { email, name, password } = req.body;
+  if (!email || !name || !password)
+    throw new BadRequestError("Please provide email, name & password");
 
-    if (req.files && req.files.avatar) avatarUrl = await uploadAvatarToCloud(req.files.avatar);
-        
-    const verificationCode = crypto.randomBytes(3).toString('hex');
-    const user = await User.create({ 
-        name,
-        email,
-        password,
-        verificationCode,
-        avatar: avatarUrl
-    });
+  let avatarUrl = null;
 
-    await sendVerificationEmail({
-        name: user.name,
-        email: user.email,
-        verificationCode: user.verificationCode
-    });
+  if (req.files && req.files.avatar)
+    avatarUrl = await uploadAvatarToCloud(req.files.avatar);
 
-    res.status(StatusCodes.CREATED).json({ msg: 'Success! Please check your email to verify account' });
-}
+  const verificationCode = crypto.randomBytes(3).toString("hex");
+  const user = await User.create({
+    name,
+    email,
+    password,
+    verificationCode,
+    avatar: avatarUrl,
+  });
 
-const verifyEmail = async (req,res) => {
-    const { verificationCode, email } = req.body;
-    const user = await User.findOne({ email });
+  await sendVerificationEmail({
+    name: user.name,
+    email: user.email,
+    verificationCode: user.verificationCode,
+  });
 
-    if (!user) throw new UnauthenticatedError('Invalid Email');
-    if (user.verificationCode !== verificationCode) throw new UnauthenticatedError('Verification Failed');
-    if (user.isVerified) throw new BadRequestError('User is already verified');
+  res
+    .status(StatusCodes.CREATED)
+    .json({ msg: "Success! Please check your email to verify account" });
+};
 
-    user.isVerified = true;
-    user.verificationCode = '';
-    await user.save();
+const verifyEmail = async (req, res) => {
+  const { verificationCode, email } = req.body;
+  const user = await User.findOne({ email });
 
-    const token = user.createJWT();
+  if (!user) throw new UnauthenticatedError("Invalid Email");
+  if (user.verificationCode !== verificationCode)
+    throw new UnauthenticatedError("Verification Failed");
+  if (user.isVerified) throw new BadRequestError("User is already verified");
 
-    res.status(StatusCodes.OK).json({ name: user.name, avatar: user.avatar ,token });
-}
+  user.isVerified = true;
+  user.verificationCode = "";
+  await user.save();
 
-const login = async (req,res) => { 
-    const { email, password } = req.body;
-    if (!email || !password) throw new BadRequestError('Please provide email and password');
-        
-    const user = await User.findOne({ email });
-    if (!user) throw new UnauthenticatedError('Invalid Email');
+  const token = user.createJWT();
 
-    const isPasswordCorrect = await user.comparePassword(password);
-    if (!isPasswordCorrect) throw new UnauthenticatedError('Invalid Credentials');
+  res
+    .status(StatusCodes.OK)
+    .json({ name: user.name, avatar: user.avatar, token });
+};
 
-    if (!user.isVerified) throw new UnauthenticatedError('Please verify your email');
-        
-    const token = user.createJWT();
-    res.status(StatusCodes.OK).json({ name: user.name, avatar: user.avatar ,token });
-}
+const login = async (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password)
+    throw new BadRequestError("Please provide email and password");
 
-const verifyToken = async (req,res) => {
-    const authHeader = req.headers.authorization;
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        throw new UnauthenticatedError('Authentication invalid');
-    }
-    const token = authHeader.split(' ')[1];
-    try {
-        const payload = jwt.verify(token, process.env.JWT_SECRET);
-        const user = await User.findById(payload.userId);
-        if (!user) throw new UnauthenticatedError('Authentication invalid');
-        res.status(StatusCodes.OK).json({ name: payload.name, avatar: user.avatar, token });
-    } 
-    catch (error) {
-        throw new UnauthenticatedError('Authentication invalid');
-    }
-}
+  const user = await User.findOne({ email });
+  if (!user) throw new UnauthenticatedError("Invalid Email");
 
-const forgotPassword = async (req,res) => {
-    const { email } = req.body;
-    if (!email) throw new BadRequestError('Please provide your email');
+  const isPasswordCorrect = await user.comparePassword(password);
+  if (!isPasswordCorrect) throw new UnauthenticatedError("Invalid Credentials");
 
-    const user = getUserFromDb(email);
-    if (!user.isVerified) throw new UnauthenticatedError('User is not verified');
+  if (!user.isVerified)
+    throw new UnauthenticatedError("Please verify your email");
 
-    const resetPasswordCode = crypto.randomBytes(6).toString('hex');
-    const tenMinutes = 1000 * 60 * 10;
-    const expirationDate = new Date(Date.now() + tenMinutes);
+  const token = user.createJWT();
+  res
+    .status(StatusCodes.OK)
+    .json({ name: user.name, avatar: user.avatar, token });
+};
 
-    user.verificationCode = resetPasswordCode;
-    user.resetPasswordCodeExpirationDate = expirationDate;
-    await user.save();
+const verifyToken = async (req, res) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    throw new UnauthenticatedError("Authentication invalid");
+  }
+  const token = authHeader.split(" ")[1];
+  try {
+    const payload = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(payload.userId);
+    if (!user) throw new UnauthenticatedError("Authentication invalid");
+    res
+      .status(StatusCodes.OK)
+      .json({ name: payload.name, avatar: user.avatar, token });
+  } catch (error) {
+    throw new UnauthenticatedError("Authentication invalid");
+  }
+};
 
-    await sendResetPasswordEmail({
-        name: user.name,
-        email: user.email,
-        verificationCode: user.verificationCode
-    });
+const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+  if (!email) throw new BadRequestError("Please provide your email");
 
-    res.status(StatusCodes.OK).json({ msg: 'Success! Please check your email to reset your password' });
-}
+  const user = await getUserFromDb(email);
 
-const resetPassword = async (req,res) => {
-    const { email, verificationCode, password } = req.body;
-    const user = getUserFromDb(email);
-    if (!user.isVerified) throw new UnauthenticatedError('User is not verified'); 
-    if (user.verificationCode !== verificationCode) throw new UnauthenticatedError('Invalid verification code');
-    if (user.resetPasswordCodeExpirationDate < Date.now()) throw new BadRequestError('Verification code expired');
+  if (!user.isVerified) throw new UnauthenticatedError("User is not verified");
 
-    user.password = password;
-    user.verificationCode = '';
-    user.resetPasswordCodeExpirationDate = null;
-    await user.save();
+  const resetPasswordCode = crypto.randomBytes(6).toString("hex");
+  const tenMinutes = 1000 * 60 * 10;
+  const expirationDate = new Date(Date.now() + tenMinutes);
 
-    res.status(StatusCodes.OK).json({ msg: 'Reset password succesfully' });
-}
+  user.verificationCode = resetPasswordCode;
+  user.resetPasswordCodeExpirationDate = expirationDate;
+  await user.save();
 
-const getUserFromDb = async (email) => { // can't use if if returned user needs to call a user fucntion
-    const user = await User.findOne({ email });
-    if (!user) throw new UnauthenticatedError('Invalid Email');
-    return user;
-}
+  await sendResetPasswordEmail({
+    name: user.name,
+    email: user.email,
+    verificationCode: user.verificationCode,
+  });
+
+  res
+    .status(StatusCodes.OK)
+    .json({ msg: "Success! Please check your email to reset your password" });
+};
+
+const resetPassword = async (req, res) => {
+  const { email, verificationCode, password } = req.body;
+  const user = await getUserFromDb(email);
+
+  if (!user.isVerified) throw new UnauthenticatedError("User is not verified");
+  if (user.verificationCode !== verificationCode)
+    throw new UnauthenticatedError("Invalid verification code");
+  if (user.resetPasswordCodeExpirationDate < Date.now())
+    throw new BadRequestError("Verification code expired");
+
+  user.password = password;
+  user.verificationCode = "";
+  user.resetPasswordCodeExpirationDate = null;
+  await user.save();
+
+  res.status(StatusCodes.OK).json({ msg: "Reset password succesfully" });
+};
+
+const getUserFromDb = async (email) => {
+  // can't use if if returned user needs to call a user fucntion
+  const user = await User.findOne({ email });
+  if (!user) throw new UnauthenticatedError("Invalid Email");
+  return user;
+};
 
 module.exports = {
-    register,
-    verifyEmail,
-    login,
-    verifyToken,
-    forgotPassword,
-    resetPassword
-}
+  register,
+  verifyEmail,
+  login,
+  verifyToken,
+  forgotPassword,
+  resetPassword,
+};

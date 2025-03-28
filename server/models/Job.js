@@ -1,31 +1,34 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const JobSchema = new mongoose.Schema({
+const JobSchema = new mongoose.Schema(
+  {
     company: {
-        type: String,
-        required: [true, 'Please provide company name'],
-        maxlength: 50
+      type: String,
+      required: [true, "Please provide company name"],
+      maxlength: 50,
     },
     position: {
-        type: String,
-        required: [true, 'Please provide position name'],
-        maxlength: 100
+      type: String,
+      required: [true, "Please provide position name"],
+      maxlength: 100,
     },
     status: {
-        type: String,
-        enum: ['interview', 'declined', 'pending'],
-        default: 'pending'
+      type: String,
+      enum: ["interview", "declined", "pending"],
+      default: "pending",
     },
     jobType: {
-        type: String,
-        enum: ['full-time', 'part-time', 'remote', 'internship'],
-        required: [true, 'Please provide job type']
+      type: String,
+      enum: ["full-time", "part-time", "remote", "internship"],
+      required: [true, "Please provide job type"],
     },
     createdBy: {
-        type: mongoose.Types.ObjectId,
-        ref: 'User',
-        required: [true, 'Please provide user']
-    }
-}, {timestamps: true});
+      type: mongoose.Types.ObjectId,
+      ref: "User",
+      required: [true, "Please provide user"],
+    },
+  },
+  { timestamps: true }
+);
 
-module.exports = mongoose.model('Job', JobSchema);
+module.exports = mongoose.model("Job", JobSchema);
